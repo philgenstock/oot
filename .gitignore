@@ -1,0 +1,41 @@
+# Environment variables
+.env
+
+# Foundry data - ignore everything except our module
+foundry-data/*
+!foundry-data/Data/
+foundry-data/Data/*
+!foundry-data/Data/modules/
+foundry-data/Data/modules/*
+!foundry-data/Data/modules/oot/
+
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Root-level duplicate files (module is in foundry-data/Data/modules/oot/)
+/module.json
+/scripts/
+/styles/
+/data/
+/.env.example
+.vs/
+obsidian/.obsidian/app.json
+obsidian/.obsidian/appearance.json
+obsidian/.obsidian/core-plugins.json
+obsidian/.obsidian/workspace.json
+obsidian/.obsidian/workspace.json
+
+module.zip

@@ -1,0 +1,21 @@
+services:
+  foundry:
+    image: felddy/foundryvtt:release
+    container_name: foundry-test
+    hostname: foundry
+    restart: unless-stopped
+    volumes:
+      # Mount local data directory
+      - ./foundry-data:/data
+    environment:
+      # You need to set your Foundry username and password
+      - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
+      - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
+      - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_KEY}
+      - FOUNDRY_MINIFY_STATIC_FILES=true
+      - FOUNDRY_HOSTNAME=localhost
+      - FOUNDRY_ROUTE_PREFIX=
+      - FOUNDRY_PROXY_SSL=false
+      - FOUNDRY_PROXY_PORT=30000
+    ports:
+      - "30000:30000"

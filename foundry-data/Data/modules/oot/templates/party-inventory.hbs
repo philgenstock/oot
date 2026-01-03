@@ -1,0 +1,109 @@
+<div class="party-inventory-container">
+  <section class="character-info">
+    {{#if hasActor}}
+      <div class="actor-display">
+        <img src="{{actor.img}}" width="36" height="36" />
+        <span class="actor-name">{{actor.name}}</span>
+      </div>
+    {{else}}
+      <p class="warning"><i class="fas fa-exclamation-triangle"></i> No assigned character. You can view the party inventory but cannot transfer items.</p>
+    {{/if}}
+  </section>
+
+  <div class="inventory-columns">
+    <section class="party-inventory-section inventory-panel">
+      <h3><i class="fas fa-users"></i> Party Inventory</h3>
+      <p class="drop-hint">Drag items here to share with the party</p>
+
+      <div class="party-items-list">
+        {{#if hasPartyItems}}
+          {{#each partyItems}}
+            <div class="party-item item-row" data-item-id="{{id}}" draggable="true">
+              <img src="{{img}}" width="32" height="32" class="item-img" />
+              <div class="item-info">
+                <span class="item-name">{{name}}</span>
+                <span class="item-meta">
+                  {{#if (gt quantity 1)}}
+                    <span class="item-quantity">x{{quantity}}</span>
+                  {{/if}}
+                  <span class="item-added">Added by {{addedBy}}</span>
+                </span>
+              </div>
+              {{#if ../hasActor}}
+                <div class="item-actions">
+                  {{#if (gt quantity 1)}}
+                    <button type="button" class="item-to-character-one" title="Take one">
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="button" class="item-to-character-all" title="Take all">
+                      <i class="fas fa-angles-right"></i>
+                    </button>
+                  {{else}}
+                    <button type="button" class="item-to-character-all" title="Take item">
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  {{/if}}
+                </div>
+              {{/if}}
+            </div>
+          {{/each}}
+        {{else}}
+          <div class="empty-list">
+            <i class="fas fa-box-open"></i>
+            <p>No items in party inventory</p>
+          </div>
+        {{/if}}
+      </div>
+    </section>
+
+    <section class="character-inventory-section inventory-panel">
+      <h3><i class="fas fa-backpack"></i> Your Inventory</h3>
+      <p class="drop-hint">Drag items here to take from party</p>
+
+      <div class="character-items-list">
+        {{#if hasActor}}
+          {{#if hasCharacterItems}}
+            {{#each characterItems}}
+              <div class="character-item item-row" data-item-id="{{id}}" draggable="true">
+                <img src="{{img}}" width="32" height="32" class="item-img" />
+                <div class="item-info">
+                  <span class="item-name">{{name}}</span>
+                  <span class="item-meta">
+                    {{#if (gt quantity 1)}}
+                      <span class="item-quantity">x{{quantity}}</span>
+                    {{/if}}
+                    <span class="item-type">{{type}}</span>
+                  </span>
+                </div>
+                <div class="item-actions">
+                  {{#if (gt quantity 1)}}
+                    <button type="button" class="item-to-party-one" title="Share one">
+                      <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button type="button" class="item-to-party-all" title="Share all">
+                      <i class="fas fa-angles-left"></i>
+                    </button>
+                  {{else}}
+                    <button type="button" class="item-to-party-all" title="Share with party">
+                      <i class="fas fa-arrow-left"></i>
+                    </button>
+                  {{/if}}
+                </div>
+              </div>
+            {{/each}}
+          {{else}}
+            <div class="empty-list">
+              <i class="fas fa-ghost"></i>
+              <p>No items in your inventory</p>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class="empty-list">
+            <i class="fas fa-user-slash"></i>
+            <p>Assign a character to manage your inventory</p>
+          </div>
+        {{/if}}
+      </div>
+    </section>
+  </div>
+</div>
