@@ -1,0 +1,29 @@
+/* Collapsed Item Descriptions in Chat Styles */
+
+/* Hide the description by default */
+.collapsed-description {
+  display: none;
+  margin-top: 0.5em;
+  padding: 0.5em;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Show when expanded */
+.collapsed-description.expanded {
+  display: block;
+}
+
+/* Style the toggle button */
+.description-toggle {
+  cursor: pointer;
+  user-select: none;
+  font-weight: bold;
+  padding: 0.25em 0;
+  margin-top: 0.5em;
+  color: var(--color-text-dark-primary, #191813);
+  transition: opacity 0.2s;
+}
+
+.description-toggle:hover {
+  opacity: 0.7;
+}

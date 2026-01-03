@@ -1,0 +1,21 @@
+{
+  "id": "oot",
+  "title": "OOT Support Module",
+  "description": "Its very good",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Your Name"
+    }
+  ],
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/oot.css"
+  ]
+}
