@@ -1,0 +1,199 @@
+{
+  "main": {
+    "id": "8805dfe9c81a43c5",
+    "type": "split",
+    "children": [
+      {
+        "id": "b0c9be9f9003b801",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5a267566533ed4e7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Thalarion Vex.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Thalarion Vex"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "49610876aa656aa2",
+    "type": "split",
+    "children": [
+      {
+        "id": "5ad2b9e3f43c14cb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b65ed0d39ef8dca5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "c1801da28fa70c17",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "07959014e43ae608",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "f5cfd98e0c4e05d7",
+    "type": "split",
+    "children": [
+      {
+        "id": "573a85e7ee146ce2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "aebeb2f496f6f535",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Thalarion Vex.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Thalarion Vex"
+            }
+          },
+          {
+            "id": "5b471abc67f530ec",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Thalarion Vex.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Thalarion Vex"
+            }
+          },
+          {
+            "id": "e5cf57cdd5fd532e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "5fe70b334f9835b8",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "36f7cd76c97acb12",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Thalarion Vex.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Thalarion Vex"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "5a267566533ed4e7",
+  "lastOpenFiles": [
+    "Divina Virtus.md",
+    "Thalarion Vex.md",
+    "Bramblethorn.md",
+    "Garrick Stonevein.md",
+    "Elira Voss.md",
+    "Elira Voss.md.tmp.9452.1768316900412",
+    "Kett Swiftwind.md",
+    "Maribel Merry Thetch.md",
+    "Maribel Merry Thetch.md.tmp.9452.1768316769299",
+    "Tormak Stonefist.md"
+  ]
+}
