@@ -1,7 +1,7 @@
 {
   "id": "oot",
   "title": "OOT Support Module",
-  "description": "Its very good",
+  "description": "Collapses D&D 5e chat messages by default with expandable details",
   "version": "1.0.0",
   "compatibility": {
     "minimum": "13",
