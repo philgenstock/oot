@@ -1,203 +1,203 @@
 # Divina Virtus
-**The Ship of Divine Virtue**
+**Das Schiff der Göttlichen Tugend**
 
 ## Mission
-A holy vessel commissioned to sail to the vampire-infested coast and cleanse it of undead corruption. The ship serves as both a mobile base of operations and a beacon of hope for survivors in the darkness.
+Ein heiliges Schiff, beauftragt zur vampirverseuchten Küste zu segeln und sie von untoter Korruption zu reinigen. Das Schiff dient sowohl als mobile Operationsbasis als auch als Hoffnungsfeuer für Überlebende in der Dunkelheit.
 
-## The Ship
-The Divina Virtus is a reinforced caravel, blessed by multiple holy orders and equipped for long-term operations in hostile territory. Her sails bear the symbol of the morning sun, and her hull is inscribed with protective wards against undead.
-
----
-
-## Command Structure
-
-### Captain
-- [Thalarion Vex](Thalarion%20Vex.md) - Human Leader & Tactical Commander
+## Das Schiff
+Die Divina Virtus ist eine verstärkte Karavelle, gesegnet von mehreren heiligen Orden und ausgerüstet für Langzeiteinsätze in feindlichem Gebiet. Ihre Segel tragen das Symbol der Morgensonne, und ihr Rumpf ist mit Schutzrunen gegen Untote beschriftet.
 
 ---
 
-## Crew & Specialists
+## Kommandostruktur
 
-### Combat Support
-- [Tormak Stonefist](Tormak%20Stonefist.md) - Half-Orc Blacksmith & Armorer
-  - Weapons & Heavy Armor
-- [Garrick Stonevein](Garrick%20Stonevein.md) - Goliath Artillerist
-  - Heavy Weaponry & Explosives
-
-### Reconnaissance & Intelligence
-- [Kett Swiftwind](Kett%20Swiftwind.md) - Gnome Scout & Navigator
-  - Tracking, Mapping & Environmental Intelligence
-
-### Crafting & Equipment
-- [Elira Voss](Elira%20Voss.md) - Human Leather & Clothworker
-  - Light & Medium Armor, Equipment
-
-### Alchemy & Medicine
-- [Bramblethorn](Bramblethorn.md) - Firbolg Alchemist
-  - Potions & Poisons
-
-### Spiritual & Medical
-- [Maribel "Merry" Thetch](Maribel%20Merry%20Thetch.md) - Halfling Cleric of Lathander
-  - Cleansing of Corruption, Healing, Spell Scrolls
-
-### Provisions & Morale
-- [Syla Nimblefingers](Syla%20Nimblefingers.md) - Kenku Cook
-  - Food & Beneficial Cuisine
+### Kapitän
+- [Thalarion Vex](Thalarion%20Vex.md) - Menschlicher Anführer & Taktischer Kommandant
 
 ---
 
-## Services Overview
+## Crew & Spezialisten
 
-### Permanent Items
-Characters can commission permanent magical items and equipment from the crew:
-- **Weapons** (Tormak) - Silvered, blessed, custom vampire-hunting weapons
-- **Heavy Armor** (Tormak) - Plate, chain, shields
-- **Light/Medium Armor** (Elira) - Leather, studded leather, specialized gear
-- **Spell Scrolls** (Maribel) - Various divine magic scrolls
-- **Magic Items** (Garrick) - Artificer creations and enhancements
-- **Specialized Equipment** (Elira) - Custom harnesses, holsters, carrying solutions
+### Kampfunterstützung
+- [Tormak Stonefist](Tormak%20Stonefist.md) - Halbork-Schmied & Rüstungsmeister
+  - Waffen & Schwere Rüstung
+- [Garrick Stonevein](Garrick%20Stonevein.md) - Goliath-Artillerist
+  - Schwere Waffen & Sprengstoffe
 
-### Consumable Items
-Regular supplies available for missions:
-- **Potions** (Bramblethorn) - Healing, buff, resistance
-- **Poisons** (Bramblethorn) - Weapon coatings, various effects
-- **Food** (Syla) - Trail rations, buff meals, morale boosters
-- **Bombs** (Garrick) - Grenades, explosives, specialty munitions
-- **Ammunition** (Garrick) - Enhanced bolts, arrows, bullets
-- **Holy Water** (Maribel) - Blessed water in various containers
+### Aufklärung & Geheimdienst
+- [Kett Swiftwind](Kett%20Swiftwind.md) - Gnom-Späher & Navigator
+  - Verfolgung, Kartierung & Umweltinformationen
 
-### Services
-- **Weapon/Armor Repair** (Tormak, Elira)
-- **Curse Removal** (Maribel) - Vampire charm, domination, corruption
-- **Scouting Reports** (Kett) - Pre-mission intelligence
-- **Healing** (Maribel) - Medical care and divine healing
-- **Trauma Counseling** (Maribel) - Emotional support
-- **Training** (Various) - Skill instruction from specialists
-- **Map Access** (Kett) - Detailed regional maps and intelligence
-- **Fortification Planning** (Garrick) - Defensive positions and traps
+### Handwerk & Ausrüstung
+- [Elira Voss](Elira%20Voss.md) - Menschliche Leder- & Tucharbeiterin
+  - Leichte & Mittelschwere Rüstung, Ausrüstung
+
+### Alchemie & Medizin
+- [Bramblethorn](Bramblethorn.md) - Firbolg-Alchemist
+  - Tränke & Gifte
+
+### Spirituelles & Medizinisches
+- [Maribel "Merry" Thetch](Maribel%20Merry%20Thetch.md) - Halbling-Klerikerin von Lathander
+  - Reinigung von Korruption, Heilung, Zauberspruchrollen
+
+### Proviant & Moral
+- [Syla Nimblefingers](Syla%20Nimblefingers.md) - Kenku-Köchin
+  - Essen & Förderliche Küche
 
 ---
 
-## The Mission
+## Dienstleistungsübersicht
 
-### Primary Objectives
-1. Eliminate vampire lords and their covens
-2. Rescue survivors from vampire-controlled territories
-3. Establish safe zones and refuges
-4. Gather intelligence on vampire movements and strongholds
-5. Recover holy relics and artifacts from occupied areas
+### Permanente Gegenstände
+Charaktere können permanente magische Gegenstände und Ausrüstung von der Crew in Auftrag geben:
+- **Waffen** (Tormak) - Versilbert, gesegnet, maßgeschneiderte Vampirjagdwaffen
+- **Schwere Rüstung** (Tormak) - Platte, Kette, Schilde
+- **Leichte/Mittelschwere Rüstung** (Elira) - Leder, beschlagenes Leder, spezialisierte Ausrüstung
+- **Zauberspruchrollen** (Maribel) - Verschiedene göttliche Magierollen
+- **Magische Gegenstände** (Garrick) - Kunsthandwerker-Schöpfungen und Verbesserungen
+- **Spezialisierte Ausrüstung** (Elira) - Maßgeschneiderte Geschirre, Halfter, Tragelösungen
 
-### Long-Term Goals
-- Complete cleansing of the vampire-infested coast
-- Restoration of settlements and communities
-- Documentation of vampire tactics and weaknesses
-- Creation of permanent defenses against future undead threats
+### Verbrauchsgegenstände
+Reguläre Vorräte für Missionen verfügbar:
+- **Tränke** (Bramblethorn) - Heilung, Stärkung, Resistenz
+- **Gifte** (Bramblethorn) - Waffenbeschichtungen, verschiedene Effekte
+- **Essen** (Syla) - Reiserationen, stärkende Mahlzeiten, Moralbooster
+- **Bomben** (Garrick) - Granaten, Sprengstoffe, Spezialmunition
+- **Munition** (Garrick) - Verstärkte Bolzen, Pfeile, Kugeln
+- **Weihwasser** (Maribel) - Gesegnetes Wasser in verschiedenen Behältern
 
----
-
-## Ship Facilities
-
-### Workshops
-- **Forge** (Tormak) - Smithing and metalwork
-- **Artificer's Workshop** (Garrick) - Explosives and magic items (blast-proof)
-- **Leather Workshop** (Elira) - Armor and equipment crafting
-- **Alchemy Lab** (Bramblethorn) - Potion and poison creation
-- **Galley** (Syla) - Kitchen and provisions storage
-- **Chapel** (Maribel) - Prayer space and healing area
-- **Chart Room** (Kett) - Maps and planning center
-- **Captain's Quarters** (Thalarion) - Command center
-
-### Common Areas
-- **Crew Quarters** - Sleeping and living spaces
-- **Mess Hall** - Communal eating area
-- **Armory** - Weapon and armor storage
-- **Medical Bay** - Treatment area
-- **Storage Hold** - Supplies and provisions
-
-### Defenses
-- Ship-mounted ballistae (blessed ammunition)
-- Holy wards against undead boarding
-- Garrick's defensive charges and traps
-- Protective magic from Maribel's daily blessings
-- Early warning system designed by Kett
+### Dienstleistungen
+- **Waffen-/Rüstungsreparatur** (Tormak, Elira)
+- **Fluchentfernung** (Maribel) - Vampirbezauberung, Beherrschung, Korruption
+- **Aufklärungsberichte** (Kett) - Vor-Missions-Informationen
+- **Heilung** (Maribel) - Medizinische Versorgung und göttliche Heilung
+- **Traumaberatung** (Maribel) - Emotionale Unterstützung
+- **Training** (Verschiedene) - Fähigkeitsunterricht von Spezialisten
+- **Kartenzugang** (Kett) - Detaillierte Regionalkarten und Geheimdienstinformationen
+- **Befestigungsplanung** (Garrick) - Verteidigungspositionen und Fallen
 
 ---
 
-## Daily Routine
+## Die Mission
 
-**Dawn:**
-- Maribel's sunrise blessing ceremony
-- Thalarion's morning briefing
-- Kett's patrol and security check
-- Garrick's explosive storage inspection
+### Hauptziele
+1. Vampirfürsten und ihre Koven eliminieren
+2. Überlebende aus vampirkontrollierten Gebieten retten
+3. Sichere Zonen und Zufluchtsorte errichten
+4. Informationen über Vampirbewegungen und Festungen sammeln
+5. Heilige Relikte und Artefakte aus besetzten Gebieten bergen
 
-**Day:**
-- Crafting and repairs
-- Training sessions
-- Mission planning
-- Shore expeditions
-
-**Evening:**
-- Evening meal (Syla's cuisine)
-- Mission debriefings
-- Maribel's vespers
-- Crew socializing
-
-**Night:**
-- Watch rotations
-- Night missions (when necessary)
-- Garrick's theoretical work
-- Kett's frequent volunteer watches
-- Thalarion's insomnia patrols
+### Langfristige Ziele
+- Vollständige Reinigung der vampirverseuchten Küste
+- Wiederherstellung von Siedlungen und Gemeinschaften
+- Dokumentation von Vampirtaktiken und -schwächen
+- Erschaffung permanenter Verteidigungen gegen zukünftige Untotenbedrohungen
 
 ---
 
-## Crew Relationships
+## Schiffseinrichtungen
 
-The crew of the Divina Virtus has become a tight-knit family, bound by shared purpose and mutual respect:
+### Werkstätten
+- **Schmiede** (Tormak) - Schmiedekunst und Metallarbeit
+- **Kunsthandwerker-Werkstatt** (Garrick) - Sprengstoffe und magische Gegenstände (explosionssicher)
+- **Lederwerkstatt** (Elira) - Rüstungs- und Ausrüstungsherstellung
+- **Alchemielabor** (Bramblethorn) - Trank- und Gifterstellung
+- **Kombüse** (Syla) - Küche und Proviantlagerung
+- **Kapelle** (Maribel) - Gebetsraum und Heilbereich
+- **Kartenraum** (Kett) - Karten und Planungszentrum
+- **Kapitänsquartier** (Thalarion) - Kommandozentrale
 
-- **Professional Rivalries:** Tormak vs Garrick, Elira vs Kett (friendly)
-- **Mentorships:** Various specialists teaching interested crew
-- **Protective Bonds:** Everyone watching out for Syla
-- **Philosophical Discussions:** Bramblethorn and Thalarion's night talks
-- **Prayer Circles:** Maribel's support groups
-- **Shared Meals:** Syla's galley as social hub
+### Gemeinschaftsbereiche
+- **Crew-Quartiere** - Schlaf- und Lebensräume
+- **Messe** - Gemeinschaftlicher Essbereich
+- **Waffenkammer** - Waffen- und Rüstungslagerung
+- **Krankenstation** - Behandlungsbereich
+- **Laderaum** - Vorräte und Proviant
 
----
-
-## Player Resources
-
-### Requesting Services
-Players can request items or services from crew members:
-- Standard items available immediately
-- Custom work requires time and materials
-- Rare creations need special components
-- Multiple crew may collaborate on complex items
-
-### Material Gathering
-Crew members will pay or trade for:
-- Rare crafting materials
-- Vampire samples (for research)
-- Recovered relics and artifacts
-- Intelligence about vampire territories
-- Ancient texts and techniques
-
-### Progression
-As the campaign advances and players provide rare materials:
-- Crew members can craft increasingly powerful items
-- New services and capabilities unlock
-- Relationships deepen with story opportunities
-- Crew members may join missions for personal reasons
+### Verteidigung
+- Schiffsmont ierte Ballisten (gesegnete Munition)
+- Heilige Bannkreise gegen Untotenenterung
+- Garricks defensive Ladungen und Fallen
+- Schutzmagie von Maribels täglichen Segnungen
+- Frühwarnsystem, entworfen von Kett
 
 ---
 
-## Notes for the Game Master
+## Tägliche Routine
 
-Each crew member has:
-- Personal backstory hooks for side quests
-- Research projects that can advance the main plot
-- Relationships with other crew that create dynamics
-- Specific materials they seek
-- Progressive crafting tiers
+**Morgendämmerung:**
+- Maribels Sonnenaufgangs-Segnungszeremonie
+- Thalarions Morgenbriefing
+- Ketts Patrouille und Sicherheitsüberprüfung
+- Garricks Sprengstofflager-Inspektion
 
-The ship serves as both a safe haven and a narrative hub, with crew interactions providing roleplay opportunities, comic relief, and emotional depth between the horror of vampire hunting.
+**Tag:**
+- Handwerk und Reparaturen
+- Trainingseinheiten
+- Missionsplanung
+- Landexpeditionen
+
+**Abend:**
+- Abendessen (Sylas Küche)
+- Missions-Debriefings
+- Maribels Vesper
+- Crew-Geselligkeit
+
+**Nacht:**
+- Wachrotationen
+- Nachtmissionen (wenn nötig)
+- Garricks theoretische Arbeit
+- Ketts häufige freiwillige Wachen
+- Thalarions Schlaflosigkeitspatrouillen
+
+---
+
+## Crew-Beziehungen
+
+Die Crew der Divina Virtus ist zu einer eng verbundenen Familie geworden, verbunden durch gemeinsamen Zweck und gegenseitigen Respekt:
+
+- **Professionelle Rivalitäten:** Tormak vs Garrick, Elira vs Kett (freundschaftlich)
+- **Mentorschaften:** Verschiedene Spezialisten unterrichten interessierte Crew
+- **Beschützende Bande:** Alle passen auf Syla auf
+- **Philosophische Diskussionen:** Bramblethorns und Thalarions Nachtgespräche
+- **Gebetskreise:** Maribels Unterstützungsgruppen
+- **Gemeinsame Mahlzeiten:** Sylas Kombüse als soziales Zentrum
+
+---
+
+## Spielerressourcen
+
+### Dienstleistungen Anfordern
+Spieler können Gegenstände oder Dienstleistungen von Crewmitgliedern anfordern:
+- Standardgegenstände sofort verfügbar
+- Maßgeschneiderte Arbeit benötigt Zeit und Materialien
+- Seltene Schöpfungen benötigen spezielle Komponenten
+- Mehrere Crewmitglieder können bei komplexen Gegenständen zusammenarbeiten
+
+### Materialbeschaffung
+Crewmitglieder zahlen oder tauschen für:
+- Seltene Handwerksmaterialien
+- Vampirproben (für Forschung)
+- Geborgene Relikte und Artefakte
+- Informationen über Vampirterritorien
+- Alte Texte und Techniken
+
+### Fortschritt
+Wenn die Kampagne voranschreitet und Spieler seltene Materialien liefern:
+- Crewmitglieder können zunehmend mächtigere Gegenstände herstellen
+- Neue Dienstleistungen und Fähigkeiten werden freigeschaltet
+- Beziehungen vertiefen sich mit Geschichtsmöglichkeiten
+- Crewmitglieder können Missionen aus persönlichen Gründen begleiten
+
+---
+
+## Hinweise für den Spielleiter
+
+Jedes Crewmitglied hat:
+- Persönliche Hintergrund-Aufhänger für Nebenquests
+- Forschungsprojekte, die die Haupthandlung vorantreiben können
+- Beziehungen mit anderen Crewmitgliedern, die Dynamiken erschaffen
+- Spezifische Materialien, die sie suchen
+- Progressive Herstellungsstufen
+
+Das Schiff dient sowohl als sicherer Hafen als auch als narratives Zentrum, wobei Crew-Interaktionen Rollenspiel-Gelegenheiten, komische Erleichterung und emotionale Tiefe zwischen dem Horror der Vampirjagd bieten.

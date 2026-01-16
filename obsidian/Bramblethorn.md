@@ -1,44 +1,45 @@
 # Bramblethorn
-**Race:** Firbolg
-**Role:** Alchemist
-**Age:** 127
-**Height:** 7'8"
+**Rasse:** Firbolg
+**Rolle:** Alchemist
+**Alter:** 127
+**Größe:** 2,34m
 
-## Appearance
-A towering figure with bark-like skin marked by lichen patterns and moss-green hair that seems to grow in seasons. His eyes are a deep amber, constantly observing and analyzing. He wears a leather apron covered in mysterious stains and pockets overflowing with herbs, vials, and strange roots.
+## Intro
+*Das Deck knarrt unter schweren Schritten, und aus dem Schatten des Unterdecks erhebt sich eine Gestalt, die fast zu groß für die Durchgänge des Schiffes scheint. Bramblethorn richtet sich auf seine volle Höhe auf – über zwei Meter von rindenartiger Haut, die von Flechtenmustern durchzogen ist. Sein moosgrünes Haar bewegt sich im Seewind, als hätte es ein Eigenleben. Bernsteinfarbene Augen mustern euch mit der Geduld eines alten Waldes. Eine Lederschürze, bedeckt mit geheimnisvollen Flecken, spannt über seiner breiten Brust, und aus den zahlreichen Taschen ragen Kräuter, Fläschchen und seltsame Wurzeln. Er neigt den Kopf leicht und spricht mit einer Stimme tief wie das Knarren alter Bäume: "Willkommen an Bord. Ich bin Bramblethorn. Solltet ihr Heilung oder... andere Mixturen benötigen, findet ihr mich in meinem Labor. Die Pflanzen dort sind empfindlich – bitte stört sie nicht."*
 
-## Personality Traits
-- **Methodical and Patient:** Takes his time with every concoction, believing rushed work invites disaster
-- **Speaks to Ingredients:** Often has one-sided conversations with plants and minerals, calling them by name
-- **Gentle Giant:** Despite his imposing size, he moves with careful grace and speaks softly
-- **Cryptic Wisdom:** Offers advice in the form of nature metaphors that seem nonsensical at first
-- **Protective:** Views the crew as a garden he must help flourish
+## Allgemeines
+- **Rasse:** Firbolg
+- **Rolle:** Alchemist
+- **Alter:** 127 Jahre
+- **Größe:** 2,34 Meter
 
-## Services Provided
-### Potions
-- Healing potions (various strengths)
-- Resistance potions (poison, fire, cold, etc.)
-- Buff potions (strength, agility, insight)
-- Specialty brews for vampire hunting (holy water infusions, garlic extracts)
+## Erscheinungsbild
+Eine hochragende Gestalt mit rindenartiger Haut, die von Flechtenmustern gezeichnet ist, und moosgrünem Haar, das mit den Jahreszeiten zu wachsen scheint. Seine Augen sind von einem tiefen Bernsteinton und beobachten und analysieren ständig. Er trägt eine Lederschürze, die mit geheimnisvollen Flecken bedeckt ist, und Taschen, die von Kräutern, Fläschchen und seltsamen Wurzeln überquellen.
 
-### Poisons
-- Blade coatings
-- Ingested poisons
-- Contact toxins
-- Paralytic compounds
-- Vampire-specific toxins (weakens regeneration)
+## Persönlichkeitsmerkmale
+- **Methodisch und Geduldig:** Nimmt sich Zeit für jede Mixtur und glaubt, dass übereilte Arbeit eine Einladung zur Katastrophe ist
+- **Spricht mit Zutaten:** Führt oft einseitige Gespräche mit Pflanzen und Mineralien und nennt sie beim Namen
+- **Sanfter Riese:** Trotz seiner imposanten Größe bewegt er sich mit vorsichtiger Anmut und spricht leise
+- **Kryptische Weisheit:** Gibt Ratschläge in Form von Naturmetaphern, die zunächst unsinnig erscheinen
+- **Beschützend:** Betrachtet die Crew als einen Garten, den er zum Gedeihen bringen muss
 
-## Notable Gear & Items
-- **Living Mortar & Pestle:** Made from ancient ironwood, still grows leaves that change with the seasons
-- **Essence Extractor:** A complex glass apparatus that can draw the magical properties from materials
-- **Traveling Greenhouse:** A fold-out portable garden where he grows rare herbs
-- **Recipe Tome:** "Brews of the Old Growth" - his personal journal spanning decades
-- **Neutralizing Salve:** Always carries antidotes to his own poisons
+## Angebotene Dienste
+### Tränke
+- Heiltränke (verschiedene Stärken)
+- Resistenztränke (Gift, Feuer, Kälte, etc.)
+- Stärkungstränke (Kraft, Geschicklichkeit, Einsicht)
+- Spezialgebräue für die Vampirjagd (Weihwasserinfusionen, Knoblauchextrakte)
 
-## Backstory Hook
-Bramblethorn once failed to create a cure for a vampiric plague that swept through his firbolg clan's forest. This mission is his chance at redemption, and he's determined to perfect a formula that can permanently weaken or destroy vampire regeneration.
+### Gifte
+- Klingenbeschichtungen
+- Einzunehmende Gifte
+- Kontaktgifte
+- Lähmende Verbindungen
+- Vampirspezifische Gifte (schwächt Regeneration)
 
-## Quest Opportunities
-- Rare ingredients can be gathered during missions to improve his formulas
-- May request specific vampire samples for research
-- Can teach herbalism or alchemy basics to interested characters
+## Bemerkenswerte Ausrüstung & Gegenstände
+- **Lebender Mörser & Stößel:** Aus uraltem Eisenholz gefertigt, wächst noch Laub, das sich mit den Jahreszeiten verändert
+- **Essenzextraktor:** Ein komplexer Glasapparat, der die magischen Eigenschaften aus Materialien ziehen kann
+
+## Hintergrund
+Bramblethorn versagte einst dabei, ein Heilmittel für eine Vampirseuche zu erschaffen, die durch den Wald seines Firbolg-Clans fegte. Diese Mission ist seine Chance auf Erlösung, und er ist entschlossen, eine Formel zu perfektionieren, die die Vampirregeneration dauerhaft schwächen oder zerstören kann.

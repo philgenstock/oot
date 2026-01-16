@@ -1,96 +1,50 @@
 # Tormak Stonefist
-**Race:** Half-Orc
-**Role:** Blacksmith & Armorer
-**Age:** 34
-**Height:** 6'5"
+**Rasse:** Halbork
+**Rolle:** Schmied & Rüstungsmeister
+**Alter:** 34
+**Größe:** 1,96m
 
-## Appearance
-Powerfully built with gray-green skin marked by burn scars that he wears like badges of honor. His tusks are decorated with silver caps etched with forge runes. Keeps his black hair in a top knot bound with copper wire. His arms are a tapestry of smithing scars and faded clan tattoos. Always smells faintly of coal smoke and hot metal.
+## Intro
+*Das rhythmische Klingen von Metall auf Metall hallt aus dem Unterdeckschacht – ein vertrauter, fast beruhigender Klang. Als ihr näher kommt, steigt die Hitze spürbar an. Im flackernden Licht der Esse seht ihr eine kraftvolle Gestalt: Tormak Stonefist, dessen graugrüne Haut von unzähligen Brandnarben gezeichnet ist, die er wie Ehrenzeichen trägt. Sein schwarzes Haar ist in einem Dutt gebunden, gehalten von Kupferdraht. Mit silbernen Kappen verzierte Stoßzähne blitzen auf, als er euch bemerkt und den massiven Hammer ruhen lässt. Seine Arme sind ein Geflecht aus Schmiedenarben und verblassten Clan-Tätowierungen. Er riecht nach Kohlerauch und heißem Metall. "Neue Gesichter." Seine tiefe Stimme ist eher ein Grollen. Er mustert eure Ausrüstung mit kritischem Blick. "Eure Rüstung... passabel. Eure Waffen... könnten besser sein." Er deutet auf seine Werkstatt. "Wenn ihr überleben wollt, kommt zu mir. Ich schmied Schutz. Ich schmiede Tod für Vampire. Was braucht ihr?"*
 
-## Personality Traits
-- **Perfectionist Craftsman:** Won't release work that doesn't meet his exacting standards
-- **Speaks Through His Work:** More comfortable expressing himself through the quality of his craft than words
-- **Surprisingly Philosophical:** Relates life lessons to metalworking - "temper the spirit like steel"
-- **Protective Nature:** Views properly forged armor as a guardian, takes it personally when crew gets injured
-- **Respectful of Weapons:** Treats every blade as if it has a soul, performs small rituals when finishing pieces
-- **Fierce Loyalty:** Once you earn his trust, he'll forge for you until his dying breath
+## Allgemeines
+- **Rasse:** Halbork
+- **Rolle:** Schmied & Rüstungsmeister
+- **Alter:** 34 Jahre
+- **Größe:** 1,96 Meter
 
-## Services Provided
-### Weapons
-- Silvered weapons (essential for vampire hunting)
-- Holy water reservoirs built into blades
-- Retractable stakes integrated into weapons
-- Blessed ammunition (crossbow bolts, arrows)
-- Reinforced stakes and vampire-killing implements
-- Weapon repairs and modifications
-- Custom weapons tailored to fighting styles
+## Erscheinungsbild
+Kraftvoll gebaut mit graugrüner Haut, die von Brandnarben gezeichnet ist, die er wie Ehrenzeichen trägt. Seine Stoßzähne sind mit silbernen Kappen verziert, die mit Schmiederunen eingraviert sind. Hält sein schwarzes Haar in einem Dutt, der mit Kupferdraht gebunden ist. Seine Arme sind ein Geflecht aus Schmiedenarben und verblassten Clan-Tätowierungen. Riecht immer leicht nach Kohlerauch und heißem Metall.
 
-### Heavy Armor
-- Plate armor with holy symbols worked into the metal
-- Chainmail with silver threading
-- Gothic plate with integrated holy water dispensers
-- Armor repairs and refitting
-- Shield crafting with religious iconography
-- Protective amulets and charms
+## Persönlichkeitsmerkmale
+- **Perfektionistischer Handwerker:** Wird keine Arbeit freigeben, die nicht seinen anspruchsvollen Standards entspricht
+- **Spricht durch seine Arbeit:** Fühlt sich wohler dabei, sich durch die Qualität seines Handwerks auszudrücken als durch Worte
+- **Überraschend Philosophisch:** Verknüpft Lebenslektionen mit Metallverarbeitung – "Härte den Geist wie Stahl"
+- **Beschützende Natur:** Betrachtet ordentlich geschmiedete Rüstung als Wächter, nimmt es persönlich, wenn Crew verletzt wird
+- **Respektvoll gegenüber Waffen:** Behandelt jede Klinge, als hätte sie eine Seele, führt kleine Rituale durch, wenn er Stücke fertigstellt
+- **Heftige Loyalität:** Sobald man sein Vertrauen gewonnen hat, wird er bis zu seinem letzten Atemzug für einen schmieden
 
-## Notable Gear & Items
-- **Soulforge Hammer:** His personal smithing hammer, passed down through three generations. The head glows white-hot when striking metal, requiring no additional heat for minor repairs
-- **Rune Anvil:** A portable anvil inscribed with protective runes. Weapons forged on it gain a temporary blessing against undead
-- **Quenching Tank:** Contains blessed water from seven different holy sites. Weapons cooled in it resist corruption
-- **Master's Tools:** A complete set of masterwork smithing tools in immaculate condition
-- **Measuring Chains:** Enchanted chains that perfectly measure bodies for custom armor fitting
-- **Fragment of the First Forge:** A piece of star metal he uses for his finest works
-- **Fire Resistance Apron:** Magical leather apron that protects him from heat and flame
-- **Silvering Kit:** Portable tools for silvering weapons and ammunition in the field
+## Angebotene Dienste
+### Waffen
+- Versilberte Waffen (essentiell für die Vampirjagd)
+- In Klingen eingebaute Weihwasser-Reservoire
+- Einziehbare Pfähle, integriert in Waffen
+- Gesegnete Munition (Armbrustbolzen, Pfeile)
+- Verstärkte Pfähle und vampirtötende Werkzeuge
+- Waffenreparaturen und Modifikationen
 
-## Combat Gear (Personal)
-- **Forge Breaker:** A massive silvered warhammer with a stake on the reverse side
-- **Scale Mail of the Dawn:** His personal armor, each scale etched with prayers to the morning lord
-- **Emergency Stakes:** Always carries six wooden stakes in his belt
+### Schwere Rüstung
+- Plattenrüstung mit heiligen Symbolen eingearbeitet
+- Kettenhemd mit Silberfäden
+- Gotische Platte mit integrierten Weihwasserspendern
+- Rüstungsreparaturen und Anpassungen
+- Schildherstellung mit religiöser Ikonographie
 
-## Backstory
-Tormak was apprenticed to a dwarven master smith who taught him that every weapon is a responsibility - you must consider who wields it and what they protect. When his master's hometown was overrun by vampires, Tormak arrived too late to save him but recovered his smithing hammer from the ashes.
+## Bemerkenswerte Ausrüstung & Gegenstände
+- **Seelenschmiede-Hammer:** Sein persönlicher Schmiedehammer, über drei Generationen weitergegeben. Der Kopf glüht weißglühend beim Schlagen von Metall und benötigt keine zusätzliche Hitze für kleinere Reparaturen
+- **Runen-Amboss:** Ein tragbarer Amboss mit Schutzrunen eingeschrieben. Auf ihm geschmiedete Waffen erhalten eine temporäre Segnung gegen Untote
 
-He vowed to forge weapons for those who would prevent such tragedies. When the Divina Virtus was being assembled, he volunteered immediately, seeing it as his calling to arm righteous warriors against darkness.
+## Hintergrund
+Tormak wurde bei einem zwergischen Meisterschmied in die Lehre gegeben, der ihm beibrachte, dass jede Waffe eine Verantwortung ist – man muss bedenken, wer sie führt und was sie schützt. Als die Heimatstadt seines Meisters von Vampiren überrannt wurde, kam Tormak zu spät, um ihn zu retten, aber er bergung den Schmiedehammer seines Meisters aus der Asche.
 
-## Smithing Philosophy
-"A blade is only as true as the hand that wields it. A shield only as strong as the heart it protects. I forge both weapon and warrior, tempering courage with every strike of my hammer."
-
-## Special Services
-### Custom Crafting
-- Can create specialized vampire-hunting weapons with unique properties
-- Offers "battle-bonding" rituals where he works with fighters to create their perfect weapon
-- Repairs magical items (though he grumbles about "fancy wizard nonsense")
-- Can identify the maker of any weapon by examining its construction
-
-### Progression System
-As characters work with Tormak and bring him rare materials, he can craft increasingly powerful gear:
-- **Basic:** Silvered weapons, reinforced armor
-- **Advanced:** Holy-infused weapons, armor with resistances
-- **Master:** Custom legendary items tailored to character's fighting style
-
-## Materials He Seeks
-- **Star Metal:** For weapons that never dull
-- **Blessed Silver:** From holy sites
-- **Vampire Fangs:** Ironically useful for armor that resists vampire bites
-- **Ancient Relics:** Can be melted down and reforged into holy weapons
-- **Dragon Scales:** For exceptional armor (rare)
-
-## Workshop Location
-His forge is in the ship's hold, converted into a mobile smithy. The constant ring of his hammer has become a comforting sound to the crew - as long as Tormak is forging, hope remains.
-
-## Relationships
-- **Deep Respect** for Thalarion's leadership and combat experience
-- **Friendly Rivalry** with Garrick over whose craft is more important
-- **Mentorship** toward younger crew members who show interest in craftsmanship
-- **Quiet Appreciation** for Maribel's blessings on his works
-- **Professional Collaboration** with Bramblethorn on weapon coatings
-
-## Quest Hooks
-- Seeking legendary smithing techniques from ruined vampire-conquered cities
-- Wants to recover his master's other tools from vampire-held territory
-- Interested in any information about ancient forging methods
-- Will craft special items for those who bring him rare materials
-
-## Personal Goal
-To forge a weapon so perfect, so holy, that it can permanently destroy a vampire lord - not just kill, but erase them from existence. He calls this theoretical weapon "Dawnbreaker" and keeps notes on its design.
+Er schwor, Waffen für jene zu schmieden, die solche Tragödien verhindern würden. Als die Divina Virtus zusammengestellt wurde, meldete er sich sofort freiwillig und sah es als seine Berufung, rechtschaffene Krieger gegen die Dunkelheit zu bewaffnen.

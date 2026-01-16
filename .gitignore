@@ -32,3 +32,8 @@ Thumbs.db
 /data/
 /.env.example
 .vs/
+obsidian/.obsidian/app.json
+obsidian/.obsidian/appearance.json
+obsidian/.obsidian/core-plugins.json
+obsidian/.obsidian/workspace.json
+obsidian/.obsidian/workspace.json

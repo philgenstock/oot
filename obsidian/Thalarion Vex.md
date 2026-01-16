@@ -1,66 +1,40 @@
 # Thalarion Vex
-**Race:** Human
-**Role:** Captain & Mission Leader
-**Age:** 42
-**Height:** 6'1"
+**Rasse:** Mensch
+**Rolle:** Kapitän & Missionsleiter
+**Alter:** 42
+**Größe:** 1,85m
 
-## Appearance
-Salt-and-pepper hair kept short and practical, with a neatly trimmed beard showing streaks of gray. Piercing steel-blue eyes that seem to calculate every situation. Bears a distinctive scar running from his left temple to jawline - a reminder of a vampire's claw. Wears a long dark coat reinforced with hidden protective plates, and always carries himself with military precision.
+## Intro
+*Schwere Stiefel klingen über das Deck mit militärischer Präzision. Kapitän Thalarion Vex tritt aus seiner Kajüte, und sofort richtet sich die Aufmerksamkeit der gesamten Crew auf ihn. Sein Salz-und-Pfeffer-Haar ist kurz geschnitten, der gestutzte Bart zeigt graue Strähnen. Stahlblaue Augen mustern euch mit der Intensität eines Mannes, der gewohnt ist, jede Situation zu analysieren. Eine markante Narbe verläuft von seiner linken Schläfe bis zum Kiefer – das Andenken einer Vampirklaue. Sein dunkler Mantel, verstärkt mit versteckten Schutzplatten, bewegt sich leicht im Wind. Er nickt euch zu, die Hand ruht locker am Griff seines versilberten Schwertes. "Willkommen an Bord der Divina Virtus." Seine Stimme ist ruhig, aber trägt das Gewicht unbeugsamer Autorität. "Ich bin Kapitän Vex. Hier kämpfen wir gegen die Dunkelheit – und wir gewinnen. Aber nur, wenn jeder seine Rolle erfüllt. Habt ihr verstanden?"*
 
-## Personality Traits
-- **Tactical Mind:** Always thinking three moves ahead, treats every situation like a chess game
-- **Haunted but Resolute:** Lost his family to vampires, channels grief into cold determination
-- **Fair but Firm:** Respects his crew but demands discipline and excellence
-- **Burden of Command:** Takes every loss personally, keeps a journal with names of those he couldn't save
-- **Dry Humor:** Uses dark wit to cut tension, though his jokes often land with uncomfortable truth
-- **Sleepless Watcher:** Rarely sleeps more than 4 hours, often found on deck during night watches
+## Allgemeines
+- **Rasse:** Mensch
+- **Rolle:** Kapitän & Missionsleiter
+- **Alter:** 42 Jahre
+- **Größe:** 1,85 Meter
 
-## Leadership Style
-- Trusts his specialists completely but verifies critical details
-- Leads from the front in combat situations
-- Holds evening briefings where every crew member can voice concerns
-- Believes in thorough preparation over rushed action
-- Will sacrifice mission objectives to save crew lives
+## Erscheinungsbild
+Salz-und-Pfeffer-Haar, kurz und praktisch gehalten, mit einem ordentlich gestutzten Bart, der graue Strähnen zeigt. Durchdringende stahlblaue Augen, die jede Situation zu berechnen scheinen. Trägt eine markante Narbe, die von seiner linken Schläfe zum Kiefer verläuft – eine Erinnerung an die Klaue eines Vampirs. Trägt einen langen dunklen Mantel, der mit versteckten Schutzplatten verstärkt ist, und hält sich immer mit militärischer Präzision.
 
-## Combat Role
-**Class Equivalent:** Fighter/Tactician (Level 10)
-- Expert swordsman specializing in fighting supernatural creatures
-- Trained in vampire hunting techniques by the Order of the Dawn
-- Proficient in multiple weapon styles
-- Strategic commander who can coordinate team tactics
+## Persönlichkeitsmerkmale
+- **Taktischer Verstand:** Denkt immer drei Züge voraus, behandelt jede Situation wie eine Schachpartie
+- **Gequält aber Entschlossen:** Verlor seine Familie an Vampire, kanalisiert Trauer in kalte Entschlossenheit
+- **Fair aber Streng:** Respektiert seine Crew, fordert aber Disziplin und Exzellenz
+- **Last des Kommandos:** Nimmt jeden Verlust persönlich, führt ein Tagebuch mit Namen derer, die er nicht retten konnte
+- **Trockener Humor:** Nutzt düsteren Witz, um Spannung zu lösen, obwohl seine Witze oft mit unbehaglicher Wahrheit landen
+- **Schlafloser Wächter:** Schläft selten mehr als 4 Stunden, oft während der Nachtwachen an Deck zu finden
 
-## Notable Gear & Items
-- **Dawnblade:** A silvered longsword with golden inlays that glow faintly in the presence of undead. The blade has been blessed by three different holy orders
-- **Commander's Spyglass:** Enchanted to see through magical darkness and detect undead auras at a distance
-- **Seal of the Divina Virtus:** His captain's seal, which can be used to authorize crew actions and serves as a symbol of his authority
-- **Warded Coat:** Heavy coat with protective wards sewn into the lining (resistance to necrotic damage)
-- **Emergency Flare:** A magical device that can signal the ship from up to 10 miles away
-- **Map Case of Holding:** Contains detailed maps, charts, and intelligence reports on vampire territories
-- **Silver Holy Symbol:** Worn under his shirt, belonged to his late wife who was a cleric
+## Angebotene Dienste
+- Führung und taktische Planung für Missionen
+- Koordination von Teamtaktiken im Kampf
+- Strategische Beratung bei der Vampirjagd
+- Kampfausbildung für Crewmitglieder
 
-## Backstory
-Once a decorated military officer, Thalarion's life shattered when a vampire coven attacked his home village twelve years ago. His wife, a cleric of the morning lord, died holding the church doors to give villagers time to escape. His two children were turned and he was forced to end their suffering himself.
+## Bemerkenswerte Ausrüstung & Gegenstände
+- **Morgenschwert:** Ein versilbertes Langschwert mit goldenen Einlegearbeiten, die schwach in Gegenwart von Untoten glühen. Die Klinge wurde von drei verschiedenen heiligen Orden gesegnet
+- **Kommandanten-Fernrohr:** Verzaubert, um durch magische Dunkelheit zu sehen und Untotenauren aus der Distanz zu erkennen
 
-He resigned his commission and spent five years learning everything about vampires - their weaknesses, their tactics, their psychology. When the church assembled the Divina Virtus mission, they sought him out specifically. He accepted not for redemption, but for the methodical elimination of every vampire he can reach.
+## Hintergrund
+Einst ein dekorierter Militäroffizier, zerbrach Thalarions Leben, als ein Vampirkoven vor zwölf Jahren sein Heimatdorf angriff. Seine Frau, eine Klerikerin des Morgenherren, starb dabei, die Kirchentüren zu halten, um Dorfbewohnern Zeit zur Flucht zu geben. Seine beiden Kinder wurden verwandelt, und er war gezwungen, ihr Leiden selbst zu beenden.
 
-## Relationships with Crew
-- **Respects** Maribel's faith, though he struggles with his own
-- **Relies heavily** on Kett's scouting reports - trusts his judgment implicitly
-- **Protective** of Syla, sees echoes of his daughter in her
-- **Professional respect** for Tormak's craftsmanship
-- **Strategic partnership** with Garrick on tactical planning
-- **Philosophical discussions** with Bramblethorn during night watches
-
-## Quest Hooks
-- Seeking information about the vampire lord who destroyed his village
-- Will pursue intelligence on vampire covens with tactical precision
-- May request high-risk reconnaissance missions he considers critical
-- Occasionally asks crew to check in on refugee settlements established by previous missions
-
-## Command Decisions
-- Mission Priority: Intelligence gathering > direct confrontation
-- Crew Safety: Will abort missions if casualty risk exceeds acceptable thresholds
-- Rules of Engagement: No unnecessary risks, no heroics without purpose, everyone comes home
-
-## Personal Quest
-Hidden in his quarters is a portrait of his family and a list of 47 vampire names. Thirty-two are crossed out. He intends to cross out every remaining name before he dies.
+Er legte sein Kommando nieder und verbrachte fünf Jahre damit, alles über Vampire zu lernen – ihre Schwächen, ihre Taktiken, ihre Psychologie. Als die Kirche die Divina Virtus-Mission zusammenstellte, suchten sie speziell nach ihm. Er akzeptierte nicht zur Erlösung, sondern zur methodischen Eliminierung jedes Vampirs, den er erreichen kann.

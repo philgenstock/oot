@@ -1,51 +1,39 @@
 # Syla Nimblefingers
-**Race:** Kenku
-**Role:** Cook & Provisions Master
-**Age:** 19
-**Height:** 4'2"
+**Rasse:** Kenku
+**Rolle:** Köchin & Proviantmeisterin
+**Alter:** 19
+**Größe:** 1,27m
 
-## Appearance
-Sleek black feathers with an iridescent sheen, bright intelligent eyes that constantly dart around observing everything. Wears a pristine white chef's apron (somehow always spotless) and a collection of cooking utensils hanging from her belt. Her wings are clipped short from her past, but this doesn't diminish her energy.
+## Intro
+*Ein würziger Duft von Gewürzen und frisch gebackenem Brot zieht über das Deck. Aus der Kombüse huscht eine kleine Gestalt – kaum über einen Meter groß, mit glänzenden schwarzen Federn, die im Sonnenlicht irisierend schimmern. Syla Nimblefingers trägt eine makellos weiße Schürze (die auf wundersame Weise sauber bleibt) und an ihrem Gürtel klimpern unzählige Kochutensilien. Ihre hellen, intelligenten Augen fixieren euch sofort. Sie öffnet den Schnabel, doch statt eigener Worte hört ihr vertraute Stimmen: "Willkommen!" sagt sie in Thalarions tiefer Stimme, gefolgt von Maribels warmem Tonfall: "Ihr müsst hungrig sein, Lieblinge." Dann, in der Stimme eines Fremden: "Kommt zur Kombüse, wenn der Magen knurrt." Sie nickt energisch und deutet mit einem Flügel Richtung Küche, bevor sie wieder verschwindet – aber nicht ohne euch noch einmal scharf zu mustern.*
 
-## Personality Traits
-- **Perfectionist:** Every meal is an art form, every ingredient must be perfect
-- **Mimicry Master:** Instead of speaking original words, she communicates by mimicking voices she's heard - often creating entire conversations from different crew members' voices
-- **Superstitious:** Believes certain food combinations bring luck or ward off evil (throws salt over shoulder, won't serve fish and cheese together)
-- **Fiercely Territorial:** The galley is HER domain, and she'll defend it with a ladle if necessary
-- **Collector:** Hoards interesting flavors, spices, and recipes from every port
+## Allgemeines
+- **Rasse:** Kenku
+- **Rolle:** Köchin & Proviantmeisterin
+- **Alter:** 19 Jahre
+- **Größe:** 1,27 Meter
 
-## Services Provided
-### Food & Provisions
-- **Hearty Meals:** Standard crew rations elevated to actual cuisine
-- **Buff Foods:** Meals that provide temporary benefits (extra stamina, cold resistance, night vision)
-- **Trail Rations:** Custom travel food that doesn't spoil and actually tastes good
-- **Morale Boosters:** Comfort foods that help with stress and fear
-- **Anti-Vampire Cuisine:** Garlic-infused everything, blessed bread, purifying teas
+## Erscheinungsbild
+Schlanke schwarze Federn mit irisierendem Schimmer, helle intelligente Augen, die ständig umherschweifen und alles beobachten. Trägt eine makellose weiße Kochschürze (die irgendwie immer sauber bleibt) und eine Sammlung von Kochutensilien, die an ihrem Gürtel hängen. Ihre Flügel sind kurz gestutzt aus ihrer Vergangenheit, aber das mindert ihre Energie nicht.
 
-### Special Recipes
-- **Sunlight Soup:** Provides resistance to necrotic damage for 8 hours
-- **Vampire Hunter's Breakfast:** Advantage on saving throws against charm effects
-- **Fortifying Stew:** Temporary hit points
-- **Nightwatch Coffee:** Prevents sleep-based effects and exhaustion
+## Persönlichkeitsmerkmale
+- **Perfektionistin:** Jede Mahlzeit ist eine Kunstform, jede Zutat muss perfekt sein
+- **Meisterin der Nachahmung:** Anstatt eigene Worte zu sprechen, kommuniziert sie durch Nachahmung von Stimmen, die sie gehört hat – oft erschafft sie ganze Gespräche aus verschiedenen Stimmen der Crewmitglieder
+- **Abergläubisch:** Glaubt, dass bestimmte Lebensmittelkombinationen Glück bringen oder Böses abwehren (wirft Salz über die Schulter, serviert niemals Fisch und Käse zusammen)
+- **Erbittert Territorial:** Die Kombüse ist IHR Reich, und sie wird es mit einem Schöpflöffel verteidigen, wenn nötig
+- **Sammlerin:** Hortet interessante Geschmäcker, Gewürze und Rezepte aus jedem Hafen
 
-## Notable Gear & Items
-- **Enchanted Cleaver:** Never dulls, can cut through bone like butter
-- **Spice Pouch of Holding:** Contains hundreds of spices from across the realm
-- **Cookbook of Echoes:** When opened, whispers recipes in the voices of famous chefs she's heard
-- **Self-Heating Pot:** A magical cooking vessel that maintains perfect temperature
-- **Taste-Testing Spoon:** Detects poison and spoiled food by changing color
-- **Salt Shaker of Blessing:** Contains consecrated salt (useful against undead)
+## Angebotene Dienste
+### Essen & Proviant
+- **Herzhafte Mahlzeiten:** Standard-Crew-Rationen, die zu echter Küche erhoben werden
+- **Stärkende Speisen:** Mahlzeiten, die temporäre Vorteile bieten (extra Ausdauer, Kälteresistenz, Nachtsicht)
+- **Reiserationen:** Maßgeschneiderte Reisekost, die nicht verdirbt und tatsächlich gut schmeckt
+- **Moralbooster:** Wohlfühlessen, das bei Stress und Angst hilft
+- **Anti-Vampir-Küche:** Mit Knoblauch durchtränkt alles, gesegnetes Brot, reinigende Tees
 
-## Backstory Hook
-Syla was once enslaved by a vampire lord who kept exotic servants. She learned to cook by mimicking the voice instructions of the vampire's chef. When the ship's previous mission rescued her, she swore to use her skills to support those who fight against vampires. She still has nightmares about her captivity but channels that fear into her cooking.
+## Bemerkenswerte Ausrüstung & Gegenstände
+- **Verzaubertes Hackmesser:** Wird niemals stumpf, kann durch Knochen schneiden wie durch Butter
+- **Gewürzbeutel des Haltens:** Enthält Hunderte von Gewürzen aus dem gesamten Reich
 
-## Quest Opportunities
-- Always seeking rare ingredients and spices from dangerous locations
-- Will pay handsomely for exotic vampire-related ingredients (vampire heart for a special recipe)
-- Can identify regions by their cuisine and may know safe havens
-- Might recognize mimicked voices from her past captivity, providing intelligence
-
-## Quirks
-- Reorganizes the galley every three days like clockwork
-- Refuses to cook with silverware touched by anyone who's lied recently
-- Hums using mimicked music from taverns across the realm
+## Hintergrund
+Syla wurde einst von einem Vampirfürsten versklavt, der exotische Diener hielt. Sie lernte kochen, indem sie die Stimmanweisungen des Kochs des Vampirs nachahmte. Als die vorherige Mission des Schiffes sie rettete, schwor sie, ihre Fähigkeiten zu nutzen, um diejenigen zu unterstützen, die gegen Vampire kämpfen. Sie hat noch immer Alpträume über ihre Gefangenschaft, aber kanalisiert diese Angst in ihr Kochen.
