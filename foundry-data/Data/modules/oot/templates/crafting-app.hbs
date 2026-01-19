@@ -1,0 +1,199 @@
+<form class="oot-crafting-form">
+  {{!-- Actor Info --}}
+  <section class="crafter-info">
+    {{#if hasActor}}
+      <div class="actor-display">
+        <img src="{{actor.img}}" width="48" height="48" />
+        <span class="actor-name">{{actor.name}}</span>
+      </div>
+    {{else}}
+      <p class="warning"><i class="fas fa-exclamation-triangle"></i> No assigned character. Please assign a character to your user in User Configuration.</p>
+    {{/if}}
+  </section>
+
+  <hr>
+
+  {{!-- Item Selection --}}
+  <section class="item-selection">
+    <h3><i class="fas fa-box"></i> Item Selection</h3>
+
+    {{#if selectedItem}}
+      <div class="selected-item">
+        <img src="{{selectedItem.img}}" width="36" height="36" />
+        <span class="item-name">{{selectedItem.name}}</span>
+        <button type="button" class="item-clear" title="Clear Selection">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    {{else}}
+      <div class="item-drop-zone">
+        <p>Drag and drop an item here, or</p>
+        <button type="button" class="item-select">
+          <i class="fas fa-search"></i> Select Item
+        </button>
+      </div>
+    {{/if}}
+  </section>
+
+  <hr>
+
+  {{!-- Crafting Configuration --}}
+  <section class="crafting-config">
+    <h3><i class="fas fa-cogs"></i> Configuration</h3>
+
+    <div class="form-group">
+      <label for="rarity">Item Rarity</label>
+      <select name="rarity" id="rarity">
+        {{#each rarities as |label key|}}
+          <option value="{{key}}" {{#if (eq key ../selectedRarity)}}selected{{/if}}>
+            {{label}} (DC {{lookup ../rarityDCs key}})
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="itemType">Item Type</label>
+      <select name="itemType" id="itemType">
+        {{#each itemTypes}}
+          <option value="{{id}}" {{#if (eq id ../selectedItemType)}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Essence Required:</strong> {{essenceType}}</p>
+      <p><strong>Max Enchanting Boons:</strong> {{maxBoons}}</p>
+      <p><strong>Current DC:</strong> {{currentDC}}</p>
+    </div>
+  </section>
+
+  <hr>
+
+  {{!-- Creation Check --}}
+  <section class="creation-check">
+    <h3><i class="fas fa-hammer"></i> 1. Creation Check</h3>
+
+    <div class="form-group">
+      <label for="creationSkill">Skill/Tool</label>
+      <select name="creationSkill" id="creationSkill">
+        {{#each craftingAbilities}}
+          <option value="{{id}}" {{#if (eq id ../creationSkill)}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{#if creationResult}}
+      <div class="roll-result {{#if creationResult.destroyed}}destroyed{{else if (gt creationResult.outcome.boons 0)}}success{{else if (gt creationResult.outcome.flaws 0)}}failure{{else}}neutral{{/if}}">
+        <p><strong>Roll:</strong> {{creationResult.roll.total}} vs DC {{creationResult.dc}}</p>
+        <p><strong>Result:</strong> {{creationResult.outcome.label}}</p>
+
+        {{#if creationResult.destroyed}}
+          <p class="destroyed-message"><i class="fas fa-skull"></i> Item destroyed!</p>
+        {{else}}
+          {{#if creationResult.flaws.length}}
+            <div class="quirks flaws">
+              <strong>Flaws:</strong>
+              <ul>
+                {{#each creationResult.flaws}}
+                  <li><strong>{{name}}</strong> (d20: {{roll}})</li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+
+          {{#if creationResult.boons.length}}
+            <div class="quirks boons">
+              <strong>Boons:</strong>
+              <ul>
+                {{#each creationResult.boons}}
+                  <li><strong>{{name}}</strong> (d20: {{roll}})</li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{else}}
+      <button type="button" class="roll-creation" {{#unless selectedItem}}disabled{{/unless}}>
+        <i class="fas fa-comments"></i> Request Creation Check
+      </button>
+    {{/if}}
+  </section>
+
+  <hr>
+
+  {{!-- Enchanting Check --}}
+  <section class="enchanting-check">
+    <h3><i class="fas fa-magic"></i> 2. Enchanting Check</h3>
+
+    <div class="form-group">
+      <label for="enchantingSkill">Skill/Tool</label>
+      <select name="enchantingSkill" id="enchantingSkill">
+        {{#each craftingAbilities}}
+          <option value="{{id}}" {{#if (eq id ../enchantingSkill)}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{#if enchantingResult}}
+      <div class="roll-result {{#if enchantingResult.destroyed}}destroyed{{else if (gt enchantingResult.outcome.boons 0)}}success{{else if (gt enchantingResult.outcome.flaws 0)}}failure{{else}}neutral{{/if}}">
+        <p><strong>Roll:</strong> {{enchantingResult.roll.total}} vs DC {{enchantingResult.dc}}</p>
+        <p><strong>Result:</strong> {{enchantingResult.outcome.label}}</p>
+
+        {{#if enchantingResult.destroyed}}
+          <p class="destroyed-message"><i class="fas fa-skull"></i> Item destroyed during enchanting!</p>
+        {{else}}
+          {{#if enchantingResult.flaws.length}}
+            <div class="quirks flaws">
+              <strong>Flaws:</strong>
+              <ul>
+                {{#each enchantingResult.flaws}}
+                  <li><strong>{{name}}</strong> (d20: {{roll}})</li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+
+          {{#if enchantingResult.boons.length}}
+            <div class="quirks boons">
+              <strong>Boons:</strong>
+              <ul>
+                {{#each enchantingResult.boons}}
+                  <li><strong>{{name}}</strong> (d20: {{roll}})</li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{else}}
+      <button type="button" class="roll-enchanting" {{#unless (and creationResult (not creationResult.destroyed))}}disabled{{/unless}}>
+        <i class="fas fa-comments"></i> Request Enchanting Check
+      </button>
+    {{/if}}
+  </section>
+
+  <hr>
+
+  {{!-- Final Actions --}}
+  <section class="final-actions">
+    {{#if craftingComplete}}
+      {{#if (or creationResult.destroyed enchantingResult.destroyed)}}
+        <p class="destroyed-final"><i class="fas fa-skull-crossbones"></i> The item was destroyed during crafting.</p>
+        <button type="button" class="reset-crafting">
+          <i class="fas fa-redo"></i> Start Over
+        </button>
+      {{else}}
+        <button type="button" class="create-item">
+          <i class="fas fa-check"></i> Create Crafted Item
+        </button>
+        <button type="button" class="reset-crafting">
+          <i class="fas fa-redo"></i> Start Over
+        </button>
+      {{/if}}
+    {{else}}
+      <p class="hint">Complete both checks to create the item.</p>
+    {{/if}}
+  </section>
+</form>

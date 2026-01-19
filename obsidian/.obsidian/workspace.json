@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Garrick Stonevein.md",
+                "file": "Kett Swiftwind.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Garrick Stonevein"
+              "title": "Kett Swiftwind"
             }
           }
         ],
@@ -200,6 +200,7 @@
   },
   "active": "d89531bded657fd6",
   "lastOpenFiles": [
+    "Garrick Stonevein.md",
     "Elira Voss.md",
     "Bramblethorn.md",
     "Garrick Stonevein.md.tmp.29532.1768553028311",
@@ -217,7 +218,6 @@
     "Tormak Stonefist.md",
     "Kett Swiftwind.md",
     "Divina Virtus.md.tmp.33380.1768550810008",
-    "Garrick Stonevein.md.tmp.33380.1768550730748",
-    "Garrick Stonevein.md"
+    "Garrick Stonevein.md.tmp.33380.1768550730748"
   ]
 }

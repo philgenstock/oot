@@ -1,0 +1,70 @@
+{
+  "OOT": {
+    "Crafting": {
+      "Title": "OOT Crafting System",
+      "NoActor": "No assigned character. Please assign a character to your user in User Configuration.",
+      "ItemSelection": "Item Selection",
+      "DragDrop": "Drag and drop an item here, or",
+      "SelectItem": "Select Item",
+      "Configuration": "Configuration",
+      "ItemRarity": "Item Rarity",
+      "ItemType": "Item Type",
+      "EssenceRequired": "Essence Required",
+      "MaxBoons": "Max Enchanting Boons",
+      "CurrentDC": "Current DC",
+      "CreationCheck": "1. Creation Check",
+      "EnchantingCheck": "2. Enchanting Check",
+      "SkillTool": "Skill/Tool",
+      "RollCreation": "Roll Creation Check",
+      "RollEnchanting": "Roll Enchanting Check",
+      "Roll": "Roll",
+      "Result": "Result",
+      "ItemDestroyed": "Item destroyed!",
+      "Flaws": "Flaws",
+      "Boons": "Boons",
+      "CreateItem": "Create Crafted Item",
+      "StartOver": "Start Over",
+      "CompleteBoth": "Complete both checks to create the item.",
+      "DestroyedDuring": "The item was destroyed during crafting.",
+      "CraftingComplete": "Crafting Complete!",
+      "NoQuirks": "No quirks rolled.",
+      "Rarity": "Rarity",
+      "CreationRoll": "Creation Roll",
+      "EnchantingRoll": "Enchanting Roll"
+    },
+    "Rarities": {
+      "Common": "Common",
+      "Uncommon": "Uncommon",
+      "Rare": "Rare",
+      "VeryRare": "Very Rare",
+      "Legendary": "Legendary",
+      "Artifact": "Artifact"
+    },
+    "ItemTypes": {
+      "Weapon": "Weapon",
+      "Armor": "Armour",
+      "Shield": "Shield",
+      "Clothing": "Clothing",
+      "Ammunition": "Ammunition",
+      "ThrownWeapon": "Thrown Weapon",
+      "HeldItem": "Held Item"
+    },
+    "Skills": {
+      "Arcana": "Arcana",
+      "Nature": "Nature",
+      "Religion": "Religion",
+      "SmithTools": "Smith's Tools",
+      "AlchemistSupplies": "Alchemist's Supplies",
+      "JewelerTools": "Jeweler's Tools",
+      "LeatherworkerTools": "Leatherworker's Tools",
+      "TinkerTools": "Tinker's Tools",
+      "WeaverTools": "Weaver's Tools",
+      "WoodcarverTools": "Woodcarver's Tools",
+      "CarpenterTools": "Carpenter's Tools"
+    },
+    "Keybindings": {
+      "OpenCrafting": "Open Crafting Window",
+      "OpenCraftingHint": "Opens the OOT Crafting application"
+    }
+  }
+}

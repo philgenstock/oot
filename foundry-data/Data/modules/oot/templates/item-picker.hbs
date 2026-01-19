@@ -1,0 +1,19 @@
+<div class="oot-item-picker">
+  <p class="picker-hint">Click an item to select it for crafting.</p>
+
+  {{#if items.length}}
+    <div class="item-list">
+      {{#each items}}
+        <div class="item-pick" data-item-id="{{id}}" data-item-source="{{source}}">
+          <img src="{{img}}" width="32" height="32" />
+          <div class="item-details">
+            <span class="item-name">{{name}}</span>
+            <span class="item-type">{{type}} ({{source}})</span>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <p class="no-items">No suitable items found. Items must be weapons, equipment, consumables, tools, or loot.</p>
+  {{/if}}
+</div>
