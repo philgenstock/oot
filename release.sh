@@ -5,11 +5,26 @@
 
 set -e
 
+if [ -z "$1" ]; then
+    echo "Usage: ./release.sh <version>"
+    echo "Example: ./release.sh 1.2.0"
+    exit 1
+fi
+
+VERSION="$1"
 MODULE_DIR="foundry-data/Data/modules/oot"
-VERSION=$(grep -o '"version": "[^"]*"' "$MODULE_DIR/module.json" | cut -d'"' -f4)
+MODULE_JSON="$MODULE_DIR/module.json"
 OUTPUT_FILE="oot-v${VERSION}.zip"
 
 echo "Creating release for OOT module v${VERSION}..."
+
+# Update version in module.json
+sed -i '' "s/\"version\": \"[^\"]*\"/\"version\": \"${VERSION}\"/" "$MODULE_JSON"
+
+# Update download URL in module.json
+sed -i '' "s|releases/download/v[^/]*/oot.zip|releases/download/v${VERSION}/oot.zip|" "$MODULE_JSON"
+
+echo "Updated module.json with version ${VERSION}"
 
 # Remove old zip if exists
 rm -f "$OUTPUT_FILE"
