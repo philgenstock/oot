@@ -18,7 +18,7 @@ Eine hochragende Gestalt mit rindenartiger Haut, die von Flechtenmustern gezeich
 
 ## Persönlichkeitsmerkmale
 - **Methodisch und Geduldig:** Nimmt sich Zeit für jede Mixtur und glaubt, dass übereilte Arbeit eine Einladung zur Katastrophe ist
-- **Spricht mit Zutaten:** Führt oft einseitige Gespräche mit Pflanzen und Mineralien und nennt sie beim Namen
+- **Spricht mit Zutaten:** Führt oft einseitige Gespräche mit Pflanzen und nennt sie beim Namen
 - **Sanfter Riese:** Trotz seiner imposanten Größe bewegt er sich mit vorsichtiger Anmut und spricht leise
 - **Kryptische Weisheit:** Gibt Ratschläge in Form von Naturmetaphern, die zunächst unsinnig erscheinen
 - **Beschützend:** Betrachtet die Crew als einen Garten, den er zum Gedeihen bringen muss

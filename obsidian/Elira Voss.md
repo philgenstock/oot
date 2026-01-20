@@ -26,19 +26,8 @@ Athletische Statur mit schwieligen Händen, die von konstanter Arbeit sprechen. 
 - **Rastlose Innovatorin:** Probiert immer neue Techniken und Materialien aus
 
 ## Angebotene Dienste
-### Leichte Rüstung
-- Lederrüstung (maßgeschneidert, an Vitalpunkten verstärkt)
-- Beschlagene Lederrüstung (mit Silberbeschlägen für Vampirresistenz)
-- Fellrüstung (für maximalen Schutz ohne Metall)
-- Gepolsterte Rüstung (leise Rüstung für Heimlichkeitsoperationen)
-- Rüstungsmodifikationen (Taschen, Riemen, Integration heiliger Symbole)
+- Rüstung
 
-### Praktische Ausrüstung
-- Rucksäcke & Taschen (maßgeschneiderte Tragelösungen)
-- Gürtel & Geschirre (Waffenträger-Systeme)
-- Stiefel (verstärkt, wasserfest, leise Bewegung)
-- Handschuhe (von feinen Arbeitshandschuhen bis zu gepanzerten Panzerhandschuhen)
-- Umhänge & Capes (Wetterschutz, Tarnung)
 
 ## Bemerkenswerte Ausrüstung & Gegenstände
 - **Nadel des Niemals-Brechens:** Ihre geschätzte Nähnadel, die niemals stumpf wird oder bricht
@@ -47,6 +36,5 @@ Athletische Statur mit schwieligen Händen, die von konstanter Arbeit sprechen. 
 ## Hintergrund
 Elira lernte ihr Handwerk von ihrer Mutter, einer Militärrüstungsschmiedin, die leichte Kavallerie versorgte. Als Elira sechzehn war, zerstörte ein Vampirangriff die Garnison ihrer Stadt. Die Soldaten starben, weil ihre Rüstung versagte – Riemen brachen, Leder verrottete durch nekrotischen Schaden, Ausrüstung fiel auseinander.
 
-Ihre Mutter starb beim Versuch, die Rüstung eines Hauptmanns mitten im Kampf zu reparieren. Elira überlebte, indem sie sich in der Gerberwerkstatt versteckte, umgeben von stechenden Chemikalien, die Vampire mieden.
 
 Sie verbrachte das nächste Jahrzehnt damit, zu erforschen, wie man Rüstung erschafft, die Vampirangriffen standhalten kann – Resistenz gegen nekrotischen Schaden, verstärkte Stresspunkte, gesegnete Materialien. Als sie von der Divina Virtus-Mission hörte, sah sie es als Chance, Menschen zu schützen, wie sie ihre Mutter nicht schützen konnte.

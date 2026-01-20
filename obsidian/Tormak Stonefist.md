@@ -13,8 +13,6 @@
 - **Alter:** 34 Jahre
 - **Größe:** 1,96 Meter
 
-## Erscheinungsbild
-Kraftvoll gebaut mit graugrüner Haut, die von Brandnarben gezeichnet ist, die er wie Ehrenzeichen trägt. Seine Stoßzähne sind mit silbernen Kappen verziert, die mit Schmiederunen eingraviert sind. Hält sein schwarzes Haar in einem Dutt, der mit Kupferdraht gebunden ist. Seine Arme sind ein Geflecht aus Schmiedenarben und verblassten Clan-Tätowierungen. Riecht immer leicht nach Kohlerauch und heißem Metall.
 
 ## Persönlichkeitsmerkmale
 - **Perfektionistischer Handwerker:** Wird keine Arbeit freigeben, die nicht seinen anspruchsvollen Standards entspricht
@@ -25,24 +23,9 @@ Kraftvoll gebaut mit graugrüner Haut, die von Brandnarben gezeichnet ist, die e
 - **Heftige Loyalität:** Sobald man sein Vertrauen gewonnen hat, wird er bis zu seinem letzten Atemzug für einen schmieden
 
 ## Angebotene Dienste
-### Waffen
-- Versilberte Waffen (essentiell für die Vampirjagd)
-- In Klingen eingebaute Weihwasser-Reservoire
-- Einziehbare Pfähle, integriert in Waffen
-- Gesegnete Munition (Armbrustbolzen, Pfeile)
-- Verstärkte Pfähle und vampirtötende Werkzeuge
-- Waffenreparaturen und Modifikationen
+- Waffen
+- Schwere Rüstung
 
-### Schwere Rüstung
-- Plattenrüstung mit heiligen Symbolen eingearbeitet
-- Kettenhemd mit Silberfäden
-- Gotische Platte mit integrierten Weihwasserspendern
-- Rüstungsreparaturen und Anpassungen
-- Schildherstellung mit religiöser Ikonographie
-
-## Bemerkenswerte Ausrüstung & Gegenstände
-- **Seelenschmiede-Hammer:** Sein persönlicher Schmiedehammer, über drei Generationen weitergegeben. Der Kopf glüht weißglühend beim Schlagen von Metall und benötigt keine zusätzliche Hitze für kleinere Reparaturen
-- **Runen-Amboss:** Ein tragbarer Amboss mit Schutzrunen eingeschrieben. Auf ihm geschmiedete Waffen erhalten eine temporäre Segnung gegen Untote
 
 ## Hintergrund
 Tormak wurde bei einem zwergischen Meisterschmied in die Lehre gegeben, der ihm beibrachte, dass jede Waffe eine Verantwortung ist – man muss bedenken, wer sie führt und was sie schützt. Als die Heimatstadt seines Meisters von Vampiren überrannt wurde, kam Tormak zu spät, um ihn zu retten, aber er bergung den Schmiedehammer seines Meisters aus der Asche.

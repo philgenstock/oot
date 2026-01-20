@@ -5,7 +5,7 @@
 **Größe:** 0,97m
 
 ## Intro
-*Ihr habt ihn nicht kommen sehen. Plötzlich ist er einfach da – eine kleine, drahtige Gestalt, kaum einen Meter groß, die aus dem Schatten des Großmastes tritt. Kett Swiftwind trägt Kleidung in gefleckten Braun- und Grüntönen, die mit der Umgebung zu verschmelzen scheint. Sein sonnengebräuntes Gesicht ist verwittert wie altes Leder, das Haar wie getrocknetes Gras in Dutzenden winziger Zöpfe gehalten, geschmückt mit Federn und kleinen Knochen. Leuchtend grüne Augen fixieren euch mit einer Intensität, die unangenehm ist – als würde er jeden Fluchtweg, jede Schwäche, jede Gefahr berechnen. Seine von Tinte verfärbten Hände ruhen an Dutzenden Taschen und Beuteln, die seinen Gürtel säumen. "Neu." Seine Stimme ist rau, die Worte knapp. "Kennt das Schiff nicht. Kennt die Gefahren nicht. Noch nicht." Er klopft nervös mit den Fingern. "Bleibt in Sichtweite. Bleibt am Leben. Gute Regel." Er nickt einmal scharf und verschwindet genauso lautlos, wie er aufgetaucht ist – aber ihr spürt noch immer seinen prüfenden Blick.*
+*Ihr hört ihn, bevor ihr ihn seht – ein leises Klirren von Metall und ein zufriedenes Summen. Hinter einer Werkbank, übersät mit Messinginstrumenten und mechanischen Apparaturen, taucht eine kleine Gestalt auf, kaum einen Meter groß. Kett Swiftwind trägt eine abgenutzte braune Lederschürze über einem hellen Hemd und dunkle Handschuhe . Wildes, kupferrotes Haar steht in alle Richtungen ab, und ein ebenso roter, buschiger Bart rahmt sein freundliches Gesicht. Eine messingfarbene Brille mit runden Gläsern sitzt auf seiner Nase, eine zweite Lupe baumelt an einem Lederband um seinen Hals. Leuchtend grüne Augen mustern euch neugierig durch die dicken Gläser, während er einen feinen Pinsel zwischen den Fingern dreht. "Oh! Neue!" Seine Stimme ist überraschend warm. "Kennt das Schiff nicht. Kennt die Gefahren nicht. Noch nicht." Er tippt nachdenklich gegen seine Brille. "Bleibt in Sichtweite. Bleibt am Leben. Gute Regel." Er nickt einmal und lässt dann seinen Blick über Deck schweifen – trotzdem habt ihr immer noch das Gefühl seinen prüfenden Blick zu spüren.*
 
 ## Allgemeines
 - **Rasse:** Waldgnom
@@ -13,8 +13,6 @@
 - **Alter:** 94 Jahre
 - **Größe:** 0,97 Meter
 
-## Erscheinungsbild
-Drahtig und verwittert, mit sonnengebräunter Haut und Haar wie getrocknetes Gras, in Dutzenden winziger Zöpfe gehalten, die mit Federn und kleinen Knochen geschmückt sind. Leuchtend grüne Augen, die nichts verpassen. Kleidet sich in gefleckte Braun- und Grüntöne, die mit seiner Umgebung zu verschmelzen scheinen. Seine Hände sind dauerhaft von Tinte verfärbt vom Kartenmachen.
 
 ## Persönlichkeitsmerkmale
 - **Obsessiv Aufmerksam:** Bemerkt jedes Detail, von der Art wie jemand läuft bis zum Geruch des Windes
@@ -27,19 +25,8 @@ Drahtig und verwittert, mit sonnengebräunter Haut und Haar wie getrocknetes Gra
 
 ## Angebotene Dienste
 ### Aufklärung & Verfolgung
-- Vor-Missions-Aufklärung (erkundet Landeplätze und Einsatzgebiete)
-- Vampirverfolgung (kann Vampire anhand ungewöhnlicher Zeichen verfolgen)
-- Brut-Erkennung (identifiziert Vampirbrut-Verstecke und Jagdgründe)
-- Sichere Wegfindung (plant Routen, die maximale Gefahr vermeiden)
-- Fluchtrouten-Planung (identifiziert immer mehrere Ausstiegsstrategien)
-- Perimetersicherheit (legt Wachrotationen und Verteidigungspositionen fest)
+- Dinge die beim Überleben helfen
 
-### Navigation & Kartierung
-- Kartographie
-- Sternennavigation
-- Wettervorhersage
-- Routenplanung
-- Identifikation sicherer Häfen
 
 ## Bemerkenswerte Ausrüstung & Gegenstände
 - **Pfadfinder-Umhang:** Tarnumhang, der mit jeder natürlichen Umgebung verschmilzt. Bietet Vorteil auf Heimlichkeit
