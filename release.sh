@@ -14,7 +14,7 @@ fi
 VERSION="$1"
 MODULE_DIR="foundry-data/Data/modules/oot"
 MODULE_JSON="$MODULE_DIR/module.json"
-OUTPUT_FILE="oot-v${VERSION}.zip"
+OUTPUT_FILE="module.zip"
 
 echo "Creating release for OOT module v${VERSION}..."
 
