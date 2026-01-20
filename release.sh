@@ -29,10 +29,10 @@ echo "Updated module.json with version ${VERSION}"
 # Remove old zip if exists
 rm -f "$OUTPUT_FILE"
 
-# Create zip from module directory
-cd foundry-data/Data/modules
-zip -r "../../../$OUTPUT_FILE" oot -x "*.DS_Store"
+# Create zip from inside module directory (files at root level)
+cd "$MODULE_DIR"
+zip -r "../../../../$OUTPUT_FILE" . -x "*.DS_Store"
 
-cd ../../..
+cd ../../../..
 echo "Created $OUTPUT_FILE"
 echo "Ready to upload to GitHub release v${VERSION}"
