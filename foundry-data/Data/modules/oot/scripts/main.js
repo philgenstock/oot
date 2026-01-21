@@ -137,7 +137,7 @@ async function performCraftingCheck(checkId, originalMessage) {
 
 async function performSkillOrToolRoll(actor, skillConfig) {
   if (skillConfig.type === "skill") {
-    const rollData = await actor.rollSkill({ skill: skillConfig.id, configure: true });
+    const rollData = await actor.rollSkill({ skill: skillConfig.id }, { configure: true });
     return extractRollFromDnd5eResponse(rollData);
   }
 
@@ -148,7 +148,7 @@ async function performSkillOrToolRoll(actor, skillConfig) {
     return null;
   }
 
-  const rollData = await toolItem.rollToolCheck({ configure: true });
+  const rollData = await toolItem.rollToolCheck({}, { configure: true });
   return extractRollFromDnd5eResponse(rollData);
 }
 
