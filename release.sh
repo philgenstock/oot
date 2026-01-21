@@ -22,7 +22,7 @@ echo "Creating release for OOT module v${VERSION}..."
 sed -i '' "s/\"version\": \"[^\"]*\"/\"version\": \"${VERSION}\"/" "$MODULE_JSON"
 
 # Update download URL in module.json
-sed -i '' "s|releases/download/v[^/]*/oot.zip|releases/download/v${VERSION}/oot.zip|" "$MODULE_JSON"
+sed -i '' "s|releases/download/[^/]*/module.zip|releases/download/${VERSION}/module.zip|" "$MODULE_JSON"
 
 echo "Updated module.json with version ${VERSION}"
 
