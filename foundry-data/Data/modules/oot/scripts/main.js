@@ -96,7 +96,7 @@ async function performCraftingCheck(checkId, originalMessage) {
   }
 
   const { skillConfig, dc, checkName, existingBoons, itemType, rarity } = pendingCheck;
-  const rollResult = await performSkillOrToolRoll(actor, skillConfig, checkName);
+  const rollResult = await performSkillOrToolRoll(actor, skillConfig);
 
   if (!rollResult) return;
 
@@ -135,27 +135,21 @@ async function performCraftingCheck(checkId, originalMessage) {
   await markCheckAsCompleted(originalMessage, actor.name);
 }
 
-async function performSkillOrToolRoll(actor, skillConfig, checkName) {
+async function performSkillOrToolRoll(actor, skillConfig) {
   if (skillConfig.type === "skill") {
-    const rollData = await actor.rollSkill({ skill: skillConfig.id });
+    const rollData = await actor.rollSkill({ skill: skillConfig.id, configure: true });
     return extractRollFromDnd5eResponse(rollData);
   }
 
   const toolItem = findToolInInventory(actor, skillConfig.name);
 
-  if (toolItem) {
-    const rollData = await toolItem.rollToolCheck({});
-    return extractRollFromDnd5eResponse(rollData);
+  if (!toolItem) {
+    ui.notifications.error(`${skillConfig.name} not found in inventory. You need this tool to perform the check.`);
+    return null;
   }
 
-  ui.notifications.warn(`${skillConfig.name} not found in inventory. Rolling with proficiency bonus only.`);
-  const profBonus = actor.system.attributes?.prof || 0;
-  const rollResult = await new Roll(`1d20 + ${profBonus}`).evaluate();
-  await rollResult.toMessage({
-    speaker: ChatMessage.getSpeaker({ actor }),
-    flavor: `${checkName} (${skillConfig.name})`
-  });
-  return rollResult;
+  const rollData = await toolItem.rollToolCheck({ configure: true });
+  return extractRollFromDnd5eResponse(rollData);
 }
 
 function findToolInInventory(actor, toolName) {
