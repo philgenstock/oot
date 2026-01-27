@@ -86,8 +86,10 @@ export class PartyInventoryApplication extends Application {
       el.addEventListener('dragstart', this._onDragStartCharacterItem.bind(this));
     });
 
-    html.find('.item-to-party').on('click', this._onMoveToParty.bind(this));
-    html.find('.item-to-character').on('click', this._onMoveToCharacter.bind(this));
+    html.find('.item-to-party-one').on('click', this._onMoveOneToParty.bind(this));
+    html.find('.item-to-party-all').on('click', this._onMoveAllToParty.bind(this));
+    html.find('.item-to-character-one').on('click', this._onMoveOneToCharacter.bind(this));
+    html.find('.item-to-character-all').on('click', this._onMoveAllToCharacter.bind(this));
   }
 
   close(options) {
@@ -177,7 +179,22 @@ export class PartyInventoryApplication extends Application {
     }
   }
 
-  async _onMoveToParty(event) {
+  async _onMoveOneToParty(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest('.character-item').dataset.itemId;
+    const actor = this.currentActor;
+
+    if (!actor) return;
+
+    const item = actor.items.get(itemId);
+    if (!item) return;
+
+    await transferToPartyInventory(actor, itemId, 1);
+    ui.notifications.info(`Moved 1 ${item.name} to party inventory.`);
+    this.render(false);
+  }
+
+  async _onMoveAllToParty(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest('.character-item').dataset.itemId;
     const actor = this.currentActor;
@@ -192,7 +209,24 @@ export class PartyInventoryApplication extends Application {
     this.render(false);
   }
 
-  async _onMoveToCharacter(event) {
+  async _onMoveOneToCharacter(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest('.party-item').dataset.itemId;
+    const actor = this.currentActor;
+
+    if (!actor) {
+      ui.notifications.error("You need an assigned character to receive items.");
+      return;
+    }
+
+    const item = await transferFromPartyInventory(itemId, actor, 1);
+    if (item) {
+      ui.notifications.info(`Received 1 ${item.name} from party inventory.`);
+    }
+    this.render(false);
+  }
+
+  async _onMoveAllToCharacter(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest('.party-item').dataset.itemId;
     const actor = this.currentActor;
