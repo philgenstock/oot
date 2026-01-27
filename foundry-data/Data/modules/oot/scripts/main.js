@@ -1,4 +1,6 @@
 import { CraftingApplication } from './crafting-app.js';
+import { PartyInventoryApplication } from './party-inventory-app.js';
+import { registerPartyInventorySettings } from './party-inventory-data.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -10,15 +12,33 @@ Hooks.on('getSceneControlButtons', (controls) => {
       button: true,
       onClick: () => new CraftingApplication().render(true)
     };
+    tokenControls.tools['oot-party-inventory'] = {
+      name: "oot-party-inventory",
+      title: "Party Inventory",
+      icon: "fas fa-boxes-stacked",
+      button: true,
+      onClick: () => game.oot.openPartyInventory()
+    };
   }
 });
 
 Hooks.once('init', async function() {
   registerHandlebarsHelpers();
+  registerPartyInventorySettings();
 
   game.oot = {
     CraftingApplication: CraftingApplication,
+    PartyInventoryApplication: PartyInventoryApplication,
     openCrafting: () => new CraftingApplication().render(true),
+    openPartyInventory: () => {
+      const existing = Object.values(ui.windows).find(w => w instanceof PartyInventoryApplication);
+      if (existing) {
+        existing.bringToTop();
+        existing.render(true);
+      } else {
+        new PartyInventoryApplication().render(true);
+      }
+    },
     pendingChecks: {},
     handleCheckResult: handleCheckResult
   };
@@ -35,9 +55,22 @@ Hooks.once('init', async function() {
     precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
   });
 
+  game.keybindings.register("oot", "openPartyInventory", {
+    name: "Open Party Inventory",
+    hint: "Opens the party inventory window",
+    editable: [{ key: "KeyI", modifiers: ["Control", "Shift"] }],
+    onDown: () => {
+      game.oot.openPartyInventory();
+      return true;
+    },
+    restricted: false,
+    precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
+  });
+
   await loadTemplates([
     "modules/oot/templates/crafting-app.hbs",
-    "modules/oot/templates/item-picker.hbs"
+    "modules/oot/templates/item-picker.hbs",
+    "modules/oot/templates/party-inventory.hbs"
   ]);
 });
 

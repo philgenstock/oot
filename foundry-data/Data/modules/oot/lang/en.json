@@ -1,5 +1,27 @@
 {
   "OOT": {
+    "PartyInventory": {
+      "Title": "Party Inventory",
+      "NoActor": "No assigned character. You can view the party inventory but cannot transfer items.",
+      "PartyInventory": "Party Inventory",
+      "YourInventory": "Your Inventory",
+      "DragToShare": "Drag items here to share with the party",
+      "DragToTake": "Drag items here to take from party",
+      "NoPartyItems": "No items in party inventory",
+      "NoCharacterItems": "No items in your inventory",
+      "AssignCharacter": "Assign a character to manage your inventory",
+      "AddedBy": "Added by",
+      "TakeItem": "Take item",
+      "ShareItem": "Share with party",
+      "DeleteItem": "Delete item",
+      "DeleteConfirm": "Are you sure you want to permanently delete this item from the party inventory?",
+      "MovedToParty": "Moved {name} to party inventory.",
+      "ReceivedFromParty": "Received {name} from party inventory.",
+      "Deleted": "Deleted {name} from party inventory.",
+      "OnlyGMOrAdder": "Only the GM or the person who added this item can delete it.",
+      "NeedCharacter": "You need an assigned character to receive items.",
+      "OnlyFromActors": "Can only transfer items from character inventories to the party inventory."
+    },
     "Crafting": {
       "Title": "OOT Crafting System",
       "NoActor": "No assigned character. Please assign a character to your user in User Configuration.",
@@ -64,7 +86,9 @@
     },
     "Keybindings": {
       "OpenCrafting": "Open Crafting Window",
-      "OpenCraftingHint": "Opens the OOT Crafting application"
+      "OpenCraftingHint": "Opens the OOT Crafting application",
+      "OpenPartyInventory": "Open Party Inventory",
+      "OpenPartyInventoryHint": "Opens the party inventory window"
     }
   }
 }
