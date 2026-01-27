@@ -19,6 +19,14 @@ Hooks.on('getSceneControlButtons', (controls) => {
       button: true,
       onClick: () => game.oot.openPartyInventory()
     };
+    tokenControls.tools['oot-creature-export'] = {
+      name: "oot-creature-export",
+      title: "Export Creatures",
+      icon: "fas fa-dragon",
+      button: true,
+      visible: game.user.isGM,
+      onClick: () => game.oot.exportCreatures()
+    };
   }
 });
 
@@ -39,6 +47,7 @@ Hooks.once('init', async function() {
         new PartyInventoryApplication().render(true);
       }
     },
+    exportCreatures: exportCreaturesByFolder,
     pendingChecks: {},
     handleCheckResult: handleCheckResult
   };
@@ -275,4 +284,52 @@ async function handleCheckResult(checkId, result) {
   } else if (game.user.id === requesterId) {
     ui.notifications.info(`${pendingCheck.checkName} completed by ${result.actorName}. Reopen crafting window to continue.`);
   }
+}
+
+function exportCreaturesByFolder() {
+  if (!game.user.isGM) {
+    ui.notifications.error("Only GMs can export creatures.");
+    return;
+  }
+
+  const folderMap = new Map();
+
+  for (const actor of game.actors) {
+    if (!actor.folder) continue;
+
+    const folderName = actor.folder.name;
+    const cr = actor.system?.details?.cr;
+
+    if (!folderMap.has(folderName)) {
+      folderMap.set(folderName, []);
+    }
+
+    folderMap.get(folderName).push({
+      name: actor.name,
+      cr: cr ?? null
+    });
+  }
+
+  const exportData = [];
+  for (const [folderName, creatures] of folderMap) {
+    creatures.sort((a, b) => a.name.localeCompare(b.name));
+    exportData.push({
+      folder: folderName,
+      creatures: creatures
+    });
+  }
+
+  exportData.sort((a, b) => a.folder.localeCompare(b.folder));
+
+  const jsonString = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([jsonString], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "creatures-export.json";
+  link.click();
+
+  URL.revokeObjectURL(url);
+  ui.notifications.info(`Exported ${folderMap.size} folders with creatures.`);
 }
