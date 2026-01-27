@@ -1,8 +1,7 @@
 import {
   getPartyInventoryItems,
   transferToPartyInventory,
-  transferFromPartyInventory,
-  removeItemFromPartyInventory
+  transferFromPartyInventory
 } from './party-inventory-data.js';
 
 export class PartyInventoryApplication extends Application {
@@ -39,8 +38,7 @@ export class PartyInventoryApplication extends Application {
       partyItems: partyItems,
       characterItems: characterItems,
       hasPartyItems: partyItems.length > 0,
-      hasCharacterItems: characterItems.length > 0,
-      isGM: game.user.isGM
+      hasCharacterItems: characterItems.length > 0
     };
   }
 
@@ -90,7 +88,6 @@ export class PartyInventoryApplication extends Application {
 
     html.find('.item-to-party').on('click', this._onMoveToParty.bind(this));
     html.find('.item-to-character').on('click', this._onMoveToCharacter.bind(this));
-    html.find('.item-delete').on('click', this._onDeleteFromParty.bind(this));
   }
 
   close(options) {
@@ -210,34 +207,5 @@ export class PartyInventoryApplication extends Application {
       ui.notifications.info(`Received ${item.name} from party inventory.`);
     }
     this.render(false);
-  }
-
-  async _onDeleteFromParty(event) {
-    event.preventDefault();
-    const itemId = event.currentTarget.closest('.party-item').dataset.itemId;
-
-    const items = getPartyInventoryItems();
-    const item = items.find(i => i.id === itemId);
-
-    if (!item) return;
-
-    if (!game.user.isGM && item.addedBy !== game.user.name) {
-      ui.notifications.error("Only the GM or the person who added this item can delete it.");
-      return;
-    }
-
-    const confirmed = await Dialog.confirm({
-      title: "Delete Item",
-      content: `<p>Are you sure you want to permanently delete <strong>${item.name}</strong> from the party inventory?</p>`,
-      yes: () => true,
-      no: () => false,
-      defaultYes: false
-    });
-
-    if (confirmed) {
-      await removeItemFromPartyInventory(itemId);
-      ui.notifications.info(`Deleted ${item.name} from party inventory.`);
-      this.render(false);
-    }
   }
 }

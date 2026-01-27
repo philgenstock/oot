@@ -18,8 +18,37 @@ export function getPartyInventoryItems() {
   return data?.items || [];
 }
 
+function findStackablePartyItem(itemData) {
+  const items = getPartyInventoryItems();
+  return items.find(existing =>
+    existing.name === itemData.name &&
+    existing.type === itemData.type &&
+    existing.img === itemData.img
+  );
+}
+
+function findStackableActorItem(actor, itemData) {
+  return actor.items.find(existing =>
+    existing.name === itemData.name &&
+    existing.type === itemData.type &&
+    existing.img === itemData.img
+  );
+}
+
 export async function addItemToPartyInventory(itemData) {
   const items = getPartyInventoryItems();
+  const quantityToAdd = itemData.system?.quantity || 1;
+
+  const existingItem = findStackablePartyItem(itemData);
+
+  if (existingItem) {
+    existingItem.quantity = (existingItem.quantity || 1) + quantityToAdd;
+    existingItem.system.quantity = existingItem.quantity;
+
+    await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
+    Hooks.callAll("oot.partyInventoryChanged", { action: "update", item: existingItem });
+    return existingItem;
+  }
 
   const partyItem = {
     id: foundry.utils.randomID(),
@@ -28,7 +57,7 @@ export async function addItemToPartyInventory(itemData) {
     type: itemData.type,
     system: foundry.utils.deepClone(itemData.system),
     flags: foundry.utils.deepClone(itemData.flags || {}),
-    quantity: itemData.system?.quantity || 1,
+    quantity: quantityToAdd,
     addedBy: game.user.name,
     addedAt: Date.now()
   };
@@ -36,7 +65,6 @@ export async function addItemToPartyInventory(itemData) {
   items.push(partyItem);
 
   await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
-
   Hooks.callAll("oot.partyInventoryChanged", { action: "add", item: partyItem });
 
   return partyItem;
@@ -51,7 +79,6 @@ export async function removeItemFromPartyInventory(itemId) {
   const [removedItem] = items.splice(index, 1);
 
   await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
-
   Hooks.callAll("oot.partyInventoryChanged", { action: "remove", item: removedItem });
 
   return removedItem;
@@ -66,24 +93,12 @@ export async function updatePartyInventoryItem(itemId, updates) {
   Object.assign(item, updates);
 
   await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
-
   Hooks.callAll("oot.partyInventoryChanged", { action: "update", item });
 
   return item;
 }
 
-export async function clearPartyInventory() {
-  if (!game.user.isGM) {
-    ui.notifications.error("Only the GM can clear the party inventory.");
-    return;
-  }
-
-  await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items: [] });
-
-  Hooks.callAll("oot.partyInventoryChanged", { action: "clear" });
-}
-
-export async function transferToPartyInventory(actor, itemId, quantity = 1) {
+export async function transferToPartyInventory(actor, itemId, quantity = null) {
   const item = actor.items.get(itemId);
   if (!item) {
     ui.notifications.error("Item not found in character inventory.");
@@ -92,19 +107,20 @@ export async function transferToPartyInventory(actor, itemId, quantity = 1) {
 
   const itemData = item.toObject();
   const currentQuantity = itemData.system?.quantity || 1;
+  const transferQuantity = quantity ?? currentQuantity;
 
-  if (quantity >= currentQuantity) {
+  if (transferQuantity >= currentQuantity) {
     await item.delete();
     itemData.system.quantity = currentQuantity;
   } else {
-    await item.update({ "system.quantity": currentQuantity - quantity });
-    itemData.system.quantity = quantity;
+    await item.update({ "system.quantity": currentQuantity - transferQuantity });
+    itemData.system.quantity = transferQuantity;
   }
 
   return await addItemToPartyInventory(itemData);
 }
 
-export async function transferFromPartyInventory(partyItemId, actor, quantity = 1) {
+export async function transferFromPartyInventory(partyItemId, actor, quantity = null) {
   const items = getPartyInventoryItems();
   const partyItem = items.find(i => i.id === partyItemId);
 
@@ -114,6 +130,7 @@ export async function transferFromPartyInventory(partyItemId, actor, quantity = 
   }
 
   const currentQuantity = partyItem.quantity || partyItem.system?.quantity || 1;
+  const transferQuantity = quantity ?? currentQuantity;
 
   const itemData = {
     name: partyItem.name,
@@ -123,15 +140,24 @@ export async function transferFromPartyInventory(partyItemId, actor, quantity = 
     flags: foundry.utils.deepClone(partyItem.flags || {})
   };
 
-  if (quantity >= currentQuantity) {
+  if (transferQuantity >= currentQuantity) {
     await removeItemFromPartyInventory(partyItemId);
     itemData.system.quantity = currentQuantity;
   } else {
+    const newQuantity = currentQuantity - transferQuantity;
     await updatePartyInventoryItem(partyItemId, {
-      quantity: currentQuantity - quantity,
-      "system.quantity": currentQuantity - quantity
+      quantity: newQuantity,
+      "system.quantity": newQuantity
     });
-    itemData.system.quantity = quantity;
+    itemData.system.quantity = transferQuantity;
+  }
+
+  const existingActorItem = findStackableActorItem(actor, itemData);
+
+  if (existingActorItem) {
+    const existingQuantity = existingActorItem.system?.quantity || 1;
+    await existingActorItem.update({ "system.quantity": existingQuantity + itemData.system.quantity });
+    return existingActorItem;
   }
 
   const createdItems = await actor.createEmbeddedDocuments("Item", [itemData]);

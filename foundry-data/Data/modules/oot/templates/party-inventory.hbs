@@ -31,16 +31,13 @@
                   <span class="item-added">Added by {{addedBy}}</span>
                 </span>
               </div>
-              <div class="item-actions">
-                {{#if ../hasActor}}
+              {{#if ../hasActor}}
+                <div class="item-actions">
                   <button type="button" class="item-to-character" title="Take item">
                     <i class="fas fa-arrow-right"></i>
                   </button>
-                {{/if}}
-                <button type="button" class="item-delete" title="Delete item">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
+                </div>
+              {{/if}}
             </div>
           {{/each}}
         {{else}}
