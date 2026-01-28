@@ -5,7 +5,7 @@
 **Größe:** 1,85m
 
 ## Intro
-*Schwere Stiefel klingen über das Deck, als eine Gestalt aus der Kapitänskajüte tritt. Sein scharlachroter Umhang weht im Seewind, während er mit entschlossenem Schritt auf euch zukommt. Die abgenutzte, aber gepflegte Plattenrüstung über weißem Waffenrock trägt das rote Kreuz des Ordens – dasselbe Symbol ziert den Turmschild an seinem Arm. Kurzes, goldblondes Haar rahmt ein junges Gesicht, doch seine Augen verraten die Härte eines Mannes, der bereits zu viel gesehen hat. Das Langschwert an seiner Seite hängt mit der Selbstverständlichkeit unzähliger Schlachten. Er bleibt vor euch stehen und mustert jeden Einzelnen. "Ich bin Kapitän Thalarion Vex, Anführer dieses Schiffs." Seine Stimme trägt über das Deck, fest und von unbeugsamer Überzeugung getragen. "Dieses Schiff bringt uns dorthin, wo die Dunkelheit lauert – und wir werden sie auslöschen. Jeder von euch wurde ausgewählt, weil ihr etwas zu bieten habt. Enttäuscht mich nicht."*
+*Schwere Stiefel klingen über das Deck, als eine Gestalt aus der Kapitänskajüte tritt. Sein scharlachroter Umhang weht im Seewind, während er mit entschlossenem Schritt das Deck überquert. Die abgenutzte, aber gepflegte Plattenrüstung über weißem Waffenrock trägt das rote Kreuz des Ordens – dasselbe Symbol ziert den Turmschild an seinem Arm. Kurzes, goldblondes Haar rahmt ein junges Gesicht, doch seine Augen verraten die Härte eines Mannes, der bereits zu viel gesehen hat. Das Langschwert an seiner Seite hängt mit der Selbstverständlichkeit unzähliger Schlachten. Er bleibt am Steuerrad stehen, sein Blick schweift über die Crew und dann zum Horizont – wo die Mission wartet.*
 
 ## Allgemeines
 - **Rasse:** Mensch

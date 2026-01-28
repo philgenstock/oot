@@ -5,7 +5,7 @@
 **Größe:** 1,02m
 
 ## Intro
-*Warmes, goldenes Licht strahlt aus der kleinen Kapelle an Deck, begleitet vom Duft von brennendem Weihrauch. Eine kleine Gestalt – kaum einen Meter groß – tritt heraus, seine Roben in den Farben des Sonnenaufgangs: Orange und Gold, durchwebt mit heiligen Symbolen. Maribel "Merry" Thetch lächelt euch an mit einem Gesicht, das von Lachfalten um die haselnussbraunen Augen gezeichnet ist. Sein kurzes kastanienbraunes Haar weht leicht im Wind. Als er sich euch nähert spürt ihr eine warme Ausstrahlung die euch umhüllt. "Willkommen, Lieblinge! Willkommen!" Sein Stimme ist warm wie Sonnenlicht. Er tritt näher, seine Hände greifen nach euren. "Ihr seid genau zur rechten Zeit gekommen. Die Morgendämmerung segnet uns heute."
+*Warmes, goldenes Licht strahlt aus der kleinen Kapelle an Deck, begleitet vom Duft von brennendem Weihrauch. Eine kleine Gestalt – kaum einen Meter groß – tritt heraus, seine Roben in den Farben des Sonnenaufgangs: Orange und Gold, durchwebt mit heiligen Symbolen. Maribel "Merry" Thetch hat ein Gesicht, das von Lachfalten um die haselnussbraunen Augen gezeichnet ist. Sein kurzes kastanienbraunes Haar weht leicht im Wind. Er breitet die Arme aus, als würde er die Morgensonne selbst willkommen heißen, und eine warme Ausstrahlung scheint ihn zu umgeben. Sein goldener Sonnenaufgangsanhänger glüht sanft im Licht, während er mit ruhiger Zufriedenheit über das Deck blickt – ein Leuchtfeuer der Hoffnung inmitten der düsteren Mission.*
 
 
 ## Persönlichkeitsmerkmale

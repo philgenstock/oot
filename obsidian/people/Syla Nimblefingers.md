@@ -5,7 +5,7 @@
 **Größe:** 1,27m
 
 ## Intro
-*Ein würziger Duft von Gewürzen und frisch gebackenem Brot zieht über das Deck. Aus der Kombüse huscht eine kleine Gestalt – kaum über einen Meter groß, mit glänzenden schwarzen Federn, die im Sonnenlicht irisierend schimmern. Syla Nimblefingers trägt eine makellos weiße Schürze (die auf wundersame Weise sauber bleibt) und an ihrem Gürtel klimpern unzählige Kochutensilien. Ihre hellen, intelligenten Augen fixieren euch sofort. Sie öffnet den Schnabel, doch statt eigener Worte hört ihr vertraute Stimmen: "Willkommen!" sagt sie in Thalarions tiefer Stimme, gefolgt von Maribels warmem Tonfall: "Ihr müsst hungrig sein, Lieblinge." Dann, in der Stimme eines Fremden: "Kommt zur Kombüse, wenn der Magen knurrt." Sie nickt energisch und deutet mit einem Flügel Richtung Küche, bevor sie wieder verschwindet – aber nicht ohne euch noch einmal scharf zu mustern.*
+*Ein würziger Duft von Gewürzen und frisch gebackenem Brot zieht über das Deck. Aus der Kombüse huscht eine kleine Gestalt – kaum über einen Meter groß, mit glänzenden schwarzen Federn, die im Sonnenlicht irisierend schimmern. Syla Nimblefingers trägt eine makellos weiße Schürze (die auf wundersame Weise sauber bleibt) und an ihrem Gürtel klimpern unzählige Kochutensilien. Ihre hellen, intelligenten Augen fixieren euch sofort und mustern jeden Einzelnen mit der Intensität einer Köchin, die neue Zutaten bewertet. Sie nickt energisch und deutet mit einem Flügel Richtung Küche, bevor sie wieder in der Kombüse verschwindet – nicht ohne euch noch einmal über die Schulter scharf anzusehen.*
 
 ## Allgemeines
 - **Rasse:** Kenku
