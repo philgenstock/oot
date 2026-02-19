@@ -10,6 +10,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       title: "OOT Crafting",
       icon: "fas fa-hammer",
       button: true,
+      visible: game.user.isGM,
       onClick: () => new CraftingApplication().render(true)
     };
     tokenControls.tools['oot-party-inventory'] = {
@@ -60,7 +61,7 @@ Hooks.once('init', async function() {
       game.oot.openCrafting();
       return true;
     },
-    restricted: false,
+    restricted: true,
     precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
   });
 

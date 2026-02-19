@@ -64,7 +64,6 @@
     <div class="info-box">
       <p><strong>Essence Required:</strong> {{essenceType}}</p>
       <p><strong>Max Enchanting Boons:</strong> {{maxBoons}}</p>
-      <p><strong>Current DC:</strong> {{currentDC}}</p>
     </div>
   </section>
 
@@ -81,6 +80,12 @@
           <option value="{{id}}" {{#if (eq id ../creationSkill)}}selected{{/if}}>{{name}}</option>
         {{/each}}
       </select>
+    </div>
+
+    <div class="form-group">
+      <label for="creationDC">DC</label>
+      <input type="number" name="creationDC" id="creationDC" value="{{creationDC}}" min="1" max="40" />
+      <span class="dc-hint">(Suggested: {{suggestedDC}})</span>
     </div>
 
     {{#if creationResult}}
@@ -136,6 +141,12 @@
       </select>
     </div>
 
+    <div class="form-group">
+      <label for="enchantingDC">DC</label>
+      <input type="number" name="enchantingDC" id="enchantingDC" value="{{enchantingDC}}" min="1" max="40" />
+      <span class="dc-hint">(Suggested: {{suggestedDC}})</span>
+    </div>
+
     {{#if enchantingResult}}
       <div class="roll-result {{#if enchantingResult.destroyed}}destroyed{{else if (gt enchantingResult.outcome.boons 0)}}success{{else if (gt enchantingResult.outcome.flaws 0)}}failure{{else}}neutral{{/if}}">
         <p><strong>Roll:</strong> {{enchantingResult.roll.total}} vs DC {{enchantingResult.dc}}</p>
@@ -185,6 +196,27 @@
           <i class="fas fa-redo"></i> Start Over
         </button>
       {{else}}
+        {{!-- Flaw Management (DM Only) --}}
+        {{#if allFlaws.length}}
+          <div class="flaw-management">
+            <h4><i class="fas fa-tools"></i> Flaw Management (DM)</h4>
+            <ul class="flaw-list">
+              {{#each allFlaws}}
+                <li class="flaw-item" data-flaw-index="{{@index}}" data-flaw-source="{{source}}">
+                  <span class="flaw-name"><strong>{{name}}</strong> (d20: {{roll}})</span>
+                  <span class="flaw-actions">
+                    <button type="button" class="reroll-flaw" title="Reroll this flaw">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button type="button" class="remove-flaw" title="Remove this flaw">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </span>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
         <button type="button" class="create-item">
           <i class="fas fa-check"></i> Create Crafted Item
         </button>

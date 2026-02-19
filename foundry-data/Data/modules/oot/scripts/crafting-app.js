@@ -1,4 +1,4 @@
-import { CRAFTING_CONFIG } from './crafting-data.js';
+import { CRAFTING_CONFIG, rollFlaw } from './crafting-data.js';
 
 export class CraftingApplication extends Application {
   constructor(options = {}) {
@@ -9,6 +9,8 @@ export class CraftingApplication extends Application {
     this.selectedItemType = "weapon";
     this.creationSkill = "smith";
     this.enchantingSkill = "arc";
+    this.creationDC = CRAFTING_CONFIG.rarityDC["uncommon"];
+    this.enchantingDC = CRAFTING_CONFIG.rarityDC["uncommon"];
 
     this.creationResult = null;
     this.enchantingResult = null;
@@ -34,6 +36,8 @@ export class CraftingApplication extends Application {
   getData(options = {}) {
     const actor = this.craftingActor;
 
+    const allFlaws = this._getAllFlawsWithSource();
+
     return {
       actor: actor,
       hasActor: !!actor,
@@ -51,8 +55,26 @@ export class CraftingApplication extends Application {
       creationResult: this.creationResult,
       enchantingResult: this.enchantingResult,
       craftingComplete: this.craftingComplete,
-      currentDC: CRAFTING_CONFIG.rarityDC[this.selectedRarity]
+      creationDC: this.creationDC,
+      enchantingDC: this.enchantingDC,
+      suggestedDC: CRAFTING_CONFIG.rarityDC[this.selectedRarity],
+      allFlaws: allFlaws
     };
+  }
+
+  _getAllFlawsWithSource() {
+    const flaws = [];
+    if (this.creationResult?.flaws) {
+      for (let i = 0; i < this.creationResult.flaws.length; i++) {
+        flaws.push({ ...this.creationResult.flaws[i], source: "creation", sourceIndex: i });
+      }
+    }
+    if (this.enchantingResult?.flaws) {
+      for (let i = 0; i < this.enchantingResult.flaws.length; i++) {
+        flaws.push({ ...this.enchantingResult.flaws[i], source: "enchanting", sourceIndex: i });
+      }
+    }
+    return flaws;
   }
 
   _getItemTypeOptions() {
@@ -74,6 +96,8 @@ export class CraftingApplication extends Application {
     html.find('.item-clear').on('click', this._onClearItem.bind(this));
 
     html.find('select[name="rarity"]').on('change', this._onRarityChange.bind(this));
+    html.find('input[name="creationDC"]').on('change', this._onCreationDCChange.bind(this));
+    html.find('input[name="enchantingDC"]').on('change', this._onEnchantingDCChange.bind(this));
     html.find('select[name="itemType"]').on('change', this._onItemTypeChange.bind(this));
     html.find('select[name="creationSkill"]').on('change', this._onCreationSkillChange.bind(this));
     html.find('select[name="enchantingSkill"]').on('change', this._onEnchantingSkillChange.bind(this));
@@ -83,6 +107,9 @@ export class CraftingApplication extends Application {
 
     html.find('.create-item').on('click', this._onCreateItem.bind(this));
     html.find('.reset-crafting').on('click', this._onReset.bind(this));
+
+    html.find('.reroll-flaw').on('click', this._onRerollFlaw.bind(this));
+    html.find('.remove-flaw').on('click', this._onRemoveFlaw.bind(this));
 
     html[0].addEventListener('drop', this._onDrop.bind(this));
   }
@@ -244,7 +271,23 @@ export class CraftingApplication extends Application {
 
   _onRarityChange(event) {
     this.selectedRarity = event.currentTarget.value;
+    this.creationDC = CRAFTING_CONFIG.rarityDC[this.selectedRarity];
+    this.enchantingDC = CRAFTING_CONFIG.rarityDC[this.selectedRarity];
     this.render();
+  }
+
+  _onCreationDCChange(event) {
+    const value = parseInt(event.currentTarget.value);
+    if (!isNaN(value) && value > 0) {
+      this.creationDC = value;
+    }
+  }
+
+  _onEnchantingDCChange(event) {
+    const value = parseInt(event.currentTarget.value);
+    if (!isNaN(value) && value > 0) {
+      this.enchantingDC = value;
+    }
   }
 
   _onItemTypeChange(event) {
@@ -292,7 +335,7 @@ export class CraftingApplication extends Application {
 
   async _postCheckRequest(checkType, skillConfig, existingBoons) {
     const checkName = checkType === "creation" ? "Creation Check" : "Enchanting Check";
-    const dc = CRAFTING_CONFIG.rarityDC[this.selectedRarity];
+    const dc = checkType === "creation" ? this.creationDC : this.enchantingDC;
     const itemName = this.selectedItem?.name || "Unknown Item";
     const rarity = CRAFTING_CONFIG.rarityLabels[this.selectedRarity];
 
@@ -566,6 +609,70 @@ export class CraftingApplication extends Application {
     this.enchantingResult = null;
     this.craftingComplete = false;
 
+    this.render();
+  }
+
+  _onRerollFlaw(event) {
+    event.preventDefault();
+
+    if (!game.user.isGM) {
+      ui.notifications.error("Only the GM can reroll flaws.");
+      return;
+    }
+
+    const flawItem = event.currentTarget.closest('.flaw-item');
+    const index = parseInt(flawItem.dataset.flawIndex);
+
+    const allFlaws = this._getAllFlawsWithSource();
+    const flawData = allFlaws[index];
+
+    if (!flawData) return;
+
+    const existingIds = new Set();
+    allFlaws.forEach(f => {
+      if (f.id !== flawData.id) existingIds.add(f.id);
+    });
+
+    const newFlaw = rollFlaw(this.selectedItemType, existingIds);
+
+    if (!newFlaw) {
+      ui.notifications.warn("Could not reroll flaw - no valid replacement found.");
+      return;
+    }
+
+    if (flawData.source === "creation" && this.creationResult?.flaws) {
+      this.creationResult.flaws[flawData.sourceIndex] = newFlaw;
+    } else if (flawData.source === "enchanting" && this.enchantingResult?.flaws) {
+      this.enchantingResult.flaws[flawData.sourceIndex] = newFlaw;
+    }
+
+    ui.notifications.info(`Rerolled ${flawData.name} → ${newFlaw.name} (d20: ${newFlaw.roll})`);
+    this.render();
+  }
+
+  _onRemoveFlaw(event) {
+    event.preventDefault();
+
+    if (!game.user.isGM) {
+      ui.notifications.error("Only the GM can remove flaws.");
+      return;
+    }
+
+    const flawItem = event.currentTarget.closest('.flaw-item');
+    const index = parseInt(flawItem.dataset.flawIndex);
+
+    const allFlaws = this._getAllFlawsWithSource();
+    const flawData = allFlaws[index];
+
+    if (!flawData) return;
+
+    if (flawData.source === "creation" && this.creationResult?.flaws) {
+      this.creationResult.flaws.splice(flawData.sourceIndex, 1);
+    } else if (flawData.source === "enchanting" && this.enchantingResult?.flaws) {
+      this.enchantingResult.flaws.splice(flawData.sourceIndex, 1);
+    }
+
+    ui.notifications.info(`Removed flaw: ${flawData.name}`);
     this.render();
   }
 
