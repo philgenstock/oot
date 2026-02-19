@@ -13,6 +13,19 @@
   <div class="inventory-columns">
     <section class="party-inventory-section inventory-panel">
       <h3><i class="fas fa-users"></i> Party Inventory</h3>
+      {{#if isGM}}
+        <div class="quick-add-buttons">
+          <button type="button" class="quick-add-item" data-item="rations" title="Add Rations">
+            <i class="fas fa-drumstick-bite"></i> Rations
+          </button>
+          <button type="button" class="quick-add-item" data-item="potion-healing" title="Add Potion of Healing">
+            <i class="fas fa-flask"></i> Healing
+          </button>
+          <button type="button" class="quick-add-item" data-item="potion-growth" title="Add Potion of Growth">
+            <i class="fas fa-arrow-up"></i> Growth
+          </button>
+        </div>
+      {{/if}}
       <p class="drop-hint">Drag items here to share with the party</p>
 
       <div class="party-items-list">

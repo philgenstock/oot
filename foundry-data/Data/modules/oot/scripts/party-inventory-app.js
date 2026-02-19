@@ -1,7 +1,8 @@
 import {
   getPartyInventoryItems,
   transferToPartyInventory,
-  transferFromPartyInventory
+  transferFromPartyInventory,
+  addItemToPartyInventory
 } from './party-inventory-data.js';
 
 export class PartyInventoryApplication extends Application {
@@ -38,7 +39,8 @@ export class PartyInventoryApplication extends Application {
       partyItems: partyItems,
       characterItems: characterItems,
       hasPartyItems: partyItems.length > 0,
-      hasCharacterItems: characterItems.length > 0
+      hasCharacterItems: characterItems.length > 0,
+      isGM: game.user.isGM
     };
   }
 
@@ -90,6 +92,8 @@ export class PartyInventoryApplication extends Application {
     html.find('.item-to-party-all').on('click', this._onMoveAllToParty.bind(this));
     html.find('.item-to-character-one').on('click', this._onMoveOneToCharacter.bind(this));
     html.find('.item-to-character-all').on('click', this._onMoveAllToCharacter.bind(this));
+
+    html.find('.quick-add-item').on('click', this._onQuickAddItem.bind(this));
   }
 
   close(options) {
@@ -241,5 +245,56 @@ export class PartyInventoryApplication extends Application {
       ui.notifications.info(`Received ${item.name} from party inventory.`);
     }
     this.render(false);
+  }
+
+  async _onQuickAddItem(event) {
+    event.preventDefault();
+    const itemKey = event.currentTarget.dataset.item;
+    const itemData = await this._getQuickAddItemData(itemKey);
+
+    if (!itemData) {
+      ui.notifications.error("Item not found in compendiums.");
+      return;
+    }
+
+    await addItemToPartyInventory(itemData);
+    ui.notifications.info(`Added ${itemData.name} to party inventory.`);
+    this.render(false);
+  }
+
+  async _getQuickAddItemData(itemKey) {
+    const searchTerms = {
+      "rations": ["rations"],
+      "potion-healing": ["potion of healing"],
+      "potion-growth": ["potion of growth"]
+    };
+
+    const terms = searchTerms[itemKey];
+    if (!terms) return null;
+
+    // Search in world items first (case-insensitive partial match)
+    let item = game.items.find(i =>
+      terms.some(term => i.name.toLowerCase().includes(term))
+    );
+
+    // Search in compendiums if not found in world
+    if (!item) {
+      for (const pack of game.packs.filter(p => p.documentName === "Item")) {
+        const index = await pack.getIndex();
+        const entry = index.find(i =>
+          terms.some(term => i.name.toLowerCase().includes(term))
+        );
+        if (entry) {
+          item = await pack.getDocument(entry._id);
+          break;
+        }
+      }
+    }
+
+    if (!item) return null;
+
+    const itemData = item.toObject();
+    itemData.system.quantity = 1;
+    return itemData;
   }
 }
