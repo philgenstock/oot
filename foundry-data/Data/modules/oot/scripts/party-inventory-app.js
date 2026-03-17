@@ -93,6 +93,28 @@ export class PartyInventoryApplication extends Application {
     html.find('.item-to-character-one').on('click', this._onMoveOneToCharacter.bind(this));
     html.find('.item-to-character-all').on('click', this._onMoveAllToCharacter.bind(this));
 
+    html.find('.party-item').on('mouseenter', (event) => {
+      const itemId = event.currentTarget.dataset.itemId;
+      const itemData = getPartyInventoryItems().find(i => i.id === itemId);
+      if (!itemData) return;
+      game.tooltip.activate(event.currentTarget, {
+        text: this._buildItemTooltip(itemData),
+        cssClass: "oot-item-tooltip",
+        direction: "RIGHT"
+      });
+    }).on('mouseleave', () => game.tooltip.deactivate());
+
+    html.find('.character-item').on('mouseenter', (event) => {
+      const itemId = event.currentTarget.dataset.itemId;
+      const itemData = this.currentActor?.items.get(itemId)?.toObject();
+      if (!itemData) return;
+      game.tooltip.activate(event.currentTarget, {
+        text: this._buildItemTooltip(itemData),
+        cssClass: "oot-item-tooltip",
+        direction: "LEFT"
+      });
+    }).on('mouseleave', () => game.tooltip.deactivate());
+
     html.find('.quick-add-item').on('click', this._onQuickAddItem.bind(this));
   }
 
@@ -260,6 +282,23 @@ export class PartyInventoryApplication extends Application {
     await addItemToPartyInventory(itemData);
     ui.notifications.info(`Added ${itemData.name} to party inventory.`);
     this.render(false);
+  }
+
+  _buildItemTooltip(itemData) {
+    const typeLabel = game.i18n.localize(CONFIG.Item.typeLabels?.[itemData.type] ?? itemData.type);
+    const quantity = itemData.system?.quantity ?? itemData.quantity ?? 1;
+    const description = itemData.system?.description?.value ?? "";
+
+    return `
+      <div class="oot-tooltip-header">
+        <img src="${itemData.img}" width="36" height="36" />
+        <div>
+          <div class="oot-tooltip-name">${itemData.name}</div>
+          <div class="oot-tooltip-meta">${typeLabel}${quantity > 1 ? ` &middot; x${quantity}` : ""}</div>
+        </div>
+      </div>
+      ${description ? `<div class="oot-tooltip-description">${description}</div>` : ""}
+    `;
   }
 
   async _getQuickAddItemData(itemKey) {

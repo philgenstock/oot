@@ -888,3 +888,62 @@
   border-color: #ff9800;
   background: rgba(255, 152, 0, 0.1);
 }
+
+/* ===================================
+   Party Inventory Item Tooltip
+   =================================== */
+
+#tooltip.oot-item-tooltip {
+  max-width: 320px;
+  padding: 0;
+  background: var(--color-bg-sheet, #f0ede0);
+  border: 1px solid var(--color-border-dark, #7a7971);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-primary, "Signika");
+}
+
+#tooltip.oot-item-tooltip .oot-tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-border-light-1, #c9c7b8);
+  background: var(--color-bg-header, rgba(0, 0, 0, 0.05));
+  border-radius: 4px 4px 0 0;
+}
+
+#tooltip.oot-item-tooltip .oot-tooltip-header img {
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-primary, #b5b3a4);
+  flex-shrink: 0;
+}
+
+#tooltip.oot-item-tooltip .oot-tooltip-name {
+  font-weight: bold;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+#tooltip.oot-item-tooltip .oot-tooltip-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-dark-secondary, #4b4a44);
+  text-transform: capitalize;
+}
+
+#tooltip.oot-item-tooltip .oot-tooltip-description {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  max-height: 200px;
+  overflow-y: auto;
+  color: var(--color-text-dark-primary, #191813);
+}
+
+#tooltip.oot-item-tooltip .oot-tooltip-description p {
+  margin: 0 0 0.4rem 0;
+}
+
+#tooltip.oot-item-tooltip .oot-tooltip-description p:last-child {
+  margin-bottom: 0;
+}
