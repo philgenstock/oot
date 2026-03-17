@@ -1,5 +1,11 @@
 const PARTY_INVENTORY_SETTING_KEY = "partyInventoryData";
 
+let _socket = null;
+
+export function setPartyInventorySocket(socket) {
+  _socket = socket;
+}
+
 export function registerPartyInventorySettings() {
   game.settings.register("oot", PARTY_INVENTORY_SETTING_KEY, {
     name: "Party Inventory Data",
@@ -35,18 +41,34 @@ function findStackableActorItem(actor, itemData) {
   );
 }
 
-export async function addItemToPartyInventory(itemData) {
+function _broadcast(payload) {
+  if (_socket) {
+    _socket.executeForEveryone("notifyChanged", payload);
+  } else {
+    Hooks.callAll("oot.partyInventoryChanged", payload);
+  }
+}
+
+function _requireActiveGM() {
+  if (!game.users.activeGM) {
+    ui.notifications.warn("A GM must be online to modify the party inventory.");
+    return false;
+  }
+  return true;
+}
+
+// --- GM-only implementations (exported for socket registration) ---
+
+export async function _gmAddItem(itemData) {
   const items = getPartyInventoryItems();
   const quantityToAdd = itemData.system?.quantity || 1;
-
   const existingItem = findStackablePartyItem(itemData);
 
   if (existingItem) {
     existingItem.quantity = (existingItem.quantity || 1) + quantityToAdd;
     existingItem.system.quantity = existingItem.quantity;
-
     await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
-    Hooks.callAll("oot.partyInventoryChanged", { action: "update", item: existingItem });
+    _broadcast({ action: "update", item: existingItem });
     return existingItem;
   }
 
@@ -58,44 +80,83 @@ export async function addItemToPartyInventory(itemData) {
     system: foundry.utils.deepClone(itemData.system),
     flags: foundry.utils.deepClone(itemData.flags || {}),
     quantity: quantityToAdd,
-    addedBy: game.user.name,
+    addedBy: itemData._userName || game.user.name,
     addedAt: Date.now()
   };
 
   items.push(partyItem);
-
   await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
-  Hooks.callAll("oot.partyInventoryChanged", { action: "add", item: partyItem });
-
+  _broadcast({ action: "add", item: partyItem });
   return partyItem;
 }
 
-export async function removeItemFromPartyInventory(itemId) {
+export async function _gmRemoveItem(itemId) {
   const items = getPartyInventoryItems();
   const index = items.findIndex(i => i.id === itemId);
-
   if (index === -1) return null;
 
   const [removedItem] = items.splice(index, 1);
-
   await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
-  Hooks.callAll("oot.partyInventoryChanged", { action: "remove", item: removedItem });
-
+  _broadcast({ action: "remove", item: removedItem });
   return removedItem;
 }
 
-export async function updatePartyInventoryItem(itemId, updates) {
+export async function _gmUpdateItem(itemId, updates) {
   const items = getPartyInventoryItems();
   const item = items.find(i => i.id === itemId);
-
   if (!item) return null;
 
   Object.assign(item, updates);
-
   await game.settings.set("oot", PARTY_INVENTORY_SETTING_KEY, { items });
-  Hooks.callAll("oot.partyInventoryChanged", { action: "update", item });
-
+  _broadcast({ action: "update", item });
   return item;
+}
+
+export async function _gmRemoveFromParty({ partyItemId, quantity }) {
+  const items = getPartyInventoryItems();
+  const partyItem = items.find(i => i.id === partyItemId);
+  if (!partyItem) return null;
+
+  const currentQuantity = partyItem.quantity || partyItem.system?.quantity || 1;
+  const transferQuantity = quantity ?? currentQuantity;
+
+  const itemData = {
+    name: partyItem.name,
+    img: partyItem.img,
+    type: partyItem.type,
+    system: foundry.utils.deepClone(partyItem.system),
+    flags: foundry.utils.deepClone(partyItem.flags || {})
+  };
+
+  if (transferQuantity >= currentQuantity) {
+    await _gmRemoveItem(partyItemId);
+    itemData.system.quantity = currentQuantity;
+  } else {
+    const newQuantity = currentQuantity - transferQuantity;
+    await _gmUpdateItem(partyItemId, { quantity: newQuantity, "system.quantity": newQuantity });
+    itemData.system.quantity = transferQuantity;
+  }
+
+  return { itemData };
+}
+
+export async function addItemToPartyInventory(itemData) {
+  const data = { ...itemData, _userName: game.user.name };
+  if (game.user.isGM) return _gmAddItem(data);
+  if (!_requireActiveGM()) return null;
+  return _socket.executeAsGM("addItem", data);
+}
+
+export async function removeItemFromPartyInventory(itemId) {
+  if (game.user.isGM) return _gmRemoveItem(itemId);
+  if (!_requireActiveGM()) return null;
+  return _socket.executeAsGM("removeItem", itemId);
+}
+
+export async function updatePartyInventoryItem(itemId, updates) {
+  if (game.user.isGM) return _gmUpdateItem(itemId, updates);
+  if (!_requireActiveGM()) return null;
+  return _socket.executeAsGM("updateItem", { itemId, updates });
 }
 
 export async function transferToPartyInventory(actor, itemId, quantity = null) {
@@ -121,37 +182,21 @@ export async function transferToPartyInventory(actor, itemId, quantity = null) {
 }
 
 export async function transferFromPartyInventory(partyItemId, actor, quantity = null) {
-  const items = getPartyInventoryItems();
-  const partyItem = items.find(i => i.id === partyItemId);
+  let result;
 
-  if (!partyItem) {
+  if (game.user.isGM) {
+    result = await _gmRemoveFromParty({ partyItemId, quantity });
+  } else {
+    if (!_requireActiveGM()) return null;
+    result = await _socket.executeAsGM("removeFromParty", { partyItemId, quantity });
+  }
+
+  if (!result) {
     ui.notifications.error("Item not found in party inventory.");
     return null;
   }
 
-  const currentQuantity = partyItem.quantity || partyItem.system?.quantity || 1;
-  const transferQuantity = quantity ?? currentQuantity;
-
-  const itemData = {
-    name: partyItem.name,
-    img: partyItem.img,
-    type: partyItem.type,
-    system: foundry.utils.deepClone(partyItem.system),
-    flags: foundry.utils.deepClone(partyItem.flags || {})
-  };
-
-  if (transferQuantity >= currentQuantity) {
-    await removeItemFromPartyInventory(partyItemId);
-    itemData.system.quantity = currentQuantity;
-  } else {
-    const newQuantity = currentQuantity - transferQuantity;
-    await updatePartyInventoryItem(partyItemId, {
-      quantity: newQuantity,
-      "system.quantity": newQuantity
-    });
-    itemData.system.quantity = transferQuantity;
-  }
-
+  const { itemData } = result;
   const existingActorItem = findStackableActorItem(actor, itemData);
 
   if (existingActorItem) {

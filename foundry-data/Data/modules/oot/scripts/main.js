@@ -1,6 +1,7 @@
 import { CraftingApplication } from './crafting-app.js';
 import { PartyInventoryApplication } from './party-inventory-app.js';
 import { registerPartyInventorySettings } from './party-inventory-data.js';
+import { registerPartyInventorySocket } from './party-inventory-socket.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -34,6 +35,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
 Hooks.once('init', async function() {
   registerHandlebarsHelpers();
   registerPartyInventorySettings();
+  registerPartyInventorySocket();
 
   game.oot = {
     CraftingApplication: CraftingApplication,
