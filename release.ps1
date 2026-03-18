@@ -47,4 +47,19 @@ try {
 }
 
 Write-Host "Created $OutputFile"
-Write-Host "Ready to upload to GitHub release v$Version"
+
+# Commit, tag, and push
+git add $ModuleJson
+git commit -m "$Version"
+git tag "v$Version"
+git push
+git push origin "v$Version"
+
+Write-Host "Pushed commit and tag v$Version"
+
+# Create GitHub release and upload assets
+gh release create "v$Version" $OutputFile $ModuleJson `
+    --title "$Version" `
+    --notes "Release v$Version"
+
+Write-Host "GitHub release v$Version created with module.zip and module.json"
