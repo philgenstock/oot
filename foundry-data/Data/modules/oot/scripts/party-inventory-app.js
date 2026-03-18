@@ -282,7 +282,7 @@ export class PartyInventoryApplication extends Application {
     const typeLabel = game.i18n.localize(CONFIG.Item.typeLabels?.[itemData.type] ?? itemData.type);
     const quantity = itemData.quantity ?? itemData.system?.quantity ?? 1;
     const rawDescription = (itemData.system?.description?.value ?? "")
-      .replace(/@\w+\[([^\[\]]*(?:\[[^\[\]]*\][^\[\]]*)*)\]/g, (_, content) => {
+      .replace(/@variantrule\[([^\[\]]*(?:\[[^\[\]]*\][^\[\]]*)*)\]/g, (_, content) => {
         const parts = content.split("|");
         return parts[parts.length - 1];
       });
