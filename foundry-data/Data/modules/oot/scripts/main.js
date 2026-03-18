@@ -32,10 +32,11 @@ Hooks.on('getSceneControlButtons', (controls) => {
   }
 });
 
+registerPartyInventorySocket();
 Hooks.once('init', async function() {
   registerHandlebarsHelpers();
   registerPartyInventorySettings();
-  registerPartyInventorySocket();
+ 
 
   game.oot = {
     CraftingApplication: CraftingApplication,
