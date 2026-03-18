@@ -93,26 +93,20 @@ export class PartyInventoryApplication extends Application {
     html.find('.item-to-character-one').on('click', this._onMoveOneToCharacter.bind(this));
     html.find('.item-to-character-all').on('click', this._onMoveAllToCharacter.bind(this));
 
-    html.find('.party-item').on('mouseenter', (event) => {
+    html.find('.party-item').on('mouseenter', async (event) => {
       const itemId = event.currentTarget.dataset.itemId;
       const itemData = getPartyInventoryItems().find(i => i.id === itemId);
       if (!itemData) return;
-      game.tooltip.activate(event.currentTarget, {
-        text: this._buildItemTooltip(itemData),
-        cssClass: "oot-item-tooltip",
-        direction: "RIGHT"
-      });
+      game.tooltip.activate(event.currentTarget, { cssClass: "oot-item-tooltip", direction: "RIGHT" });
+      game.tooltip.tooltip.innerHTML = await this._buildItemTooltip(itemData);
     }).on('mouseleave', () => game.tooltip.deactivate());
 
-    html.find('.character-item').on('mouseenter', (event) => {
+    html.find('.character-item').on('mouseenter', async (event) => {
       const itemId = event.currentTarget.dataset.itemId;
       const itemData = this.currentActor?.items.get(itemId)?.toObject();
       if (!itemData) return;
-      game.tooltip.activate(event.currentTarget, {
-        text: this._buildItemTooltip(itemData),
-        cssClass: "oot-item-tooltip",
-        direction: "LEFT"
-      });
+      game.tooltip.activate(event.currentTarget, { cssClass: "oot-item-tooltip", direction: "LEFT" });
+      game.tooltip.tooltip.innerHTML = await this._buildItemTooltip(itemData);
     }).on('mouseleave', () => game.tooltip.deactivate());
 
     html.find('.quick-add-item').on('click', this._onQuickAddItem.bind(this));
@@ -284,10 +278,15 @@ export class PartyInventoryApplication extends Application {
     this.render(false);
   }
 
-  _buildItemTooltip(itemData) {
+  async _buildItemTooltip(itemData) {
     const typeLabel = game.i18n.localize(CONFIG.Item.typeLabels?.[itemData.type] ?? itemData.type);
-    const quantity = itemData.system?.quantity ?? itemData.quantity ?? 1;
-    const description = itemData.system?.description?.value ?? "";
+    const quantity = itemData.quantity ?? itemData.system?.quantity ?? 1;
+    const rawDescription = (itemData.system?.description?.value ?? "")
+      .replace(/@\w+\[([^\[\]]*(?:\[[^\[\]]*\][^\[\]]*)*)\]/g, (_, content) => {
+        const parts = content.split("|");
+        return parts[parts.length - 1];
+      });
+    const description = rawDescription ? await TextEditor.enrichHTML(rawDescription, { async: true }) : "";
 
     return `
       <div class="oot-tooltip-header">

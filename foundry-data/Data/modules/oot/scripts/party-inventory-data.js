@@ -133,7 +133,7 @@ export async function _gmRemoveFromParty({ partyItemId, quantity }) {
     itemData.system.quantity = currentQuantity;
   } else {
     const newQuantity = currentQuantity - transferQuantity;
-    await _gmUpdateItem(partyItemId, { quantity: newQuantity, "system.quantity": newQuantity });
+    await _gmUpdateItem(partyItemId, { quantity: newQuantity });
     itemData.system.quantity = transferQuantity;
   }
 
