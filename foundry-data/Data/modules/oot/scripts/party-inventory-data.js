@@ -160,6 +160,7 @@ export async function updatePartyInventoryItem(itemId, updates) {
 }
 
 export async function transferToPartyInventory(actor, itemId, quantity = null) {
+  if (!_requireActiveGM()) return null;
   const item = actor.items.get(itemId);
   if (!item) {
     ui.notifications.error("Item not found in character inventory.");
