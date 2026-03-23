@@ -51,14 +51,14 @@ Write-Host "Created $OutputFile"
 # Commit, tag, and push
 git add $ModuleJson
 git commit -m "$Version"
-git tag "v$Version"
+git tag "$Version"
 git push
-git push origin "v$Version"
+git push origin "$Version"
 
 Write-Host "Pushed commit and tag v$Version"
 
 # Create GitHub release and upload assets
-gh release create "v$Version" $OutputFile $ModuleJson `
+gh release create "$Version" $OutputFile $ModuleJson `
     --title "$Version" `
     --notes "Release v$Version"
 
