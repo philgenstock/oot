@@ -1,15 +1,15 @@
-param(
-    [Parameter(Mandatory=$true, Position=0)]
-    [string]$Version
-)
-
 $ErrorActionPreference = "Stop"
 
 $ModuleDir = "foundry-data/Data/modules/oot"
 $ModuleJson = "$ModuleDir/module.json"
 $OutputFile = "module.zip"
 
-Write-Host "Creating release for OOT module v$Version..."
+# Read and increment version from module.json
+$json = Get-Content $ModuleJson -Raw | ConvertFrom-Json
+$parts = $json.version -split '\.'
+$Version = "$($parts[0]).$([int]$parts[1] + 1)"
+
+Write-Host "Creating release for OOT module $Version (was $($json.version))..."
 
 # Update version and download URL in module.json
 $content = Get-Content $ModuleJson -Raw
@@ -24,7 +24,7 @@ if (Test-Path $OutputFile) {
     Remove-Item $OutputFile
 }
 
-# Create zip with module contents at root (equivalent to: cd $ModuleDir && zip -r ../../../../module.zip .)
+# Create zip with module contents at root
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 Add-Type -AssemblyName System.IO.Compression
 
@@ -55,11 +55,11 @@ git tag "$Version"
 git push
 git push origin "$Version"
 
-Write-Host "Pushed commit and tag v$Version"
+Write-Host "Pushed commit and tag $Version"
 
 # Create GitHub release and upload assets
 gh release create "$Version" $OutputFile $ModuleJson `
     --title "$Version" `
-    --notes "Release v$Version"
+    --notes "Release $Version"
 
-Write-Host "GitHub release v$Version created with module.zip and module.json"
+Write-Host "GitHub release $Version created with module.zip and module.json"
