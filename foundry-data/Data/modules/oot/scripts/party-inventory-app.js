@@ -9,6 +9,7 @@ export class PartyInventoryApplication extends Application {
   constructor(options = {}) {
     super(options);
     this._onPartyInventoryChanged = this._onPartyInventoryChanged.bind(this);
+    this._activePartyTab = "potions";
   }
 
   static get defaultOptions() {
@@ -20,7 +21,7 @@ export class PartyInventoryApplication extends Application {
       width: 500,
       height: 600,
       resizable: true,
-      scrollY: [".party-items-list", ".character-items-list"]
+      scrollY: [".party-items-list", ".character-items-list", ".party-tab-pane"]
     });
   }
 
@@ -28,20 +29,36 @@ export class PartyInventoryApplication extends Application {
     return game.user.character;
   }
 
-  getData(options = {}) {
+  getData() {
     const actor = this.currentActor;
     const partyItems = getPartyInventoryItems();
     const characterItems = actor ? this._getCharacterItems(actor) : [];
 
+    const partyCategories = { potions: [], scrolls: [], weapons: [], misc: [] };
+    for (const item of partyItems) {
+      partyCategories[this._categorizePartyItem(item)].push(item);
+    }
+
     return {
       actor: actor,
       hasActor: !!actor,
-      partyItems: partyItems,
+      partyCategories,
+      activePartyTab: this._activePartyTab,
       characterItems: characterItems,
-      hasPartyItems: partyItems.length > 0,
       hasCharacterItems: characterItems.length > 0,
       isGM: game.user.isGM
     };
+  }
+
+  _categorizePartyItem(item) {
+    const name = item.name.toLowerCase();
+    if (item.type === "weapon") return "weapons";
+    if (item.type === "consumable") {
+      const subtype = item.system?.type?.value;
+      if (subtype === "potion" || name.includes("potion")) return "potions";
+      if (subtype === "scroll" || name.includes("scroll")) return "scrolls";
+    }
+    return "misc";
   }
 
   _getCharacterItems(actor) {
@@ -86,6 +103,15 @@ export class PartyInventoryApplication extends Application {
     html.find('.character-item').each((i, el) => {
       el.setAttribute('draggable', true);
       el.addEventListener('dragstart', this._onDragStartCharacterItem.bind(this));
+    });
+
+    html.find('.party-tab-btn').on('click', (event) => {
+      const tab = event.currentTarget.dataset.tab;
+      this._activePartyTab = tab;
+      html.find('.party-tab-btn').removeClass('active');
+      $(event.currentTarget).addClass('active');
+      html.find('.party-tab-pane').hide();
+      html.find(`.party-tab-pane[data-tab="${tab}"]`).show();
     });
 
     html.find('.item-to-party-one').on('click', this._onMoveOneToParty.bind(this));
