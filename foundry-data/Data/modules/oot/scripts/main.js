@@ -1,6 +1,7 @@
 import { PartyInventoryApplication } from './party-inventory-app.js';
 import { registerPartyInventorySettings } from './party-inventory-data.js';
-import { registerPartyInventorySocket } from './party-inventory-socket.js';
+import { registerSocket } from './socket.js';
+import { StairController, initStairInteraction } from './stair-tool.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -20,13 +21,22 @@ Hooks.on('getSceneControlButtons', (controls) => {
       visible: game.user.isGM,
       onClick: () => game.oot.exportCreatures()
     };
+    tokenControls.tools['oot-stair-tool'] = {
+      name: "oot-stair-tool",
+      title: "Stair Tool",
+      icon: "fas fa-dungeon",
+      button: true,
+      visible: game.user.isGM,
+      onClick: () => game.oot.stairController.toggle()
+    };
   }
 });
 
-registerPartyInventorySocket();
+registerSocket();
 Hooks.once('init', async function() {
   registerHandlebarsHelpers();
   registerPartyInventorySettings();
+  initStairInteraction();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
@@ -39,7 +49,8 @@ Hooks.once('init', async function() {
         new PartyInventoryApplication().render(true);
       }
     },
-    exportCreatures: exportCreaturesByFolder
+    exportCreatures: exportCreaturesByFolder,
+    stairController: new StairController()
   };
 
   game.keybindings.register("oot", "openPartyInventory", {
@@ -54,7 +65,7 @@ Hooks.once('init', async function() {
     precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
   });
 
-  await loadTemplates([
+  await foundry.applications.handlebars.loadTemplates([
     "modules/oot/templates/party-inventory.hbs"
   ]);
 });
@@ -63,7 +74,8 @@ Hooks.once('ready', async function() {
   console.log('OOT | Module ready');
 });
 
-Hooks.on('renderChatMessage', async function(message, html) {
+
+Hooks.on('renderChatMessage', async function(_message, html) {
   collapseDnd5eMessageByDefault(html);
 });
 
