@@ -1,3 +1,4 @@
+{{#if creatures.length}}
 <div class="creature-ledger-list">
   {{#each creatures}}
   <div class="creature-entry">
@@ -9,10 +10,22 @@
         <span class="stat"><i class="fas fa-shield-halved"></i> {{ac}}</span>
       </div>
       <div class="creature-traits">
-        <div class="trait-row"><span class="trait-label">Resistances</span><span class="trait-value">{{resistances}}</span></div>
-        <div class="trait-row"><span class="trait-label">Immunities</span><span class="trait-value">{{immunities}}</span></div>
+        <div class="trait-row">
+          <span class="trait-label">Resistances</span>
+          <span class="trait-value">{{resistances}}</span>
+        </div>
+        <div class="trait-row">
+          <span class="trait-label">Immunities</span>
+          <span class="trait-value">{{immunities}}</span>
+        </div>
       </div>
     </div>
   </div>
   {{/each}}
 </div>
+{{else}}
+<div class="creature-ledger-empty">
+  <i class="fas fa-book-skull"></i>
+  <p>No creatures discovered yet.</p>
+</div>
+{{/if}}

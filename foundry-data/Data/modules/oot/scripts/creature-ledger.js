@@ -1,4 +1,5 @@
 const PLAYER_NAME = "Joshi";
+const SETTING_KEY = "discoveredCreatures";
 
 class CreatureLedger extends Application {
   static get defaultOptions() {
@@ -14,20 +15,48 @@ class CreatureLedger extends Application {
   }
 
   getData() {
+    const discoveredIds = new Set(game.settings.get("oot", SETTING_KEY));
     return {
-      creatures: game.actors.filter(a => a.type === "npc").map(a => ({
-        name: a.name,
-        img: a.img,
-        hp: a.system.attributes.hp.max,
-        ac: a.system.attributes.ac.value,
-        resistances: [...(a.system.traits.dr.value ?? [])].join(", ") || "—",
-        immunities: [...(a.system.traits.di.value ?? [])].join(", ") || "—"
-      }))
+      creatures: game.actors
+        .filter(a => a.type === "npc" && discoveredIds.has(a.id))
+        .map(a => ({
+          name: a.name,
+          img: a.img,
+          hp: a.system.attributes.hp.max,
+          ac: a.system.attributes.ac.value,
+          resistances: [...(a.system.traits.dr.value ?? [])].join(", ") || "—",
+          immunities:  [...(a.system.traits.di.value ?? [])].join(", ") || "—"
+        }))
     };
   }
 }
 
+function getDiscoveredIds() {
+  return game.settings.get("oot", SETTING_KEY);
+}
+
+async function toggleDiscovery(actorId) {
+  const ids = getDiscoveredIds();
+  const newIds = ids.includes(actorId)
+    ? ids.filter(id => id !== actorId)
+    : [...ids, actorId];
+  await game.settings.set("oot", SETTING_KEY, newIds);
+}
+
+function openCreatureLedger() {
+  const existing = Object.values(ui.windows).find(w => w instanceof CreatureLedger);
+  if (existing) { existing.bringToTop(); existing.render(true); }
+  else new CreatureLedger().render(true);
+}
+
 export function initCreatureLedger() {
+  game.settings.register("oot", SETTING_KEY, {
+    scope: "world",
+    config: false,
+    type: Array,
+    default: []
+  });
+
   Hooks.on("getSceneControlButtons", (controls) => {
     if (game.user.name !== PLAYER_NAME && !game.user.isGM) return;
     const tokenControls = controls.tokens || controls.token;
@@ -37,12 +66,40 @@ export function initCreatureLedger() {
         title: "Creature Ledger",
         icon: "fas fa-book-skull",
         button: true,
-        onClick: () => {
-          const existing = Object.values(ui.windows).find(w => w instanceof CreatureLedger);
-          if (existing) { existing.bringToTop(); existing.render(true); }
-          else new CreatureLedger().render(true);
-        }
+        onClick: () => openCreatureLedger()
       };
     }
+  });
+
+  Hooks.on("renderActorDirectory", (_app, html) => {
+    if (!game.user.isGM) return;
+    const discovered = new Set(getDiscoveredIds());
+    $(html).find("li[data-entry-id]").each((_i, el) => {
+      const actor = game.actors.get(el.dataset.entryId);
+      if (!actor || actor.type !== "npc") return;
+
+      const known = discovered.has(actor.id);
+      const btn = $(
+        `<a class="oot-discover-btn ${known ? "discovered" : ""}"
+            title="${known ? "Remove from Ledger" : "Add to Ledger"}">
+           <i class="fas fa-${known ? "eye" : "eye-slash"}"></i>
+         </a>`
+      );
+      btn.on("click", async e => {
+        e.preventDefault();
+        e.stopPropagation();
+        await toggleDiscovery(actor.id);
+      });
+
+      $(el).append(btn);
+    });
+  });
+
+  Hooks.on("updateSetting", setting => {
+    if (setting.key !== `oot.${SETTING_KEY}`) return;
+    for (const win of Object.values(ui.windows)) {
+      if (win instanceof CreatureLedger) win.render(false);
+    }
+    if (game.user.isGM) ui.actors?.render(false);
   });
 }
