@@ -2,6 +2,7 @@ import { PartyInventoryApplication } from './party-inventory-app.js';
 import { registerPartyInventorySettings } from './party-inventory-data.js';
 import { registerSocket } from './socket.js';
 import { StairController, initStairInteraction } from './stair-tool.js';
+import { initCreatureLedger } from './creature-ledger.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -37,6 +38,7 @@ Hooks.once('init', async function() {
   registerHandlebarsHelpers();
   registerPartyInventorySettings();
   initStairInteraction();
+  initCreatureLedger();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
@@ -66,7 +68,8 @@ Hooks.once('init', async function() {
   });
 
   await foundry.applications.handlebars.loadTemplates([
-    "modules/oot/templates/party-inventory.hbs"
+    "modules/oot/templates/party-inventory.hbs",
+    "modules/oot/templates/creature-ledger.hbs"
   ]);
 });
 

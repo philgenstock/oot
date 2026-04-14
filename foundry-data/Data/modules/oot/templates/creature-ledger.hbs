@@ -1,0 +1,18 @@
+<div class="creature-ledger-list">
+  {{#each creatures}}
+  <div class="creature-entry">
+    <img class="creature-portrait" src="{{img}}" alt="{{name}}" />
+    <div class="creature-info">
+      <h3 class="creature-name">{{name}}</h3>
+      <div class="creature-stats">
+        <span class="stat"><i class="fas fa-heart"></i> {{hp}}</span>
+        <span class="stat"><i class="fas fa-shield-halved"></i> {{ac}}</span>
+      </div>
+      <div class="creature-traits">
+        <div class="trait-row"><span class="trait-label">Resistances</span><span class="trait-value">{{resistances}}</span></div>
+        <div class="trait-row"><span class="trait-label">Immunities</span><span class="trait-value">{{immunities}}</span></div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
