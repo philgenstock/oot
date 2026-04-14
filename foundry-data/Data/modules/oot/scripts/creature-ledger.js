@@ -23,7 +23,7 @@ class CreatureLedger extends Application {
         .filter(a => a.type === "npc" && discoveredIds.has(a.id))
         .map(a => ({
           id: a.id,
-          name: a.name,
+          name: a.prototypeToken.name,
           img: a.img,
           hp: a.system.attributes.hp.max,
           ac: a.system.attributes.ac.value,
