@@ -1,7 +1,7 @@
 {{#if creatures.length}}
 <div class="creature-ledger-list">
   {{#each creatures}}
-  <div class="creature-entry">
+  <div class="creature-entry" data-actor-id="{{id}}">
     <img class="creature-portrait" src="{{img}}" alt="{{name}}" />
     <div class="creature-info">
       <h3 class="creature-name">{{name}}</h3>

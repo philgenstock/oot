@@ -1,6 +1,8 @@
 const PLAYER_NAME = "Joshi";
 const SETTING_KEY = "discoveredCreatures";
 
+let _prevDiscovered = null;
+
 class CreatureLedger extends Application {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -20,6 +22,7 @@ class CreatureLedger extends Application {
       creatures: game.actors
         .filter(a => a.type === "npc" && discoveredIds.has(a.id))
         .map(a => ({
+          id: a.id,
           name: a.name,
           img: a.img,
           hp: a.system.attributes.hp.max,
@@ -28,6 +31,11 @@ class CreatureLedger extends Application {
           immunities:  [...(a.system.traits.di.value ?? [])].join(", ") || "—"
         }))
     };
+  }
+
+  scrollTo(actorId) {
+    const el = this.element.find(`[data-actor-id="${actorId}"]`)[0];
+    el?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 }
 
@@ -43,6 +51,17 @@ async function toggleDiscovery(actorId) {
   await game.settings.set("oot", SETTING_KEY, newIds);
 }
 
+function openAndScrollTo(actorId) {
+  const existing = Object.values(ui.windows).find(w => w instanceof CreatureLedger);
+  Hooks.once("renderCreatureLedger", app => app.scrollTo(actorId));
+  if (existing) {
+    existing.bringToTop();
+    existing.render(true);
+  } else {
+    new CreatureLedger().render(true);
+  }
+}
+
 function openCreatureLedger() {
   const existing = Object.values(ui.windows).find(w => w instanceof CreatureLedger);
   if (existing) { existing.bringToTop(); existing.render(true); }
@@ -55,6 +74,10 @@ export function initCreatureLedger() {
     config: false,
     type: Array,
     default: []
+  });
+
+  Hooks.once("ready", () => {
+    _prevDiscovered = new Set(getDiscoveredIds());
   });
 
   Hooks.on("getSceneControlButtons", (controls) => {
@@ -97,9 +120,20 @@ export function initCreatureLedger() {
 
   Hooks.on("updateSetting", setting => {
     if (setting.key !== `oot.${SETTING_KEY}`) return;
+
+    const next = new Set(setting.value);
+    const added = [...next].filter(id => !_prevDiscovered?.has(id));
+    _prevDiscovered = next;
+
+    if (game.user.isGM) ui.actors?.render(false);
+
+    if (game.user.name === PLAYER_NAME && added.length > 0) {
+      openAndScrollTo(added[0]);
+      return;
+    }
+
     for (const win of Object.values(ui.windows)) {
       if (win instanceof CreatureLedger) win.render(false);
     }
-    if (game.user.isGM) ui.actors?.render(false);
   });
 }
