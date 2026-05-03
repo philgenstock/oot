@@ -66,6 +66,7 @@ export async function requestWildShape(actorUuid, beastUuid) {
   if (game.user.isGM) {
     await _gmWildShapeTransform({ actorUuid, beastUuid });
   } else {
+    if (!game.users.activeGM) throw new Error("No GM is currently online.");
     await _socket.executeAsGM("wildShapeTransform", { actorUuid, beastUuid });
   }
 }
@@ -80,6 +81,7 @@ export async function requestRevertWildShape(actorUuid) {
   if (game.user.isGM) {
     await _gmRevertWildShape({ actorUuid });
   } else {
+    if (!game.users.activeGM) throw new Error("No GM is currently online.");
     await _socket.executeAsGM("revertWildShape", { actorUuid });
   }
 }

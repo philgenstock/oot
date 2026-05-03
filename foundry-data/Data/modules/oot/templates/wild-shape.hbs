@@ -1,8 +1,14 @@
 <div class="oot-wild-shape-container">
+  {{#if noToken}}
+  <div class="wild-shape-empty">
+    <i class="fas fa-horse-head"></i>
+    <p>Select your token on the canvas first.</p>
+  </div>
+  {{else}}
   <div class="wild-shape-header">
     <div class="wild-shape-info">
       <i class="fas fa-paw"></i>
-      <span>{{actorName}} &mdash; Max CR <strong>{{crCap}}</strong></span>
+      <span>{{tokenName}} &mdash; Max CR <strong>{{crCap}}</strong></span>
     </div>
     <input type="text" class="wild-shape-search" placeholder="Search beasts...">
   </div>
@@ -41,5 +47,6 @@
     <i class="fas fa-paw"></i>
     <p>No beasts available for CR {{crCap}} or lower.</p>
   </div>
+  {{/if}}
   {{/if}}
 </div>

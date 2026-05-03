@@ -30,16 +30,32 @@ class WildShapeApplication extends Application {
     });
   }
 
-  get _actor() {
-    return game.user.character;
+  get _token() {
+    return canvas.tokens?.controlled[0] ?? null;
   }
 
+  get _actor() {
+    return this._token?.actor ?? null;
+  }
+
+  // Always computed from the assigned druid character so CR cap is correct
+  // even when the selected token is the beast form.
   get _crCap() {
-    const druidLevel = this._actor?.classes?.druid?.system?.levels ?? 0;
+    const druidLevel = game.user.character?.classes?.druid?.system?.levels ?? 0;
     return Math.max(1, Math.floor(druidLevel / 3));
   }
 
+  // dnd5e names the beast token "Brown Bear (Kalle)" — parentheses = polymorphed.
+  get _isPolymorphed() {
+    return /\(/.test(this._token?.name ?? "");
+  }
+
   getData() {
+    const token = this._token;
+    if (!token) {
+      return { noToken: true };
+    }
+
     const favorites = _getFavorites();
     const beasts = (this._beasts ?? [])
       .map(b => ({ ...b, starred: favorites.has(b.name) }))
@@ -49,18 +65,19 @@ class WildShapeApplication extends Application {
       });
 
     return {
+      noToken: false,
       loading: this._beasts === null,
       beasts,
-      actorName: this._actor?.name ?? "",
+      tokenName: token.name,
       crCap: _formatCR(this._crCap),
-      isPolymorphed: this._actor?.isPolymorphed ?? false
+      isPolymorphed: this._isPolymorphed
     };
   }
 
   activateListeners(html) {
     super.activateListeners(html);
 
-    if (this._beasts === null && !this._loading) {
+    if (this._token && this._beasts === null && !this._loading) {
       this._loading = true;
       this._fetchAndRender();
     }
@@ -89,38 +106,36 @@ class WildShapeApplication extends Application {
     const name = row.dataset.name;
     const favorites = _getFavorites();
 
-    if (favorites.has(name)) {
-      favorites.delete(name);
-    } else {
-      favorites.add(name);
-    }
+    favorites.has(name) ? favorites.delete(name) : favorites.add(name);
     await _saveFavorites(favorites);
 
     const isStarred = favorites.has(name);
-    const icon = event.currentTarget.querySelector('i');
-    icon.className = isStarred ? 'fas fa-star' : 'far fa-star';
+    event.currentTarget.querySelector('i').className = isStarred ? 'fas fa-star' : 'far fa-star';
     row.classList.toggle('starred', isStarred);
 
-    // Re-sort rows in place without re-rendering
     const list = this.element.find('.wild-shape-list')[0];
     if (!list) return;
-    const allFavorites = _getFavorites();
+    const current = _getFavorites();
     [...list.querySelectorAll('.beast-row')]
-      .sort((a, b) => {
-        const aS = allFavorites.has(a.dataset.name) ? 0 : 1;
-        const bS = allFavorites.has(b.dataset.name) ? 0 : 1;
-        return aS - bS;
-      })
+      .sort((a, b) => (current.has(a.dataset.name) ? 0 : 1) - (current.has(b.dataset.name) ? 0 : 1))
       .forEach(r => list.appendChild(r));
   }
 
   async _onSelectBeast(event) {
-    const { uuid } = event.currentTarget.dataset;
+    const { uuid, name } = event.currentTarget.dataset;
+    const token = this._token;
     const actor = this._actor;
-    if (!actor) {
-      ui.notifications.warn("No character assigned.");
+
+    if (!token || !actor) {
+      ui.notifications.warn("No token selected.");
       return;
     }
+
+    const confirmed = await Dialog.confirm({
+      title: "Wild Shape",
+      content: `<p>Transform <strong>${token.name}</strong> into <strong>${name}</strong>?</p>`
+    });
+    if (!confirmed) return;
 
     this.element.find('.beast-row').css('pointer-events', 'none');
     try {
@@ -133,8 +148,15 @@ class WildShapeApplication extends Application {
   }
 
   async _onRevert() {
+    const token = this._token;
     const actor = this._actor;
-    if (!actor) return;
+    if (!token || !actor) return;
+
+    const confirmed = await Dialog.confirm({
+      title: "Revert Wild Shape",
+      content: `<p>Revert <strong>${token.name}</strong> to original form?</p>`
+    });
+    if (!confirmed) return;
 
     this.element.find('.revert-btn').prop('disabled', true);
     try {
@@ -187,7 +209,6 @@ async function _loadBeasts(crCap) {
       if ((entry.system?.attributes?.movement?.fly ?? 0) > 0) continue;
       if ((entry.system?.attributes?.movement?.swim ?? 0) > 0) continue;
 
-      // Construct UUID — index entries include .uuid in Foundry v11+
       const uuid = entry.uuid ?? `Compendium.${pack.collection}.Actor.${entry._id}`;
 
       beasts.push({
@@ -201,7 +222,6 @@ async function _loadBeasts(crCap) {
     }
   }
 
-  // Deduplicate by name (first compendium wins)
   const seen = new Set();
   return beasts.filter(b => {
     if (seen.has(b.name)) return false;
