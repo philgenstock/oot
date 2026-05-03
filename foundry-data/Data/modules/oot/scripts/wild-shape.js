@@ -207,8 +207,7 @@ async function _loadBeasts(crCap) {
       const cr = entry.system?.details?.cr ?? 0;
       if (cr > crCap) continue;
       if ((entry.system?.attributes?.movement?.fly ?? 0) > 0) continue;
-      if ((entry.system?.attributes?.movement?.swim ?? 0) > 0) continue;
-
+      
       const uuid = entry.uuid ?? `Compendium.${pack.collection}.Actor.${entry._id}`;
 
       beasts.push({
