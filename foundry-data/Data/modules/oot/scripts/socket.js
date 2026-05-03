@@ -32,6 +32,7 @@ export function registerSocket() {
 
     // Wild Shape
     _socket.register("wildShapeTransform", _gmWildShapeTransform);
+    _socket.register("revertWildShape", _gmRevertWildShape);
   });
 }
 
@@ -66,6 +67,20 @@ export async function requestWildShape(actorUuid, beastUuid) {
     await _gmWildShapeTransform({ actorUuid, beastUuid });
   } else {
     await _socket.executeAsGM("wildShapeTransform", { actorUuid, beastUuid });
+  }
+}
+
+async function _gmRevertWildShape({ actorUuid }) {
+  const actor = await fromUuid(actorUuid);
+  if (!actor) throw new Error("Actor not found");
+  await actor.revertOriginalForm();
+}
+
+export async function requestRevertWildShape(actorUuid) {
+  if (game.user.isGM) {
+    await _gmRevertWildShape({ actorUuid });
+  } else {
+    await _socket.executeAsGM("revertWildShape", { actorUuid });
   }
 }
 

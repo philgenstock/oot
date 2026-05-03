@@ -7,6 +7,16 @@
     <input type="text" class="wild-shape-search" placeholder="Search beasts...">
   </div>
 
+  {{#if isPolymorphed}}
+  <div class="wild-shape-revert">
+    <i class="fas fa-paw"></i>
+    <span>Currently transformed</span>
+    <button type="button" class="revert-btn">
+      <i class="fas fa-rotate-left"></i> Revert
+    </button>
+  </div>
+  {{/if}}
+
   {{#if loading}}
   <div class="wild-shape-loading">
     <i class="fas fa-spinner fa-spin"></i>

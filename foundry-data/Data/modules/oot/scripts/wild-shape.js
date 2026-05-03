@@ -1,4 +1,4 @@
-import { requestWildShape } from './socket.js';
+import { requestWildShape, requestRevertWildShape } from './socket.js';
 
 const PLAYER_NAME = "Kalle";
 const FAVORITES_KEY = "wildShapeFavorites";
@@ -52,7 +52,8 @@ class WildShapeApplication extends Application {
       loading: this._beasts === null,
       beasts,
       actorName: this._actor?.name ?? "",
-      crCap: _formatCR(this._crCap)
+      crCap: _formatCR(this._crCap),
+      isPolymorphed: this._actor?.isPolymorphed ?? false
     };
   }
 
@@ -67,6 +68,7 @@ class WildShapeApplication extends Application {
     html.find('.wild-shape-search').on('input', e => this._onSearch(e));
     html.find('.beast-star').on('click', e => { e.stopPropagation(); this._onToggleStar(e); });
     html.find('.beast-row').on('click', e => this._onSelectBeast(e));
+    html.find('.revert-btn').on('click', () => this._onRevert());
   }
 
   async _fetchAndRender() {
@@ -127,6 +129,20 @@ class WildShapeApplication extends Application {
     } catch (e) {
       ui.notifications.error(`Wild Shape failed: ${e.message}`);
       this.element.find('.beast-row').css('pointer-events', '');
+    }
+  }
+
+  async _onRevert() {
+    const actor = this._actor;
+    if (!actor) return;
+
+    this.element.find('.revert-btn').prop('disabled', true);
+    try {
+      await requestRevertWildShape(actor.uuid);
+      this.close();
+    } catch (e) {
+      ui.notifications.error(`Revert failed: ${e.message}`);
+      this.element.find('.revert-btn').prop('disabled', false);
     }
   }
 }
