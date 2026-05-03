@@ -4,6 +4,7 @@ import { registerSocket } from './socket.js';
 import { StairController, initStairInteraction } from './stair-tool.js';
 import { initCreatureLedger } from './creature-ledger.js';
 import { BulkUploadApplication } from './bulk-upload-app.js';
+import { initWildShape } from './wild-shape.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -48,6 +49,7 @@ Hooks.once('init', async function() {
   registerPartyInventorySettings();
   initStairInteraction();
   initCreatureLedger();
+  initWildShape();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
@@ -88,7 +90,8 @@ Hooks.once('init', async function() {
   await foundry.applications.handlebars.loadTemplates([
     "modules/oot/templates/party-inventory.hbs",
     "modules/oot/templates/creature-ledger.hbs",
-    "modules/oot/templates/bulk-upload.hbs"
+    "modules/oot/templates/bulk-upload.hbs",
+    "modules/oot/templates/wild-shape.hbs"
   ]);
 });
 

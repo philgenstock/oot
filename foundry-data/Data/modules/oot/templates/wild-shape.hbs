@@ -1,0 +1,32 @@
+<div class="oot-wild-shape-container">
+  <div class="wild-shape-header">
+    <div class="wild-shape-info">
+      <i class="fas fa-paw"></i>
+      <span>{{actorName}} &mdash; Max CR <strong>{{crCap}}</strong></span>
+    </div>
+    <input type="text" class="wild-shape-search" placeholder="Search beasts...">
+  </div>
+
+  {{#if loading}}
+  <div class="wild-shape-loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    <span>Loading beasts...</span>
+  </div>
+  {{else if beasts.length}}
+  <div class="wild-shape-list">
+    {{#each beasts}}
+    <div class="beast-row" data-pack="{{pack}}" data-id="{{id}}" data-name="{{name}}">
+      <img class="beast-img" src="{{img}}" alt="{{name}}">
+      <div class="beast-name">{{name}}</div>
+      <div class="beast-size">{{size}}</div>
+      <div class="beast-cr">CR {{crDisplay}}</div>
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <div class="wild-shape-empty">
+    <i class="fas fa-paw"></i>
+    <p>No beasts available for CR {{crCap}} or lower.</p>
+  </div>
+  {{/if}}
+</div>
