@@ -1,0 +1,29 @@
+<div class="oot-bulk-upload-container">
+  <div class="upload-form-group">
+    <label><i class="fas fa-server"></i> Destination Folder on Server</label>
+    <div class="dest-path-row">
+      <input type="text" class="dest-path-input" placeholder="Select a destination folder..." readonly>
+      <button type="button" class="browse-dest"><i class="fas fa-folder-open"></i> Browse</button>
+    </div>
+  </div>
+
+  <div class="upload-form-group">
+    <label><i class="fas fa-folder"></i> Local Folder to Upload</label>
+    <input type="file" class="folder-input" webkitdirectory multiple>
+    <button type="button" class="select-folder"><i class="fas fa-upload"></i> Select Folder</button>
+    <div class="file-summary empty">No folder selected</div>
+  </div>
+
+  <div class="upload-progress">
+    <div class="upload-progress-bar">
+      <div class="upload-progress-fill"></div>
+    </div>
+    <div class="upload-progress-text">Preparing...</div>
+  </div>
+
+  <div class="upload-actions">
+    <button type="button" class="upload-btn" disabled>
+      <i class="fas fa-cloud-arrow-up"></i> Upload Files
+    </button>
+  </div>
+</div>

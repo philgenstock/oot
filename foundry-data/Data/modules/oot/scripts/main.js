@@ -1,8 +1,9 @@
-import { PartyInventoryApplication } from './party-inventory-app.js';
+﻿import { PartyInventoryApplication } from './party-inventory-app.js';
 import { registerPartyInventorySettings } from './party-inventory-data.js';
 import { registerSocket } from './socket.js';
 import { StairController, initStairInteraction } from './stair-tool.js';
 import { initCreatureLedger } from './creature-ledger.js';
+import { BulkUploadApplication } from './bulk-upload-app.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -30,6 +31,14 @@ Hooks.on('getSceneControlButtons', (controls) => {
       visible: game.user.isGM,
       onClick: () => game.oot.stairController.toggle()
     };
+    tokenControls.tools['oot-bulk-upload'] = {
+      name: "oot-bulk-upload",
+      title: "Bulk Asset Upload",
+      icon: "fas fa-cloud-arrow-up",
+      button: true,
+      visible: game.user.isGM,
+      onClick: () => game.oot.openBulkUpload()
+    };
   }
 });
 
@@ -52,7 +61,16 @@ Hooks.once('init', async function() {
       }
     },
     exportCreatures: exportCreaturesByFolder,
-    stairController: new StairController()
+    stairController: new StairController(),
+    openBulkUpload: () => {
+      const existing = Object.values(ui.windows).find(w => w instanceof BulkUploadApplication);
+      if (existing) {
+        existing.bringToTop();
+        existing.render(true);
+      } else {
+        new BulkUploadApplication().render(true);
+      }
+    }
   };
 
   game.keybindings.register("oot", "openPartyInventory", {
@@ -69,7 +87,8 @@ Hooks.once('init', async function() {
 
   await foundry.applications.handlebars.loadTemplates([
     "modules/oot/templates/party-inventory.hbs",
-    "modules/oot/templates/creature-ledger.hbs"
+    "modules/oot/templates/creature-ledger.hbs",
+    "modules/oot/templates/bulk-upload.hbs"
   ]);
 });
 
