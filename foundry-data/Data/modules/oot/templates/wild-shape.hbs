@@ -15,7 +15,10 @@
   {{else if beasts.length}}
   <div class="wild-shape-list">
     {{#each beasts}}
-    <div class="beast-row" data-pack="{{pack}}" data-id="{{id}}" data-name="{{name}}">
+    <div class="beast-row {{#if starred}}starred{{/if}}" data-uuid="{{uuid}}" data-name="{{name}}">
+      <button type="button" class="beast-star" title="{{#if starred}}Unstar{{else}}Star{{/if}}">
+        <i class="{{#if starred}}fas{{else}}far{{/if}} fa-star"></i>
+      </button>
       <img class="beast-img" src="{{img}}" alt="{{name}}">
       <div class="beast-name">{{name}}</div>
       <div class="beast-size">{{size}}</div>

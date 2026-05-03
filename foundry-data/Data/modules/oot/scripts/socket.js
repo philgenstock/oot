@@ -29,6 +29,9 @@ export function registerSocket() {
       if (userId !== game.user.id) return;
       game.scenes.get(destSceneId)?.view();
     });
+
+    // Wild Shape
+    _socket.register("wildShapeTransform", _gmWildShapeTransform);
   });
 }
 
@@ -38,6 +41,31 @@ export async function requestTeleport(payload) {
     await _gmTeleportToken(fullPayload);
   } else {
     await _socket.executeAsGM("teleportToken", fullPayload);
+  }
+}
+
+async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
+  const actor = await fromUuid(actorUuid);
+  if (!actor) throw new Error("Actor not found");
+
+  const beast = await fromUuid(beastUuid);
+  if (!beast) throw new Error("Beast not found in compendium");
+
+  // dnd5e 3.3+ changed transformInto to (target, settings, options)
+  // where settings must be a DataModel. Older versions used (target, options).
+  const isNewAPI = foundry.utils.isNewerVersion(game.system.version, "3.2.9");
+  if (isNewAPI) {
+    await actor.transformInto(beast, undefined, { wildShape: true });
+  } else {
+    await actor.transformInto(beast, { wildShape: true });
+  }
+}
+
+export async function requestWildShape(actorUuid, beastUuid) {
+  if (game.user.isGM) {
+    await _gmWildShapeTransform({ actorUuid, beastUuid });
+  } else {
+    await _socket.executeAsGM("wildShapeTransform", { actorUuid, beastUuid });
   }
 }
 
