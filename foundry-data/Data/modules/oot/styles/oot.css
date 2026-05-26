@@ -353,6 +353,16 @@
   background: var(--color-bg-btn-hover, #e0e0d0);
 }
 
+.item-row .item-actions input[type="number"] {
+  width: 38px;
+  height: 28px;
+  padding: 0 4px;
+  text-align: center;
+  border: 1px solid var(--color-border-light-primary, #b5b3a4);
+  border-radius: 3px;
+  font-size: 0.82rem;
+}
+
 .item-row .item-to-party:hover,
 .item-row .item-to-character:hover {
   color: #357abd;

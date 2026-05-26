@@ -114,9 +114,9 @@ export class PartyInventoryApplication extends Application {
       html.find(`.party-tab-pane[data-tab="${tab}"]`).show();
     });
 
-    html.find('.item-to-party-one').on('click', this._onMoveOneToParty.bind(this));
+    html.find('.item-to-party-qty').on('click', this._onMoveQtyToParty.bind(this));
     html.find('.item-to-party-all').on('click', this._onMoveAllToParty.bind(this));
-    html.find('.item-to-character-one').on('click', this._onMoveOneToCharacter.bind(this));
+    html.find('.item-to-character-qty').on('click', this._onMoveQtyToCharacter.bind(this));
     html.find('.item-to-character-all').on('click', this._onMoveAllToCharacter.bind(this));
 
     html.find('.party-item').on('mouseenter', async (event) => {
@@ -225,9 +225,11 @@ export class PartyInventoryApplication extends Application {
     }
   }
 
-  async _onMoveOneToParty(event) {
+  async _onMoveQtyToParty(event) {
     event.preventDefault();
-    const itemId = event.currentTarget.closest('.character-item').dataset.itemId;
+    const row = event.currentTarget.closest('.character-item');
+    const itemId = row.dataset.itemId;
+    const qty = Math.max(1, parseInt(row.querySelector('.item-share-qty')?.value) || 1);
     const actor = this.currentActor;
 
     if (!actor) return;
@@ -235,8 +237,8 @@ export class PartyInventoryApplication extends Application {
     const item = actor.items.get(itemId);
     if (!item) return;
 
-    await transferToPartyInventory(actor, itemId, 1);
-    ui.notifications.info(`Moved 1 ${item.name} to party inventory.`);
+    await transferToPartyInventory(actor, itemId, qty);
+    ui.notifications.info(`Moved ${qty} ${item.name} to party inventory.`);
     this.render(false);
   }
 
@@ -255,9 +257,11 @@ export class PartyInventoryApplication extends Application {
     this.render(false);
   }
 
-  async _onMoveOneToCharacter(event) {
+  async _onMoveQtyToCharacter(event) {
     event.preventDefault();
-    const itemId = event.currentTarget.closest('.party-item').dataset.itemId;
+    const row = event.currentTarget.closest('.party-item');
+    const itemId = row.dataset.itemId;
+    const qty = Math.max(1, parseInt(row.querySelector('.item-take-qty')?.value) || 1);
     const actor = this.currentActor;
 
     if (!actor) {
@@ -265,9 +269,9 @@ export class PartyInventoryApplication extends Application {
       return;
     }
 
-    const item = await transferFromPartyInventory(itemId, actor, 1);
+    const item = await transferFromPartyInventory(itemId, actor, qty);
     if (item) {
-      ui.notifications.info(`Received 1 ${item.name} from party inventory.`);
+      ui.notifications.info(`Received ${qty} ${item.name} from party inventory.`);
     }
     this.render(false);
   }
