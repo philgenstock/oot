@@ -73,9 +73,34 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
       updates["system.attributes.ac.calc"] = "flat";
     }
 
-    const tempHP = 3 * druidLevel;
-    if (tempHP > 0) {
-      updates["system.attributes.hp.temp"] = tempHP;
+    if (druidLevel > 0) {
+      updates["system.attributes.hp.temp"] = 3 * druidLevel;
+    }
+
+    for (const key of ["int", "wis", "cha"]) {
+      const druidScore = actor.system.abilities[key]?.value ?? 10;
+      const beastScore = beastActor.system.abilities[key]?.value ?? 10;
+      updates[`system.abilities.${key}.value`] = Math.max(druidScore, beastScore);
+    }
+
+    if (actor.system.attributes.prof) {
+      updates["system.attributes.prof"] = actor.system.attributes.prof;
+    }
+
+    for (const [key, ability] of Object.entries(actor.system.abilities ?? {})) {
+      const druidProf = ability.proficient ?? 0;
+      const beastProf = beastActor.system.abilities[key]?.proficient ?? 0;
+      if (druidProf > beastProf) {
+        updates[`system.abilities.${key}.proficient`] = druidProf;
+      }
+    }
+
+    for (const [key, skill] of Object.entries(actor.system.skills ?? {})) {
+      const druidProf = skill.value ?? 0;
+      const beastProf = beastActor.system.skills[key]?.value ?? 0;
+      if (druidProf > beastProf) {
+        updates[`system.skills.${key}.value`] = druidProf;
+      }
     }
 
     if (Object.keys(updates).length) await beastActor.update(updates);
