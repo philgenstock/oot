@@ -192,6 +192,30 @@
   color: var(--color-text-dark-secondary, #4b4a44);
 }
 
+.inventory-panel h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.vigil-toggle {
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--color-border-light-primary, #b5b3a4);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--color-text-dark-secondary, #4b4a44);
+  line-height: 1;
+}
+
+.vigil-toggle:hover {
+  background: var(--color-bg-btn-hover, #e0e0d0);
+}
+
 .quick-add-buttons {
   display: flex;
   gap: 0.25rem;

@@ -1,4 +1,5 @@
 const PARTY_INVENTORY_SETTING_KEY = "partyInventoryData";
+export const VIGIL_ACTOR_NAME = "Vigil Custodis I";
 
 let _socket = null;
 
@@ -158,6 +159,98 @@ export async function updatePartyInventoryItem(itemId, updates) {
   if (!_requireActiveGM()) return null;
   return _socket.executeAsGM("updateItem", { itemId, updates });
 }
+
+// ---- Vigil Custodis inventory (actor-backed) ----
+
+export async function _gmVigilGiveItem({ fromActorId, itemId, quantity }) {
+  const fromActor = game.actors.get(fromActorId);
+  const vigilActor = game.actors.getName(VIGIL_ACTOR_NAME);
+  if (!fromActor || !vigilActor) return null;
+
+  const item = fromActor.items.get(itemId);
+  if (!item) return null;
+
+  const itemData = item.toObject();
+  const currentQty = itemData.system?.quantity || 1;
+  const transferQty = quantity ?? currentQty;
+
+  if (transferQty >= currentQty) {
+    await item.delete();
+    itemData.system.quantity = currentQty;
+  } else {
+    await item.update({ "system.quantity": currentQty - transferQty });
+    itemData.system.quantity = transferQty;
+  }
+
+  const existing = vigilActor.items.find(i =>
+    i.name === itemData.name && i.type === itemData.type && i.img === itemData.img
+  );
+  if (existing) {
+    await existing.update({ "system.quantity": (existing.system?.quantity || 1) + itemData.system.quantity });
+  } else {
+    await vigilActor.createEmbeddedDocuments("Item", [itemData]);
+  }
+
+  _broadcast({ action: "vigil-update" });
+  return true;
+}
+
+export async function _gmVigilTakeItem({ vigilItemId, toActorId, quantity }) {
+  const vigilActor = game.actors.getName(VIGIL_ACTOR_NAME);
+  const toActor = game.actors.get(toActorId);
+  if (!vigilActor || !toActor) return null;
+
+  const vigilItem = vigilActor.items.get(vigilItemId);
+  if (!vigilItem) return null;
+
+  const itemData = vigilItem.toObject();
+  const currentQty = itemData.system?.quantity || 1;
+  const transferQty = quantity ?? currentQty;
+
+  if (transferQty >= currentQty) {
+    await vigilItem.delete();
+    itemData.system.quantity = currentQty;
+  } else {
+    await vigilItem.update({ "system.quantity": currentQty - transferQty });
+    itemData.system.quantity = transferQty;
+  }
+
+  _broadcast({ action: "vigil-update" });
+  return { itemData };
+}
+
+export async function transferToVigilInventory(fromActor, itemId, quantity = null) {
+  if (!_requireActiveGM()) return null;
+  if (game.user.isGM) return _gmVigilGiveItem({ fromActorId: fromActor.id, itemId, quantity });
+  return _socket.executeAsGM("vigilGiveItem", { fromActorId: fromActor.id, itemId, quantity });
+}
+
+export async function transferFromVigilInventory(vigilItemId, toActor, quantity = null) {
+  let result;
+  if (game.user.isGM) {
+    result = await _gmVigilTakeItem({ vigilItemId, toActorId: toActor.id, quantity });
+  } else {
+    if (!_requireActiveGM()) return null;
+    result = await _socket.executeAsGM("vigilTakeItem", { vigilItemId, toActorId: toActor.id, quantity });
+  }
+
+  if (!result) {
+    ui.notifications.error("Item not found in Vigil Custodis inventory.");
+    return null;
+  }
+
+  const { itemData } = result;
+  const existing = findStackableActorItem(toActor, itemData);
+  if (existing) {
+    await existing.update({ "system.quantity": (existing.system?.quantity || 1) + itemData.system.quantity });
+    return existing;
+  }
+
+  const created = await toActor.createEmbeddedDocuments("Item", [itemData]);
+  return created[0];
+}
+
+// ---- Party inventory ----
 
 export async function transferToPartyInventory(actor, itemId, quantity = null) {
   if (!_requireActiveGM()) return null;

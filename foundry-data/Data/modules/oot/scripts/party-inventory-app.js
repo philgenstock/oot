@@ -2,7 +2,10 @@ import {
   getPartyInventoryItems,
   transferToPartyInventory,
   transferFromPartyInventory,
-  addItemToPartyInventory
+  addItemToPartyInventory,
+  transferToVigilInventory,
+  transferFromVigilInventory,
+  VIGIL_ACTOR_NAME
 } from './party-inventory-data.js';
 
 export class PartyInventoryApplication extends Application {
@@ -10,6 +13,8 @@ export class PartyInventoryApplication extends Application {
     super(options);
     this._onPartyInventoryChanged = this._onPartyInventoryChanged.bind(this);
     this._activePartyTab = "potions";
+    this._transferring = false;
+    this._vigilMode = false;
   }
 
   static get defaultOptions() {
@@ -31,23 +36,45 @@ export class PartyInventoryApplication extends Application {
 
   getData() {
     const actor = this.currentActor;
-    const partyItems = getPartyInventoryItems();
     const characterItems = actor ? this._getCharacterItems(actor) : [];
 
+    const rawItems = this._vigilMode
+      ? this._getVigilItems()
+      : getPartyInventoryItems();
+
     const partyCategories = { potions: [], scrolls: [], weapons: [], misc: [] };
-    for (const item of partyItems) {
+    for (const item of rawItems) {
       partyCategories[this._categorizePartyItem(item)].push(item);
     }
 
     return {
-      actor: actor,
+      actor,
       hasActor: !!actor,
       partyCategories,
       activePartyTab: this._activePartyTab,
-      characterItems: characterItems,
+      characterItems,
       hasCharacterItems: characterItems.length > 0,
-      isGM: game.user.isGM
+      isGM: game.user.isGM,
+      vigilMode: this._vigilMode,
+      vigilActorName: VIGIL_ACTOR_NAME
     };
+  }
+
+  _getVigilItems() {
+    const vigilActor = game.actors.getName(VIGIL_ACTOR_NAME);
+    if (!vigilActor) return [];
+    const validTypes = ["weapon", "equipment", "consumable", "tool", "loot", "container"];
+    return vigilActor.items
+      .filter(i => validTypes.includes(i.type))
+      .map(i => ({
+        id: i.id,
+        name: i.name,
+        img: i.img,
+        type: i.type,
+        quantity: i.system?.quantity || 1,
+        system: i.system,
+        flags: i.flags ?? {}
+      }));
   }
 
   _categorizePartyItem(item) {
@@ -135,6 +162,11 @@ export class PartyInventoryApplication extends Application {
       game.tooltip.tooltip.innerHTML = await this._buildItemTooltip(itemData);
     }).on('mouseleave', () => game.tooltip.deactivate());
 
+    html.find('.vigil-toggle').on('click', () => {
+      this._vigilMode = !this._vigilMode;
+      this.render(false);
+    });
+
     html.find('.quick-add-item').on('click', this._onQuickAddItem.bind(this));
   }
 
@@ -177,6 +209,7 @@ export class PartyInventoryApplication extends Application {
   async _onDropToParty(event) {
     event.preventDefault();
     event.currentTarget.classList.remove('drag-hover');
+    if (this._transferring) return;
 
     let data;
     try {
@@ -195,8 +228,8 @@ export class PartyInventoryApplication extends Application {
         return;
       }
 
-      await transferToPartyInventory(actor, item.id);
-      ui.notifications.info(`Moved ${item.name} to party inventory.`);
+      await this._transferToInventory(actor, item.id, null);
+      ui.notifications.info(`Moved ${item.name} to ${this._vigilMode ? VIGIL_ACTOR_NAME : "party inventory"}.`);
       this.render(false);
     }
   }
@@ -204,6 +237,7 @@ export class PartyInventoryApplication extends Application {
   async _onDropToCharacter(event) {
     event.preventDefault();
     event.currentTarget.classList.remove('drag-hover');
+    if (this._transferring) return;
 
     const actor = this.currentActor;
     if (!actor) {
@@ -219,9 +253,39 @@ export class PartyInventoryApplication extends Application {
     }
 
     if (data.type === "PartyInventoryItem" && data.itemId) {
-      await transferFromPartyInventory(data.itemId, actor);
-      ui.notifications.info(`Received item from party inventory.`);
+      await this._transferFromInventory(data.itemId, actor, null);
+      ui.notifications.info(`Received item from ${this._vigilMode ? VIGIL_ACTOR_NAME : "party inventory"}.`);
       this.render(false);
+    }
+  }
+
+  async _transferToInventory(actor, itemId, qty) {
+    if (this._vigilMode) return transferToVigilInventory(actor, itemId, qty);
+    return transferToPartyInventory(actor, itemId, qty);
+  }
+
+  async _transferFromInventory(itemId, actor, qty) {
+    if (this._vigilMode) return transferFromVigilInventory(itemId, actor, qty);
+    return transferFromPartyInventory(itemId, actor, qty);
+  }
+
+  async _withTransferLock(event, fn) {
+    if (this._transferring) return;
+    this._transferring = true;
+
+    const icon = event.currentTarget.querySelector('i');
+    const savedClass = icon?.className;
+    if (icon) icon.className = 'fas fa-spinner fa-spin';
+    this.element.find('.item-actions button, .item-actions input').prop('disabled', true);
+
+    try {
+      await fn();
+    } catch (e) {
+      ui.notifications.error(`Transfer failed: ${e.message}`);
+    } finally {
+      this._transferring = false;
+      if (icon && savedClass) icon.className = savedClass;
+      this.element.find('.item-actions button, .item-actions input').prop('disabled', false);
     }
   }
 
@@ -230,31 +294,29 @@ export class PartyInventoryApplication extends Application {
     const row = event.currentTarget.closest('.character-item');
     const itemId = row.dataset.itemId;
     const qty = Math.max(1, parseInt(row.querySelector('.item-share-qty')?.value) || 1);
-    const actor = this.currentActor;
-
-    if (!actor) return;
-
-    const item = actor.items.get(itemId);
-    if (!item) return;
-
-    await transferToPartyInventory(actor, itemId, qty);
-    ui.notifications.info(`Moved ${qty} ${item.name} to party inventory.`);
-    this.render(false);
+    await this._withTransferLock(event, async () => {
+      const actor = this.currentActor;
+      if (!actor) return;
+      const item = actor.items.get(itemId);
+      if (!item) return;
+      await this._transferToInventory(actor, itemId, qty);
+      ui.notifications.info(`Moved ${qty} ${item.name} to ${this._vigilMode ? VIGIL_ACTOR_NAME : "party inventory"}.`);
+      this.render(false);
+    });
   }
 
   async _onMoveAllToParty(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest('.character-item').dataset.itemId;
-    const actor = this.currentActor;
-
-    if (!actor) return;
-
-    const item = actor.items.get(itemId);
-    if (!item) return;
-
-    await transferToPartyInventory(actor, itemId);
-    ui.notifications.info(`Moved ${item.name} to party inventory.`);
-    this.render(false);
+    await this._withTransferLock(event, async () => {
+      const actor = this.currentActor;
+      if (!actor) return;
+      const item = actor.items.get(itemId);
+      if (!item) return;
+      await this._transferToInventory(actor, itemId, null);
+      ui.notifications.info(`Moved ${item.name} to ${this._vigilMode ? VIGIL_ACTOR_NAME : "party inventory"}.`);
+      this.render(false);
+    });
   }
 
   async _onMoveQtyToCharacter(event) {
@@ -262,39 +324,30 @@ export class PartyInventoryApplication extends Application {
     const row = event.currentTarget.closest('.party-item');
     const itemId = row.dataset.itemId;
     const qty = Math.max(1, parseInt(row.querySelector('.item-take-qty')?.value) || 1);
-    const actor = this.currentActor;
-
-    if (!actor) {
-      ui.notifications.error("You need an assigned character to receive items.");
-      return;
-    }
-
-    const item = await transferFromPartyInventory(itemId, actor, qty);
-    if (item) {
-      ui.notifications.info(`Received ${qty} ${item.name} from party inventory.`);
-    }
-    this.render(false);
+    await this._withTransferLock(event, async () => {
+      const actor = this.currentActor;
+      if (!actor) { ui.notifications.error("You need an assigned character to receive items."); return; }
+      const item = await this._transferFromInventory(itemId, actor, qty);
+      if (item) ui.notifications.info(`Received ${qty} ${item.name} from ${this._vigilMode ? VIGIL_ACTOR_NAME : "party inventory"}.`);
+      this.render(false);
+    });
   }
 
   async _onMoveAllToCharacter(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest('.party-item').dataset.itemId;
-    const actor = this.currentActor;
-
-    if (!actor) {
-      ui.notifications.error("You need an assigned character to receive items.");
-      return;
-    }
-
-    const item = await transferFromPartyInventory(itemId, actor);
-    if (item) {
-      ui.notifications.info(`Received ${item.name} from party inventory.`);
-    }
-    this.render(false);
+    await this._withTransferLock(event, async () => {
+      const actor = this.currentActor;
+      if (!actor) { ui.notifications.error("You need an assigned character to receive items."); return; }
+      const item = await this._transferFromInventory(itemId, actor, null);
+      if (item) ui.notifications.info(`Received ${item.name} from ${this._vigilMode ? VIGIL_ACTOR_NAME : "party inventory"}.`);
+      this.render(false);
+    });
   }
 
   async _onQuickAddItem(event) {
     event.preventDefault();
+    if (this._transferring) return;
     const itemKey = event.currentTarget.dataset.item;
     const itemData = await this._getQuickAddItemData(itemKey);
 

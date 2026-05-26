@@ -12,8 +12,14 @@
 
   <div class="inventory-columns">
     <section class="party-inventory-section inventory-panel">
-      <h3><i class="fas fa-users"></i> Party Inventory</h3>
-      {{#if isGM}}
+      <h3>
+        <i class="fas fa-{{#if vigilMode}}shield-halved{{else}}users{{/if}}"></i>
+        {{#if vigilMode}}&ldquo;Our&rdquo;{{else}}Party{{/if}} Inventory
+        <button type="button" class="vigil-toggle" title="Switch to {{#if vigilMode}}Party Inventory{{else}}{{vigilActorName}}{{/if}}">
+          <i class="fas fa-right-left"></i>
+        </button>
+      </h3>
+      {{#if isGM}}{{#unless vigilMode}}
         <div class="quick-add-buttons">
           <button type="button" class="quick-add-item" data-item="rations" title="Add Rations">
             <i class="fas fa-drumstick-bite"></i> Rations
@@ -25,7 +31,7 @@
             <i class="fas fa-arrow-up"></i> Growth
           </button>
         </div>
-      {{/if}}
+      {{/unless}}{{/if}}
       <p class="drop-hint">Drag items here to share with the party</p>
 
       <div class="party-tabs">
@@ -52,7 +58,7 @@
                 <span class="item-name">{{name}}</span>
                 <span class="item-meta">
                   {{#if (gt quantity 1)}}<span class="item-quantity">x{{quantity}}</span>{{/if}}
-                  <span class="item-added">Added by {{addedBy}}</span>
+                  {{#if addedBy}}<span class="item-added">Added by {{addedBy}}</span>{{/if}}
                 </span>
               </div>
               {{#if ../hasActor}}
@@ -80,7 +86,7 @@
                 <span class="item-name">{{name}}</span>
                 <span class="item-meta">
                   {{#if (gt quantity 1)}}<span class="item-quantity">x{{quantity}}</span>{{/if}}
-                  <span class="item-added">Added by {{addedBy}}</span>
+                  {{#if addedBy}}<span class="item-added">Added by {{addedBy}}</span>{{/if}}
                 </span>
               </div>
               {{#if ../hasActor}}
@@ -108,7 +114,7 @@
                 <span class="item-name">{{name}}</span>
                 <span class="item-meta">
                   {{#if (gt quantity 1)}}<span class="item-quantity">x{{quantity}}</span>{{/if}}
-                  <span class="item-added">Added by {{addedBy}}</span>
+                  {{#if addedBy}}<span class="item-added">Added by {{addedBy}}</span>{{/if}}
                 </span>
               </div>
               {{#if ../hasActor}}
@@ -136,7 +142,7 @@
                 <span class="item-name">{{name}}</span>
                 <span class="item-meta">
                   {{#if (gt quantity 1)}}<span class="item-quantity">x{{quantity}}</span>{{/if}}
-                  <span class="item-added">Added by {{addedBy}}</span>
+                  {{#if addedBy}}<span class="item-added">Added by {{addedBy}}</span>{{/if}}
                 </span>
               </div>
               {{#if ../hasActor}}

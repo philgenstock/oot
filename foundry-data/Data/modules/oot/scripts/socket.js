@@ -3,7 +3,9 @@ import {
   _gmAddItem,
   _gmRemoveItem,
   _gmUpdateItem,
-  _gmRemoveFromParty
+  _gmRemoveFromParty,
+  _gmVigilGiveItem,
+  _gmVigilTakeItem
 } from './party-inventory-data.js';
 
 let _socket = null;
@@ -29,6 +31,10 @@ export function registerSocket() {
       if (userId !== game.user.id) return;
       game.scenes.get(destSceneId)?.view();
     });
+
+    // Vigil Custodis inventory
+    _socket.register("vigilGiveItem", _gmVigilGiveItem);
+    _socket.register("vigilTakeItem", _gmVigilTakeItem);
 
     // Wild Shape
     _socket.register("wildShapeTransform", _gmWildShapeTransform);
