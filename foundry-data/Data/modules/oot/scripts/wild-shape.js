@@ -64,13 +64,19 @@ class WildShapeApplication extends Application {
         return a.cr - b.cr || a.name.localeCompare(b.name);
       });
 
+    const wildShapeItem = _getWildShapeItem(game.user.character);
+    const wildShapeCharges = wildShapeItem?.system?.uses?.value ?? 0;
+    const wildShapeMax = wildShapeItem?.system?.uses?.max ?? 0;
+
     return {
       noToken: false,
       loading: this._beasts === null,
       beasts,
       tokenName: token.name,
       crCap: _formatCR(this._crCap),
-      isPolymorphed: this._isPolymorphed
+      isPolymorphed: this._isPolymorphed,
+      wildShapeCharges,
+      wildShapeMax
     };
   }
 
@@ -131,6 +137,16 @@ class WildShapeApplication extends Application {
       return;
     }
 
+    const wildShapeItem = _getWildShapeItem(game.user.character);
+    if (!wildShapeItem) {
+      ui.notifications.warn("Wild Shape feature not found on your character.");
+      return;
+    }
+    if (wildShapeItem.system.uses.value <= 0) {
+      ui.notifications.warn("No Wild Shape charges remaining.");
+      return;
+    }
+
     const confirmed = await Dialog.confirm({
       title: "Wild Shape",
       content: `<p>Transform <strong>${token.name}</strong> into <strong>${name}</strong>?</p>`
@@ -139,6 +155,7 @@ class WildShapeApplication extends Application {
 
     this.element.find('.beast-row').css('pointer-events', 'none');
     try {
+      await wildShapeItem.update({ "system.uses.spent": (wildShapeItem.system.uses.spent ?? 0) + 1 });
       await requestWildShape(actor.uuid, uuid);
       this.close();
     } catch (e) {
@@ -167,6 +184,13 @@ class WildShapeApplication extends Application {
       this.element.find('.revert-btn').prop('disabled', false);
     }
   }
+}
+
+// ---- Wild Shape charge helpers ----
+
+function _getWildShapeItem(actor) {
+  if (!actor) return null;
+  return actor.items.find(i => i.name === "Wild Shape" && (i.system?.uses?.max ?? 0) > 0) ?? null;
 }
 
 // ---- Favorites helpers ----
@@ -248,7 +272,7 @@ export function initWildShape() {
   });
 
   Hooks.on("getSceneControlButtons", (controls) => {
-    if (game.user.name !== PLAYER_NAME) return;
+    if (game.user.name !== PLAYER_NAME && !game.user.isGM) return;
     const tokenControls = controls.tokens || controls.token;
     if (!tokenControls?.tools) return;
     tokenControls.tools["oot-wild-shape"] = {

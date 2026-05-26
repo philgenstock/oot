@@ -583,6 +583,17 @@
   color: var(--color-text-dark-primary, #191813);
 }
 
+.wild-shape-charges {
+  margin-left: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--color-text-dark-secondary, #4b4a44);
+}
+
+.wild-shape-charges.no-charges {
+  color: #c0392b;
+  font-weight: bold;
+}
+
 .wild-shape-revert {
   display: flex;
   align-items: center;

@@ -9,6 +9,9 @@
     <div class="wild-shape-info">
       <i class="fas fa-paw"></i>
       <span>{{tokenName}} &mdash; Max CR <strong>{{crCap}}</strong></span>
+      <span class="wild-shape-charges {{#unless wildShapeCharges}}no-charges{{/unless}}">
+        <i class="fas fa-bolt"></i> <strong>{{wildShapeCharges}}</strong>/{{wildShapeMax}}
+      </span>
     </div>
     <input type="text" class="wild-shape-search" placeholder="Search beasts...">
   </div>
