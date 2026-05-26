@@ -52,13 +52,25 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
   const beast = await fromUuid(beastUuid);
   if (!beast) throw new Error("Beast not found in compendium");
 
-  // dnd5e 3.3+ changed transformInto to (target, settings, options)
-  // where settings must be a DataModel. Older versions used (target, options).
+  const wisMod = actor.system?.abilities?.wis?.mod ?? 0;
+  const actorId = actor.id;
+
   const isNewAPI = foundry.utils.isNewerVersion(game.system.version, "3.2.9");
   if (isNewAPI) {
     await actor.transformInto(beast, undefined, { wildShape: true });
   } else {
     await actor.transformInto(beast, { wildShape: true });
+  }
+
+  const beastActor = game.actors.find(a => a.getFlag("dnd5e", "originalActor") === actorId);
+  if (beastActor) {
+    const druidAC = 13 + wisMod;
+    if (druidAC > beastActor.system.attributes.ac.value) {
+      await beastActor.update({
+        "system.attributes.ac.flat": druidAC,
+        "system.attributes.ac.calc": "flat"
+      });
+    }
   }
 }
 
