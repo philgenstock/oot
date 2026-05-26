@@ -53,6 +53,7 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
   if (!beast) throw new Error("Beast not found in compendium");
 
   const wisMod = actor.system?.abilities?.wis?.mod ?? 0;
+  const druidLevel = actor.classes?.druid?.system?.levels ?? 0;
   const actorId = actor.id;
 
   const isNewAPI = foundry.utils.isNewerVersion(game.system.version, "3.2.9");
@@ -64,13 +65,20 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
 
   const beastActor = game.actors.find(a => a.getFlag("dnd5e", "originalActor") === actorId);
   if (beastActor) {
+    const updates = {};
+
     const druidAC = 13 + wisMod;
     if (druidAC > beastActor.system.attributes.ac.value) {
-      await beastActor.update({
-        "system.attributes.ac.flat": druidAC,
-        "system.attributes.ac.calc": "flat"
-      });
+      updates["system.attributes.ac.flat"] = druidAC;
+      updates["system.attributes.ac.calc"] = "flat";
     }
+
+    const tempHP = 3 * druidLevel;
+    if (tempHP > 0) {
+      updates["system.attributes.hp.temp"] = tempHP;
+    }
+
+    if (Object.keys(updates).length) await beastActor.update(updates);
   }
 }
 
