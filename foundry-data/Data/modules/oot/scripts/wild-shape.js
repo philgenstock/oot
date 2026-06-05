@@ -41,7 +41,7 @@ class WildShapeApplication extends Application {
   // Always computed from the assigned druid character so CR cap is correct
   // even when the selected token is the beast form.
   get _crCap() {
-    const druidLevel = game.user.character?.classes?.druid?.system?.levels ?? 0;
+    const druidLevel = this._actor?.classes?.druid?.system?.levels ?? 0;
     return Math.max(1, Math.floor(druidLevel / 3));
   }
 
@@ -64,7 +64,7 @@ class WildShapeApplication extends Application {
         return a.cr - b.cr || a.name.localeCompare(b.name);
       });
 
-    const wildShapeItem = _getWildShapeItem(game.user.character);
+    const wildShapeItem = _getWildShapeItem(this._actor);
     const wildShapeCharges = wildShapeItem?.system?.uses?.value ?? 0;
     const wildShapeMax = wildShapeItem?.system?.uses?.max ?? 0;
 
@@ -137,7 +137,7 @@ class WildShapeApplication extends Application {
       return;
     }
 
-    const wildShapeItem = _getWildShapeItem(game.user.character);
+    const wildShapeItem = _getWildShapeItem(actor);
     if (!wildShapeItem) {
       ui.notifications.warn("Wild Shape feature not found on your character.");
       return;
@@ -155,7 +155,9 @@ class WildShapeApplication extends Application {
 
     this.element.find('.beast-row').css('pointer-events', 'none');
     try {
+      console.log("OOT | WildShape | Requesting transform", { actorUuid: actor.uuid, beastUuid: uuid, beastName: name });
       await wildShapeItem.update({ "system.uses.spent": (wildShapeItem.system.uses.spent ?? 0) + 1 });
+      console.log("OOT | WildShape | Charge spent, calling requestWildShape");
       await requestWildShape(actor.uuid, uuid);
       this.close();
     } catch (e) {

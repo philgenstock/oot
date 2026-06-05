@@ -52,65 +52,80 @@ export async function requestTeleport(payload) {
 }
 
 async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
+  console.log("OOT | WildShape | _gmWildShapeTransform called", { actorUuid, beastUuid });
+
   const actor = await fromUuid(actorUuid);
-  if (!actor) throw new Error("Actor not found");
+  if (!actor) { console.error("OOT | WildShape | Actor not found for uuid", actorUuid); throw new Error("Actor not found"); }
+  console.log("OOT | WildShape | Actor resolved:", actor.name, actor.id);
 
   const beast = await fromUuid(beastUuid);
-  if (!beast) throw new Error("Beast not found in compendium");
+  if (!beast) { console.error("OOT | WildShape | Beast not found for uuid", beastUuid); throw new Error("Beast not found in compendium"); }
 
   const wisMod = actor.system?.abilities?.wis?.mod ?? 0;
   const druidLevel = actor.classes?.druid?.system?.levels ?? 0;
   const actorId = actor.id;
 
+
   const isNewAPI = foundry.utils.isNewerVersion(game.system.version, "3.2.9");
-  if (isNewAPI) {
-    await actor.transformInto(beast, undefined, { wildShape: true });
-  } else {
-    await actor.transformInto(beast, { wildShape: true });
+
+  try {
+    if (isNewAPI) {
+      await actor.transformInto(beast, undefined, { wildShape: true });
+    } else {
+      await actor.transformInto(beast, { wildShape: true });
+    }
+  } catch (err) {
+    console.error("OOT | WildShape | transformInto threw:", err);
+    throw err;
   }
 
-  const beastActor = game.actors.find(a => a.getFlag("dnd5e", "originalActor") === actorId);
-  if (beastActor) {
-    const updates = {};
+  // Apply druid overrides to the newly created beast actor
+  const newBeastActor = game.actors.find(a => a.getFlag("dnd5e", "originalActor") === actorId);
+  console.log("OOT | WildShape | Post-transform beastActor:", newBeastActor ? newBeastActor.name : "STILL NOT FOUND");
+  if (!newBeastActor) return;
 
-    const druidAC = 13 + wisMod;
-    if (druidAC > beastActor.system.attributes.ac.value) {
-      updates["system.attributes.ac.flat"] = druidAC;
-      updates["system.attributes.ac.calc"] = "flat";
-    }
+  const updates = {};
 
-    if (druidLevel > 0) {
-      updates["system.attributes.hp.temp"] = 3 * druidLevel;
-    }
-
-    for (const key of ["int", "wis", "cha"]) {
-      const druidScore = actor.system.abilities[key]?.value ?? 10;
-      const beastScore = beastActor.system.abilities[key]?.value ?? 10;
-      updates[`system.abilities.${key}.value`] = Math.max(druidScore, beastScore);
-    }
-
-    if (actor.system.attributes.prof) {
-      updates["system.attributes.prof"] = actor.system.attributes.prof;
-    }
-
-    for (const [key, ability] of Object.entries(actor.system.abilities ?? {})) {
-      const druidProf = ability.proficient ?? 0;
-      const beastProf = beastActor.system.abilities[key]?.proficient ?? 0;
-      if (druidProf > beastProf) {
-        updates[`system.abilities.${key}.proficient`] = druidProf;
-      }
-    }
-
-    for (const [key, skill] of Object.entries(actor.system.skills ?? {})) {
-      const druidProf = skill.value ?? 0;
-      const beastProf = beastActor.system.skills[key]?.value ?? 0;
-      if (druidProf > beastProf) {
-        updates[`system.skills.${key}.value`] = druidProf;
-      }
-    }
-
-    if (Object.keys(updates).length) await beastActor.update(updates);
+  const druidAC = 13 + wisMod;
+  console.log("OOT | WildShape | druidAC:", druidAC, "beastAC:", newBeastActor.system.attributes.ac.value);
+  if (druidAC > newBeastActor.system.attributes.ac.value) {
+    updates["system.attributes.ac.flat"] = druidAC;
+    updates["system.attributes.ac.calc"] = "flat";
   }
+
+  if (druidLevel > 0) {
+    updates["system.attributes.hp.temp"] = 3 * druidLevel;
+  }
+
+  for (const key of ["int", "wis", "cha"]) {
+    const druidScore = actor.system.abilities[key]?.value ?? 10;
+    const beastScore = newBeastActor.system.abilities[key]?.value ?? 10;
+    updates[`system.abilities.${key}.value`] = Math.max(druidScore, beastScore);
+  }
+
+  if (actor.system.attributes.prof) {
+    updates["system.attributes.prof"] = actor.system.attributes.prof;
+  }
+
+  for (const [key, ability] of Object.entries(actor.system.abilities ?? {})) {
+    const druidProf = ability.proficient ?? 0;
+    const beastProf = newBeastActor.system.abilities[key]?.proficient ?? 0;
+    if (druidProf > beastProf) {
+      updates[`system.abilities.${key}.proficient`] = druidProf;
+    }
+  }
+
+  for (const [key, skill] of Object.entries(actor.system.skills ?? {})) {
+    const druidProf = skill.value ?? 0;
+    const beastProf = newBeastActor.system.skills[key]?.value ?? 0;
+    if (druidProf > beastProf) {
+      updates[`system.skills.${key}.value`] = druidProf;
+    }
+  }
+
+  console.log("OOT | WildShape | Applying post-transform updates:", updates);
+  if (Object.keys(updates).length) await newBeastActor.update(updates);
+  console.log("OOT | WildShape | Done.");
 }
 
 export async function requestWildShape(actorUuid, beastUuid) {
