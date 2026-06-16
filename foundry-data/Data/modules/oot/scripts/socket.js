@@ -68,21 +68,30 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
 
   const isNewAPI = foundry.utils.isNewerVersion(game.system.version, "3.2.9");
 
+  let transformResult;
   try {
     if (isNewAPI) {
-      await actor.transformInto(beast, undefined, { wildShape: true });
+      transformResult = await actor.transformInto(beast, undefined, { wildShape: true });
     } else {
-      await actor.transformInto(beast, { wildShape: true });
+      transformResult = await actor.transformInto(beast, { wildShape: true });
     }
   } catch (err) {
     console.error("OOT | WildShape | transformInto threw:", err);
     throw err;
   }
 
-  // Apply druid overrides to the newly created beast actor
-  const newBeastActor = game.actors.find(a => a.getFlag("dnd5e", "originalActor") === actorId);
+  console.log("OOT | WildShape | transformInto result:", transformResult);
+
+  // Prefer the actor returned by transformInto; fall back to searching game.actors
+  let newBeastActor = transformResult instanceof Actor ? transformResult : null;
+  if (!newBeastActor) {
+    newBeastActor = game.actors.find(a => a.getFlag("dnd5e", "originalActor") === actorId);
+  }
   console.log("OOT | WildShape | Post-transform beastActor:", newBeastActor ? newBeastActor.name : "STILL NOT FOUND");
-  if (!newBeastActor) return;
+  if (!newBeastActor) {
+    console.error("OOT | WildShape | Could not locate beast actor after transform, aborting stat overrides.");
+    return;
+  }
 
   const updates = {};
 
@@ -124,8 +133,17 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
   }
 
   console.log("OOT | WildShape | Applying post-transform updates:", updates);
-  if (Object.keys(updates).length) await newBeastActor.update(updates);
-  console.log("OOT | WildShape | Done.");
+  if (Object.keys(updates).length) {
+    try {
+      await newBeastActor.update(updates);
+      console.log("OOT | WildShape | Done.");
+    } catch (err) {
+      console.error("OOT | WildShape | update() failed:", err);
+      throw err;
+    }
+  } else {
+    console.log("OOT | WildShape | No updates to apply. Done.");
+  }
 }
 
 export async function requestWildShape(actorUuid, beastUuid) {
