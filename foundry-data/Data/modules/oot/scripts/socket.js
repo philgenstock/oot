@@ -51,8 +51,8 @@ export async function requestTeleport(payload) {
   }
 }
 
-async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
-  console.log("OOT | WildShape | _gmWildShapeTransform called", { actorUuid, beastUuid });
+async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = false }) {
+  console.log("OOT | WildShape | _gmWildShapeTransform called", { actorUuid, beastUuid, magicWeapons });
 
   const actor = await fromUuid(actorUuid);
   if (!actor) { console.error("OOT | WildShape | Actor not found for uuid", actorUuid); throw new Error("Actor not found"); }
@@ -136,22 +136,31 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid }) {
   if (Object.keys(updates).length) {
     try {
       await newBeastActor.update(updates);
-      console.log("OOT | WildShape | Done.");
     } catch (err) {
       console.error("OOT | WildShape | update() failed:", err);
       throw err;
     }
-  } else {
-    console.log("OOT | WildShape | No updates to apply. Done.");
   }
+
+  if (magicWeapons) {
+    console.log("OOT | WildShape | Applying magic weapons (+1 atk/dmg) via global bonuses");
+    await newBeastActor.update({
+      "system.bonuses.mwak.attack": "1",
+      "system.bonuses.mwak.damage": "1",
+      "system.bonuses.rwak.attack": "1",
+      "system.bonuses.rwak.damage": "1",
+    });
+  }
+
+  console.log("OOT | WildShape | Done.");
 }
 
-export async function requestWildShape(actorUuid, beastUuid) {
+export async function requestWildShape(actorUuid, beastUuid, magicWeapons = false) {
   if (game.user.isGM) {
-    await _gmWildShapeTransform({ actorUuid, beastUuid });
+    await _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons });
   } else {
     if (!game.users.activeGM) throw new Error("No GM is currently online.");
-    await _socket.executeAsGM("wildShapeTransform", { actorUuid, beastUuid });
+    await _socket.executeAsGM("wildShapeTransform", { actorUuid, beastUuid, magicWeapons });
   }
 }
 

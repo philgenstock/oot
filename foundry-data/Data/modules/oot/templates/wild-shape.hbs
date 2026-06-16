@@ -14,6 +14,10 @@
       </span>
     </div>
     <input type="text" class="wild-shape-search" placeholder="Search beasts...">
+    <label class="wild-shape-magic-toggle" title="Apply +1 to attack and damage on all attacks">
+      <input type="checkbox" class="wild-shape-magic-weapons" {{#if magicWeapons}}checked{{/if}}>
+      <i class="fas fa-wand-magic-sparkles"></i> Magic Weapons (+1)
+    </label>
   </div>
 
   {{#if isPolymorphed}}

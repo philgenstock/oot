@@ -684,6 +684,26 @@
   box-sizing: border-box;
 }
 
+.wild-shape-magic-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--color-text-dark-secondary, #4b4a44);
+  cursor: pointer;
+  user-select: none;
+}
+
+.wild-shape-magic-toggle input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.wild-shape-magic-toggle i {
+  color: #c0850a;
+}
+
 .wild-shape-list {
   flex: 1;
   overflow-y: auto;

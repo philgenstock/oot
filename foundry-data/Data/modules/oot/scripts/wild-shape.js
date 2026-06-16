@@ -15,6 +15,7 @@ class WildShapeApplication extends Application {
     super(options);
     this._beasts = null;
     this._loading = false;
+    this._magicWeapons = true;
   }
 
   static get defaultOptions() {
@@ -76,7 +77,8 @@ class WildShapeApplication extends Application {
       crCap: _formatCR(this._crCap),
       isPolymorphed: this._isPolymorphed,
       wildShapeCharges,
-      wildShapeMax
+      wildShapeMax,
+      magicWeapons: this._magicWeapons
     };
   }
 
@@ -89,6 +91,7 @@ class WildShapeApplication extends Application {
     }
 
     html.find('.wild-shape-search').on('input', e => this._onSearch(e));
+    html.find('.wild-shape-magic-weapons').on('change', e => { this._magicWeapons = e.currentTarget.checked; });
     html.find('.beast-star').on('click', e => { e.stopPropagation(); this._onToggleStar(e); });
     html.find('.beast-row').on('click', e => this._onSelectBeast(e));
     html.find('.revert-btn').on('click', () => this._onRevert());
@@ -155,10 +158,10 @@ class WildShapeApplication extends Application {
 
     this.element.find('.beast-row').css('pointer-events', 'none');
     try {
-      console.log("OOT | WildShape | Requesting transform", { actorUuid: actor.uuid, beastUuid: uuid, beastName: name });
+      console.log("OOT | WildShape | Requesting transform", { actorUuid: actor.uuid, beastUuid: uuid, beastName: name, magicWeapons: this._magicWeapons });
       await wildShapeItem.update({ "system.uses.spent": (wildShapeItem.system.uses.spent ?? 0) + 1 });
       console.log("OOT | WildShape | Charge spent, calling requestWildShape");
-      await requestWildShape(actor.uuid, uuid);
+      await requestWildShape(actor.uuid, uuid, this._magicWeapons);
       this.close();
     } catch (e) {
       ui.notifications.error(`Wild Shape failed: ${e.message}`);
