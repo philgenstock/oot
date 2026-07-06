@@ -51,8 +51,8 @@ export async function requestTeleport(payload) {
   }
 }
 
-async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = false }) {
-  console.log("OOT | WildShape | _gmWildShapeTransform called", { actorUuid, beastUuid, magicWeapons });
+async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = false, radiantDamage = false }) {
+  console.log("OOT | WildShape | _gmWildShapeTransform called", { actorUuid, beastUuid, magicWeapons, radiantDamage });
 
   const actor = await fromUuid(actorUuid);
   if (!actor) { console.error("OOT | WildShape | Actor not found for uuid", actorUuid); throw new Error("Actor not found"); }
@@ -152,15 +152,55 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = fals
     });
   }
 
+  if (radiantDamage) {
+    const variants = newBeastActor.items
+      .filter(_isAttackItem)
+      .map(_makeRadiantVariant);
+    console.log("OOT | WildShape | Creating radiant attack variants:", variants.map(v => v.name));
+    if (variants.length) await newBeastActor.createEmbeddedDocuments("Item", variants);
+  }
+
   console.log("OOT | WildShape | Done.");
 }
 
-export async function requestWildShape(actorUuid, beastUuid, magicWeapons = false) {
+function _isAttackItem(item) {
+  // legacy schema (dnd5e <= 3.x)
+  if (["mwak", "rwak", "msak", "rsak"].includes(item.system?.actionType)) return true;
+  // modern schema (dnd5e >= 4.x): items carry activities
+  for (const activity of item.system?.activities ?? []) {
+    if (activity.type === "attack") return true;
+  }
+  return false;
+}
+
+function _makeRadiantVariant(item) {
+  const data = item.toObject();
+  delete data._id;
+  data.name = `${data.name} (R)`;
+
+  // legacy schema: parts are [formula, type] tuples
+  if (Array.isArray(data.system?.damage?.parts)) {
+    data.system.damage.parts = data.system.damage.parts.map(([formula]) => [formula, "radiant"]);
+  }
+
+  // modern schema: base/versatile damage on the item, extra parts on activities
+  if (data.system?.damage?.base?.types) data.system.damage.base.types = ["radiant"];
+  if (data.system?.damage?.versatile?.types?.length) data.system.damage.versatile.types = ["radiant"];
+  for (const activity of Object.values(data.system?.activities ?? {})) {
+    for (const part of activity.damage?.parts ?? []) {
+      if (part.types) part.types = ["radiant"];
+    }
+  }
+
+  return data;
+}
+
+export async function requestWildShape(actorUuid, beastUuid, magicWeapons = false, radiantDamage = false) {
   if (game.user.isGM) {
-    await _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons });
+    await _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons, radiantDamage });
   } else {
     if (!game.users.activeGM) throw new Error("No GM is currently online.");
-    await _socket.executeAsGM("wildShapeTransform", { actorUuid, beastUuid, magicWeapons });
+    await _socket.executeAsGM("wildShapeTransform", { actorUuid, beastUuid, magicWeapons, radiantDamage });
   }
 }
 

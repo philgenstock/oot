@@ -16,6 +16,7 @@ class WildShapeApplication extends Application {
     this._beasts = null;
     this._loading = false;
     this._magicWeapons = true;
+    this._radiantDamage = true;
   }
 
   static get defaultOptions() {
@@ -78,7 +79,8 @@ class WildShapeApplication extends Application {
       isPolymorphed: this._isPolymorphed,
       wildShapeCharges,
       wildShapeMax,
-      magicWeapons: this._magicWeapons
+      magicWeapons: this._magicWeapons,
+      radiantDamage: this._radiantDamage
     };
   }
 
@@ -92,6 +94,7 @@ class WildShapeApplication extends Application {
 
     html.find('.wild-shape-search').on('input', e => this._onSearch(e));
     html.find('.wild-shape-magic-weapons').on('change', e => { this._magicWeapons = e.currentTarget.checked; });
+    html.find('.wild-shape-radiant-damage').on('change', e => { this._radiantDamage = e.currentTarget.checked; });
     html.find('.beast-star').on('click', e => { e.stopPropagation(); this._onToggleStar(e); });
     html.find('.beast-row').on('click', e => this._onSelectBeast(e));
     html.find('.revert-btn').on('click', () => this._onRevert());
@@ -158,10 +161,10 @@ class WildShapeApplication extends Application {
 
     this.element.find('.beast-row').css('pointer-events', 'none');
     try {
-      console.log("OOT | WildShape | Requesting transform", { actorUuid: actor.uuid, beastUuid: uuid, beastName: name, magicWeapons: this._magicWeapons });
+      console.log("OOT | WildShape | Requesting transform", { actorUuid: actor.uuid, beastUuid: uuid, beastName: name, magicWeapons: this._magicWeapons, radiantDamage: this._radiantDamage });
       await wildShapeItem.update({ "system.uses.spent": (wildShapeItem.system.uses.spent ?? 0) + 1 });
       console.log("OOT | WildShape | Charge spent, calling requestWildShape");
-      await requestWildShape(actor.uuid, uuid, this._magicWeapons);
+      await requestWildShape(actor.uuid, uuid, this._magicWeapons, this._radiantDamage);
       this.close();
     } catch (e) {
       ui.notifications.error(`Wild Shape failed: ${e.message}`);
@@ -230,6 +233,7 @@ async function _loadBeasts(crCap) {
     if (pack.documentName !== "Actor") continue;
 
     const isLegacy = _isLegacyPack(pack);
+    console.debug("OOT LEGACY", isLegacy, pack)
 
     const index = await pack.getIndex({ fields: [
       "system.details.cr",
