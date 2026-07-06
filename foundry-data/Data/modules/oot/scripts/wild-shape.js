@@ -221,7 +221,7 @@ function _formatCR(cr) {
 // Legacy (2014) beasts get a "(L)" suffix so they stay distinct from their
 // modern counterparts instead of being removed by the duplicate-name filter.
 function _isLegacyPack(pack) {
-  if (pack.metadata.packageName === "dnd-legacy-content") return true;
+  if (pack.metadata.id === "dnd5e.monsters") return true;
   const moduleTitle = game.modules.get(pack.metadata.packageName)?.title ?? "";
   return moduleTitle.includes("Legacy Content");
 }
@@ -233,7 +233,7 @@ async function _loadBeasts(crCap) {
     if (pack.documentName !== "Actor") continue;
 
     const isLegacy = _isLegacyPack(pack);
-    console.debug("OOT LEGACY", isLegacy, pack)
+    console.debug("OOT LEGACY", isLegacy, pack, pack.metadata.id)
 
     const index = await pack.getIndex({ fields: [
       "system.details.cr",
