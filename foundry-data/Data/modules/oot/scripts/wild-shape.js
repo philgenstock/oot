@@ -215,11 +215,21 @@ function _formatCR(cr) {
   return fractions[cr] ?? String(cr ?? 0);
 }
 
+// Legacy (2014) beasts get a "(L)" suffix so they stay distinct from their
+// modern counterparts instead of being removed by the duplicate-name filter.
+function _isLegacyPack(pack) {
+  if (pack.metadata.packageName === "dnd-legacy-content") return true;
+  const moduleTitle = game.modules.get(pack.metadata.packageName)?.title ?? "";
+  return moduleTitle.includes("Legacy Content");
+}
+
 async function _loadBeasts(crCap) {
   const beasts = [];
 
   for (const pack of game.packs) {
     if (pack.documentName !== "Actor") continue;
+
+    const isLegacy = _isLegacyPack(pack);
 
     const index = await pack.getIndex({ fields: [
       "system.details.cr",
@@ -241,7 +251,7 @@ async function _loadBeasts(crCap) {
 
       beasts.push({
         uuid,
-        name: entry.name,
+        name: isLegacy ? `${entry.name} (L)` : entry.name,
         cr,
         crDisplay: _formatCR(cr),
         size: SIZE_LABELS[entry.system?.traits?.size] ?? "Medium",
