@@ -51,6 +51,24 @@ export async function requestTeleport(payload) {
   }
 }
 
+// Scene switches leave the previous wild shape's beast actor (and its token)
+// behind instead of reverting it, so they'd otherwise pile up in the world
+// every time the player wild shapes again. Sweep them before transforming.
+async function _cleanupStaleWildShapeActors(actorId) {
+  const staleActors = game.actors.filter(a => a.getFlag("dnd5e", "originalActor") === actorId);
+  if (!staleActors.length) return;
+
+  console.log("OOT | WildShape | Cleaning up stale beast actors:", staleActors.map(a => a.name));
+  const staleIds = new Set(staleActors.map(a => a.id));
+
+  for (const scene of game.scenes) {
+    const staleTokens = scene.tokens.filter(t => staleIds.has(t.actorId));
+    if (staleTokens.length) await scene.deleteEmbeddedDocuments("Token", staleTokens.map(t => t.id));
+  }
+
+  await Actor.deleteDocuments([...staleIds]);
+}
+
 async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = false, radiantDamage = false }) {
   console.log("OOT | WildShape | _gmWildShapeTransform called", { actorUuid, beastUuid, magicWeapons, radiantDamage });
 
@@ -65,6 +83,7 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = fals
   const druidLevel = actor.classes?.druid?.system?.levels ?? 0;
   const actorId = actor.id;
 
+  await _cleanupStaleWildShapeActors(actorId);
 
   const isNewAPI = foundry.utils.isNewerVersion(game.system.version, "3.2.9");
 
