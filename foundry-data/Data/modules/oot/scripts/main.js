@@ -5,6 +5,7 @@ import { StairController, initStairInteraction } from './stair-tool.js';
 import { initCreatureLedger } from './creature-ledger.js';
 import { BulkUploadApplication } from './bulk-upload-app.js';
 import { initWildShape } from './wild-shape.js';
+import { SpawnPartyController, initSpawnParty } from './spawn-party.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -32,6 +33,14 @@ Hooks.on('getSceneControlButtons', (controls) => {
       visible: game.user.isGM,
       onClick: () => game.oot.stairController.toggle()
     };
+    tokenControls.tools['oot-spawn-party'] = {
+      name: "oot-spawn-party",
+      title: "Spawn Party",
+      icon: "fas fa-users",
+      button: true,
+      visible: game.user.isGM,
+      onClick: () => game.oot.spawnPartyController.toggle()
+    };
     tokenControls.tools['oot-bulk-upload'] = {
       name: "oot-bulk-upload",
       title: "Bulk Asset Upload",
@@ -50,6 +59,7 @@ Hooks.once('init', async function() {
   initStairInteraction();
   initCreatureLedger();
   initWildShape();
+  initSpawnParty();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
@@ -64,6 +74,7 @@ Hooks.once('init', async function() {
     },
     exportCreatures: exportCreaturesByFolder,
     stairController: new StairController(),
+    spawnPartyController: new SpawnPartyController(),
     openBulkUpload: () => {
       const existing = Object.values(ui.windows).find(w => w instanceof BulkUploadApplication);
       if (existing) {
