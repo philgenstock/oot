@@ -1,10 +1,11 @@
-﻿import { PartyInventoryApplication } from './party-inventory-app.js';
+import { PartyInventoryApplication } from './party-inventory-app.js';
 import { registerPartyInventorySettings } from './party-inventory-data.js';
 import { registerSocket } from './socket.js';
 import { StairController, initStairInteraction } from './stair-tool.js';
 import { initCreatureLedger } from './creature-ledger.js';
 import { BulkUploadApplication } from './bulk-upload-app.js';
 import { initWildShape } from './wild-shape.js';
+import { initAttackCard } from './attack-card.js';
 import { SpawnPartyController, initSpawnParty } from './spawn-party.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
@@ -15,7 +16,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       title: "Party Inventory",
       icon: "fas fa-boxes-stacked",
       button: true,
-      onClick: () => game.oot.openPartyInventory()
+      onChange: () => game.oot.openPartyInventory()
     };
     tokenControls.tools['oot-creature-export'] = {
       name: "oot-creature-export",
@@ -23,7 +24,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       icon: "fas fa-dragon",
       button: true,
       visible: game.user.isGM,
-      onClick: () => game.oot.exportCreatures()
+      onChange: () => game.oot.exportCreatures()
     };
     tokenControls.tools['oot-stair-tool'] = {
       name: "oot-stair-tool",
@@ -31,7 +32,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       icon: "fas fa-dungeon",
       button: true,
       visible: game.user.isGM,
-      onClick: () => game.oot.stairController.toggle()
+      onChange: () => game.oot.stairController.toggle()
     };
     tokenControls.tools['oot-spawn-party'] = {
       name: "oot-spawn-party",
@@ -39,7 +40,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       icon: "fas fa-users",
       button: true,
       visible: game.user.isGM,
-      onClick: () => game.oot.spawnPartyController.toggle()
+      onChange: () => game.oot.spawnPartyController.toggle()
     };
     tokenControls.tools['oot-bulk-upload'] = {
       name: "oot-bulk-upload",
@@ -47,7 +48,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       icon: "fas fa-cloud-arrow-up",
       button: true,
       visible: game.user.isGM,
-      onClick: () => game.oot.openBulkUpload()
+      onChange: () => game.oot.openBulkUpload()
     };
   }
 });
@@ -60,6 +61,7 @@ Hooks.once('init', async function() {
   initCreatureLedger();
   initWildShape();
   initSpawnParty();
+  initAttackCard();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
@@ -111,7 +113,7 @@ Hooks.once('ready', async function() {
 });
 
 
-Hooks.on('renderChatMessage', async function(_message, html) {
+Hooks.on('renderChatMessageHTML', function(_message, html) {
   collapseDnd5eMessageByDefault(html);
 });
 
@@ -124,10 +126,7 @@ function registerHandlebarsHelpers() {
 }
 
 function collapseDnd5eMessageByDefault(html) {
-  const toggleButton = html.find('.fa-chevron-down');
-  if (toggleButton.length > 0) {
-    toggleButton.click();
-  }
+  html.querySelector('.fa-chevron-down')?.click();
 }
 
 function exportCreaturesByFolder() {

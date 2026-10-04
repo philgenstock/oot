@@ -883,3 +883,6 @@
 #tooltip.oot-item-tooltip .oot-tooltip-description p:last-child {
   margin-bottom: 0;
 }
+
+/* Combined attack + damage card */
+.oot-damage-card { margin-top: 6px; }

@@ -89,7 +89,7 @@ export function initCreatureLedger() {
         title: "Creature Ledger",
         icon: "fas fa-book-skull",
         button: true,
-        onClick: () => openCreatureLedger()
+        onChange: () => openCreatureLedger()
       };
     }
   });

@@ -299,7 +299,7 @@ export function initWildShape() {
       title: "Wild Shape",
       icon: "fas fa-paw",
       button: true,
-      onClick: () => _open()
+      onChange: () => _open()
     };
   });
 }
