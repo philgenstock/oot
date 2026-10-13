@@ -63,21 +63,22 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = fals
   const beast = await fromUuid(beastUuid);
   if (!beast) { console.error("OOT | WildShape | Beast not found for uuid", beastUuid); throw new Error("Beast not found in compendium"); }
 
-  const wisMod = actor.system?.abilities?.wis?.mod ?? 0;
-  const druidLevel = actor.classes?.druid?.system?.levels ?? 0;
   const actorId = actor.id;
 
   await _cleanupStaleWildShapeActors(actorId);
 
-  const isNewAPI = foundry.utils.isNewerVersion(game.system.version, "3.2.9");
+  // dnd5e's Wild Shape preset implements the 2024 rules: keep HP/HD, Int/Wis/Cha, type and
+  // languages; merge save/skill proficiencies (higher modifier wins); AC 13 + Wis and
+  // 3x druid level temp HP for Moon druids.
+  const { TransformationSetting } = dnd5e.dataModels.settings;
+  const settings = new TransformationSetting({
+    ...CONFIG.DND5E.transformation.presets.wildshape.settings,
+    preset: "wildshape"
+  });
 
   let transformResult;
   try {
-    if (isNewAPI) {
-      transformResult = await actor.transformInto(beast, undefined, { wildShape: true });
-    } else {
-      transformResult = await actor.transformInto(beast, { wildShape: true });
-    }
+    transformResult = await actor.transformInto(beast, settings);
   } catch (err) {
     console.error("OOT | WildShape | transformInto threw:", err);
     throw err;
@@ -96,55 +97,6 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = fals
     return;
   }
 
-  const updates = {};
-
-  const druidAC = 13 + wisMod;
-  console.log("OOT | WildShape | druidAC:", druidAC, "beastAC:", newBeastActor.system.attributes.ac.value);
-  if (druidAC > newBeastActor.system.attributes.ac.value) {
-    updates["system.attributes.ac.flat"] = druidAC;
-    updates["system.attributes.ac.calc"] = "flat";
-  }
-
-  if (druidLevel > 0) {
-    updates["system.attributes.hp.temp"] = 3 * druidLevel;
-  }
-
-  for (const key of ["int", "wis", "cha"]) {
-    const druidScore = actor.system.abilities[key]?.value ?? 10;
-    const beastScore = newBeastActor.system.abilities[key]?.value ?? 10;
-    updates[`system.abilities.${key}.value`] = Math.max(druidScore, beastScore);
-  }
-
-  if (actor.system.attributes.prof) {
-    updates["system.attributes.prof"] = actor.system.attributes.prof;
-  }
-
-  for (const [key, ability] of Object.entries(actor.system.abilities ?? {})) {
-    const druidProf = ability.proficient ?? 0;
-    const beastProf = newBeastActor.system.abilities[key]?.proficient ?? 0;
-    if (druidProf > beastProf) {
-      updates[`system.abilities.${key}.proficient`] = druidProf;
-    }
-  }
-
-  for (const [key, skill] of Object.entries(actor.system.skills ?? {})) {
-    const druidProf = skill.value ?? 0;
-    const beastProf = newBeastActor.system.skills[key]?.value ?? 0;
-    if (druidProf > beastProf) {
-      updates[`system.skills.${key}.value`] = druidProf;
-    }
-  }
-
-  console.log("OOT | WildShape | Applying post-transform updates:", updates);
-  if (Object.keys(updates).length) {
-    try {
-      await newBeastActor.update(updates);
-    } catch (err) {
-      console.error("OOT | WildShape | update() failed:", err);
-      throw err;
-    }
-  }
-
   if (magicWeapons) {
     console.log("OOT | WildShape | Applying magic weapons (+1 atk/dmg) via global bonuses");
     await newBeastActor.update({
@@ -157,7 +109,7 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = fals
 
   if (radiantDamage) {
     const variants = newBeastActor.items
-      .filter(_isAttackItem)
+      .filter(i => i.type === "weapon" && _isAttackItem(i))
       .map(_makeRadiantVariant);
     console.log("OOT | WildShape | Creating radiant attack variants:", variants.map(v => v.name));
     if (variants.length) await newBeastActor.createEmbeddedDocuments("Item", variants);

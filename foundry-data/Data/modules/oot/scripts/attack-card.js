@@ -44,6 +44,9 @@ async function _onPostRollAttack(rolls, { subject: activity }) {
     );
     if (!damageRolls?.length) return;
 
+    const extra = await _rollPrimalStrike(activity, attackRoll);
+    if (extra) damageRolls.push(extra);
+
     if (game.dice3d) {
       for (const roll of damageRolls) game.dice3d.showForRoll(roll, game.user, true);
     }
@@ -60,6 +63,50 @@ async function _onPostRollAttack(rolls, { subject: activity }) {
   } catch (e) {
     console.error("OOT | Auto damage roll failed", e);
   }
+}
+
+// Druid 7 Elemental Fury (Primal Strike): once per turn, a weapon or Beast form
+// hit deals an extra 1d8 Cold/Fire/Lightning/Thunder (2d8 at druid 15).
+// ponytail: "once per turn" is tracked per combat round, not per combatant.
+async function _rollPrimalStrike(activity, attackRoll) {
+  const actor = activity.actor;
+  if (activity.item.type !== "weapon" || !actor) return null;
+
+  const original = game.actors.get(actor.getFlag("dnd5e", "originalActor"));
+  const druidLevel = Math.max(actor.classes?.druid?.system?.levels ?? 0, original?.classes?.druid?.system?.levels ?? 0);
+  if (druidLevel < 7) return null;
+
+  // Miss against a known target AC: no strike (a natural 20 always hits)
+  if (attackRoll.isFailure && !attackRoll.isCritical) return null;
+
+  const combat = game.combat?.started ? game.combat : null;
+  const turnKey = combat ? `${combat.id}:${combat.round}` : null;
+  if (turnKey && actor.getFlag("oot", "primalStrike") === turnKey) return null;
+
+  const choices = ["cold", "fire", "lightning", "thunder"];
+  const type = await foundry.applications.api.DialogV2.wait({
+    window: { title: "Primal Strike", icon: "fa-solid fa-bolt" },
+    content: "<p>Add Primal Strike damage to this hit?</p>",
+    buttons: [
+      ...choices.map(action => ({ action, label: CONFIG.DND5E.damageTypes[action].label })),
+      { action: "skip", label: "Skip" }
+    ],
+    rejectClose: false
+  });
+  if (!choices.includes(type)) return null;
+
+  if (turnKey) await actor.setFlag("oot", "primalStrike", turnKey);
+
+  const roll = new CONFIG.Dice.DamageRoll(`${druidLevel >= 15 ? 2 : 1}d8`, {}, {
+    type,
+    isCritical: attackRoll.isCritical,
+    critical: {
+      multiplyNumeric: game.settings.get("dnd5e", "criticalDamageModifiers"),
+      powerfulCritical: game.settings.get("dnd5e", "criticalDamageMaxDice")
+    }
+  });
+  await roll.evaluate();
+  return roll;
 }
 
 function _onRenderChatMessage(message, html) {
@@ -81,6 +128,7 @@ function _onRenderChatMessage(message, html) {
   section.classList.add("oot-damage-card");
   if (data.critical) section.classList.add("critical");
   section.append(...parts);
+  section.querySelector("damage-application")?.setAttribute("open", "");
   section.querySelectorAll(".dice-roll").forEach(el =>
     el.addEventListener("click", message._onClickDiceRoll.bind(message)));
 
