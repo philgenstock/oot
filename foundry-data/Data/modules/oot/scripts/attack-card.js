@@ -21,6 +21,7 @@ export function initAttackCard() {
     default: true
   });
 
+  Hooks.on("dnd5e.preRollDamageV2", _applyRadiantSoul);
   Hooks.on("dnd5e.postRollAttack", _onPostRollAttack);
   Hooks.on("dnd5e.renderChatMessage", _onRenderChatMessage);
 }
@@ -65,9 +66,29 @@ async function _onPostRollAttack(rolls, { subject: activity }) {
   }
 }
 
+// ponytail: "once per turn" is tracked per combat round, not per combatant. Null outside combat (no limit).
+function _turnKey() {
+  const combat = game.combat?.started ? game.combat : null;
+  return combat ? `${combat.id}:${combat.round}` : null;
+}
+
+// Blood Hunter (Order of the Profane Soul) Radiant Soul: a spell that deals Radiant or Fire
+// damage gets + Wis mod on one damage roll. No per-turn limit.
+function _applyRadiantSoul(config) {
+  const activity = config.subject;
+  const actor = activity?.actor;
+  if (activity?.item?.type !== "spell" || !actor) return;
+  if (!actor.items.some(i => i.system.identifier === "radiant-soul")) return;
+
+  const roll = config.rolls?.find(r => ["radiant", "fire"].includes(r.options?.type));
+  const wis = actor.system.abilities?.wis?.mod;
+  if (!roll || !wis) return;
+
+  roll.parts.push(`${wis}[Radiant Soul]`);
+}
+
 // Druid 7 Elemental Fury (Primal Strike): once per turn, a weapon or Beast form
 // hit deals an extra 1d8 Cold/Fire/Lightning/Thunder (2d8 at druid 15).
-// ponytail: "once per turn" is tracked per combat round, not per combatant.
 async function _rollPrimalStrike(activity, attackRoll) {
   const actor = activity.actor;
   if (activity.item.type !== "weapon" || !actor) return null;
@@ -79,8 +100,7 @@ async function _rollPrimalStrike(activity, attackRoll) {
   // Miss against a known target AC: no strike (a natural 20 always hits)
   if (attackRoll.isFailure && !attackRoll.isCritical) return null;
 
-  const combat = game.combat?.started ? game.combat : null;
-  const turnKey = combat ? `${combat.id}:${combat.round}` : null;
+  const turnKey = _turnKey();
   if (turnKey && actor.getFlag("oot", "primalStrike") === turnKey) return null;
 
   const choices = ["cold", "fire", "lightning", "thunder"];
