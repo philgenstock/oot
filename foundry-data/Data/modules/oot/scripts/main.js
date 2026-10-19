@@ -6,6 +6,7 @@ import { initCreatureLedger } from './creature-ledger.js';
 import { BulkUploadApplication } from './bulk-upload-app.js';
 import { initWildShape } from './wild-shape.js';
 import { initAttackCard } from './attack-card.js';
+import { initStaffOfTheOsteomancer } from './staff-of-the-osteomancer.js';
 import { SpawnPartyController, initSpawnParty } from './spawn-party.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
@@ -62,6 +63,7 @@ Hooks.once('init', async function() {
   initWildShape();
   initSpawnParty();
   initAttackCard();
+  initStaffOfTheOsteomancer();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
