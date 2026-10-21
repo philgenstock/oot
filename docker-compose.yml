@@ -6,9 +6,9 @@ services:
     restart: unless-stopped
     volumes:
       # Mount local data directory
-      - ./foundry-data:/data
+      - ./foundry-data:/data:z
     environment:
-      # You need to set your Foundry username and password
+      # Credentials come from .env (git-ignored): FOUNDRY_USERNAME, FOUNDRY_PASSWORD, FOUNDRY_ADMIN_KEY
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_KEY}
