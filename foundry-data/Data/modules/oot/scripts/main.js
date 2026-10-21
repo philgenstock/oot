@@ -8,6 +8,7 @@ import { initWildShape } from './wild-shape.js';
 import { initAttackCard } from './attack-card.js';
 import { initStaffOfTheOsteomancer } from './staff-of-the-osteomancer.js';
 import { SpawnPartyController, initSpawnParty } from './spawn-party.js';
+import { initKagebunshin } from './kagebunshin.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -64,6 +65,7 @@ Hooks.once('init', async function() {
   initSpawnParty();
   initAttackCard();
   initStaffOfTheOsteomancer();
+  initKagebunshin();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
