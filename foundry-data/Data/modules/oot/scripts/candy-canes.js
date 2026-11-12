@@ -6,8 +6,8 @@
 // Active on any scene with the flag `flags.oot.candyCanes` (an object, may be empty):
 //   { caneImg: "path/to/cane.png", radiusFt: 5 }
 // At the end of a character's turn (forward steps only, active GM only):
-//   1. the marker placed for them last round falls: it becomes an impassable region
-//      (restriction: move, bound to the token's level, else Foundry ignores it) plus a cane tile;
+//   1. the marker placed for them last round falls: it becomes impassable terrain,
+//      four movement-only walls around the square plus a cane tile;
 //   2. a new marker (red circle region, visible to everyone) is placed on the square they ended on.
 // Nothing is posted to chat: the DM calls the saves for whoever stands in the marker.
 // game.oot.candyCanesReset() removes all markers, canes and cane tiles from the current scene.
@@ -39,18 +39,18 @@ async function dropCane(scene, marker, cfg) {
   const { x, y } = marker.shapes[0];
   const g = scene.grid.size;
 
-  // the cane blocks the square it lands on; a restricted region only works on exactly one level
+  // the cane blocks the square it lands on: four movement-only walls (sight and light pass).
+  // A region "restriction" does not block anything in v14, it only clips the region to walls.
   const x0 = Math.floor(x / g) * g, y0 = Math.floor(y / g) * g;
   const level = ours(marker).level ?? scene.initialLevel?.id;
-  await scene.createEmbeddedDocuments("Region", [{
-    name: "Zuckerstock (liegt)",
-    color: "#7a1020",
-    visibility: CONST.REGION_VISIBILITY.GAMEMASTER,
-    levels: [level],
-    shapes: [{ type: "rectangle", x: x0, y: y0, width: g, height: g }],
-    restriction: { enabled: true, type: "move", priority: 0 },
+  const NONE = CONST.EDGE_SENSE_TYPES.NONE;
+  const corners = [[x0, y0], [x0 + g, y0], [x0 + g, y0 + g], [x0, y0 + g]];
+  await scene.createEmbeddedDocuments("Wall", corners.map((p, i) => ({
+    c: [...p, ...corners[(i + 1) % 4]],
+    move: CONST.WALL_MOVEMENT_TYPES.NORMAL, sight: NONE, light: NONE, sound: NONE,
+    levels: level ? [level] : [],
     flags: { oot: { [KEY]: { cane: true } } }
-  }]);
+  })));
   if (cfg.caneImg) {
     await scene.createEmbeddedDocuments("Tile", [{
       texture: { src: cfg.caneImg },
@@ -85,6 +85,7 @@ async function reset() {
   const ids = coll => coll.filter(ours).map(d => d.id);
   await scene.deleteEmbeddedDocuments("Region", ids(scene.regions));
   await scene.deleteEmbeddedDocuments("Tile", ids(scene.tiles));
+  await scene.deleteEmbeddedDocuments("Wall", ids(scene.walls));
   ui.notifications.info("Zuckerstöcke entfernt.");
 }
 
