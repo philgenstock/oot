@@ -9,6 +9,8 @@ import { initAttackCard } from './attack-card.js';
 import { initStaffOfTheOsteomancer } from './staff-of-the-osteomancer.js';
 import { SpawnPartyController, initSpawnParty } from './spawn-party.js';
 import { initKagebunshin } from './kagebunshin.js';
+import { initCandyCanes } from './candy-canes.js';
+import { initChocolateFlood } from './chocolate-flood.js';
 
 Hooks.on('getSceneControlButtons', (controls) => {
   const tokenControls = controls.tokens || controls.token;
@@ -66,6 +68,8 @@ Hooks.once('init', async function() {
   initAttackCard();
   initStaffOfTheOsteomancer();
   initKagebunshin();
+  initCandyCanes();
+  initChocolateFlood();
 
   game.oot = {
     PartyInventoryApplication: PartyInventoryApplication,
