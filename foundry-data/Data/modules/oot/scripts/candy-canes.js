@@ -90,12 +90,31 @@ async function reset() {
   ui.notifications.info("Zuckerstöcke entfernt.");
 }
 
+// The spinnery's cotton candy overlays (tiles whose image is spin_cotton_*): all on or all off, by hand.
+async function toggleCotton() {
+  const scene = canvas.scene;
+  if (!game.user.isGM || !scene) return;
+  const cotton = scene.tiles.filter(t => (t.texture.src ?? "").includes("spin_cotton_"));
+  if (!cotton.length) return ui.notifications.warn("Keine Zuckerwatte in dieser Szene.");
+  const show = cotton.some(t => t.hidden);                   // any hidden -> show all, else hide all
+  await scene.updateEmbeddedDocuments("Tile", cotton.map(t => ({ _id: t.id, hidden: !show })));
+  ui.notifications.info(show ? "Zuckerwatte an." : "Zuckerwatte aus.");
+}
+
 export function initCandyCanes() {
   Hooks.on("combatTurnChange", onTurnChange);
   Hooks.once("ready", () => { game.oot.candyCanesReset = reset; });
   Hooks.on("getSceneControlButtons", controls => {           // same reset as a GM button, no console needed
     const tools = (controls.tokens || controls.token)?.tools;
     if (!tools) return;
+    tools["oot-cotton"] = {
+      name: "oot-cotton",
+      title: "Zuckerwatte an / aus",
+      icon: "fas fa-cloud",
+      button: true,
+      visible: game.user.isGM && !!canvas.scene?.getFlag("oot", KEY),
+      onChange: () => toggleCotton()
+    };
     tools["oot-candy-canes-reset"] = {
       name: "oot-candy-canes-reset",
       title: "Zuckerstöcke zurücksetzen",
