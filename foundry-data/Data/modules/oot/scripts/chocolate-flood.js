@@ -82,7 +82,7 @@ async function controlDialog() {
     window: { title: `Schokoflut · Stufe ${st.stage ?? 0}${st.running ? " · läuft" : " · gestoppt"}` },
     buttons: [
       { action: "tap", label: "Haupthahn zu (stoppt, Schokolade erstarrt)", icon: "fa-solid fa-faucet" },
-      { action: "reopen", label: "Haupthahn wieder auf (Gespenst)", icon: "fa-solid fa-ghost" },
+      { action: "reopen", label: "Haupthahn wieder auf (Weihnachtsmann)", icon: "fa-solid fa-gifts" },
       { action: "drain", label: "Ablauf offen (läuft ab)", icon: "fa-solid fa-arrow-down" },
       { action: "up", label: "Eine Stufe höher", icon: "fa-solid fa-plus" },
       { action: "down", label: "Eine Stufe tiefer", icon: "fa-solid fa-minus" },

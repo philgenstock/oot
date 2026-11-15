@@ -10,7 +10,8 @@
 //      four movement-only walls around the square plus a cane tile;
 //   2. a new marker (red circle region, visible to everyone) is placed on the square they ended on.
 // Nothing is posted to chat: the DM calls the saves for whoever stands in the marker.
-// game.oot.candyCanesReset() removes all markers, canes and cane tiles from the current scene.
+// game.oot.candyCanesReset() (or the GM tool "Zuckerstöcke zurücksetzen") removes all markers, canes
+// and cane tiles from the current scene.
 
 const KEY = "candyCanes";
 const isPrimaryGM = () => !!game.users.activeGM?.isSelf;
@@ -92,4 +93,16 @@ async function reset() {
 export function initCandyCanes() {
   Hooks.on("combatTurnChange", onTurnChange);
   Hooks.once("ready", () => { game.oot.candyCanesReset = reset; });
+  Hooks.on("getSceneControlButtons", controls => {           // same reset as a GM button, no console needed
+    const tools = (controls.tokens || controls.token)?.tools;
+    if (!tools) return;
+    tools["oot-candy-canes-reset"] = {
+      name: "oot-candy-canes-reset",
+      title: "Zuckerstöcke zurücksetzen",
+      icon: "fas fa-candy-cane",
+      button: true,
+      visible: game.user.isGM && !!canvas.scene?.getFlag("oot", KEY),
+      onChange: () => reset()
+    };
+  });
 }
