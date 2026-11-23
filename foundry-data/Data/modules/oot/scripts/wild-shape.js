@@ -239,6 +239,7 @@ async function _loadBeasts(crCap) {
       "system.details.cr",
       "system.details.type.value",
       "system.attributes.movement.fly",
+      "system.attributes.movement.speeds.fly",
       "system.attributes.movement.swim",
       "system.traits.size"
     ]});
@@ -249,7 +250,7 @@ async function _loadBeasts(crCap) {
 
       const cr = entry.system?.details?.cr ?? 0;
       if (cr > crCap) continue;
-      if ((entry.system?.attributes?.movement?.fly ?? 0) > 0) continue;
+      if ((entry.system?.attributes?.movement?.speeds?.fly ?? entry.system?.attributes?.movement?.fly ?? 0) > 0) continue;
       
       const uuid = entry.uuid ?? `Compendium.${pack.collection}.Actor.${entry._id}`;
 

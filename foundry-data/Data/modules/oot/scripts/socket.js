@@ -99,11 +99,14 @@ async function _gmWildShapeTransform({ actorUuid, beastUuid, magicWeapons = fals
 
   if (magicWeapons) {
     console.log("OOT | WildShape | Applying magic weapons (+1 atk/dmg) via global bonuses");
+    // dnd5e 6.0 moved these to system.rolls.{attack,damage}.<type>.bonus
+    const modern = foundry.utils.hasProperty(newBeastActor, "system.rolls.attack.mwak");
+    const path = (kind, type) => modern ? `system.rolls.${kind}.${type}.bonus` : `system.bonuses.${type}.${kind}`;
     await newBeastActor.update({
-      "system.bonuses.mwak.attack": "1",
-      "system.bonuses.mwak.damage": "1",
-      "system.bonuses.rwak.attack": "1",
-      "system.bonuses.rwak.damage": "1",
+      [path("attack", "mwak")]: "1",
+      [path("damage", "mwak")]: "1",
+      [path("attack", "rwak")]: "1",
+      [path("damage", "rwak")]: "1",
     });
   }
 

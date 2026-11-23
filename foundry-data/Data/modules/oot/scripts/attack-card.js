@@ -2,6 +2,9 @@ const SETTING_AUTO_DAMAGE = "autoRollDamage";
 const SETTING_REPLACE_CARD = "replaceItemCard";
 const FLAG_DAMAGE = "damage";
 
+// dnd5e 6.0 removed ChatMessage5e#_enrichDamageTooltip; damage rolls now live in message.rolls and the tray reads them from there.
+const _legacyCards = () => typeof CONFIG.ChatMessage.documentClass.prototype._enrichDamageTooltip === "function";
+
 export function initAttackCard() {
   game.settings.register("oot", SETTING_AUTO_DAMAGE, {
     name: "Auto-roll damage with attacks",
@@ -52,13 +55,17 @@ async function _onPostRollAttack(rolls, { subject: activity }) {
       for (const roll of damageRolls) game.dice3d.showForRoll(roll, game.user, true);
     }
 
-    await message.setFlag("oot", FLAG_DAMAGE, {
-      rolls: damageRolls.map(r => r.toJSON()),
-      critical: !!attackRoll.isCritical
-    });
+    if (_legacyCards()) {
+      await message.setFlag("oot", FLAG_DAMAGE, {
+        rolls: damageRolls.map(r => r.toJSON()),
+        critical: !!attackRoll.isCritical
+      });
+    } else {
+      await message.update({ rolls: [...message.rolls, ...damageRolls].map(r => r.toJSON()) });
+    }
 
     if (game.settings.get("oot", SETTING_REPLACE_CARD)) {
-      const original = game.messages.get(message.getFlag("dnd5e", "originatingMessage"));
+      const original = message.system?.origin ?? game.messages.get(message.getFlag("dnd5e", "originatingMessage"));
       if (original?.isOwner) await original.delete();
     }
   } catch (e) {
@@ -129,7 +136,18 @@ async function _rollPrimalStrike(activity, attackRoll) {
   return roll;
 }
 
+// dnd5e 6.0: the attack card already lists the damage rolls; add the apply-damage tray, which reads them from message.rolls.
+function _addDamageTray(message, html) {
+  if (!message.isContentVisible || !message.rolls.some(r => r instanceof CONFIG.Dice.DamageRoll)) return;
+  if (!(game.user.isGM || dnd5e.settings.allowPlayerDamageTray) || html.querySelector("damage-application")) return;
+  const tray = document.createElement("damage-application");
+  tray.classList.add("dnd5e2");
+  tray.setAttribute("open", "");
+  html.querySelector(".message-content")?.append(tray);
+}
+
 function _onRenderChatMessage(message, html) {
+  if (!_legacyCards()) return _addDamageTray(message, html);
   const data = message.getFlag("oot", FLAG_DAMAGE);
   if (!data?.rolls?.length || !message.isContentVisible) return;
 

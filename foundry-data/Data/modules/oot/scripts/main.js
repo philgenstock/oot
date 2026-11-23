@@ -136,7 +136,7 @@ function registerHandlebarsHelpers() {
 }
 
 function collapseDnd5eMessageByDefault(html) {
-  html.querySelector('.fa-chevron-down')?.click();
+  (html.querySelector('[data-action="toggleDescription"]') ?? html.querySelector('.fa-chevron-down'))?.click();
 }
 
 function exportCreaturesByFolder() {
